@@ -19,17 +19,14 @@ public class UsuarioService extends BaseService<Usuario, Long, UsuarioRepository
 
     private final PasswordEncoder passwordEncoder;
 
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return this.repositorio.findFirstByEmail(email)
                 .orElseThrow(()-> new UsernameNotFoundException(email + " no encontrado"));
     }
 
-
-
-
-    // Este método lo mejoraremos en el próximo tema
-    public Usuario save(CreatedUserDto newUser) {
+    public Usuario savePropietario(CreatedUserDto newUser) {
         if (newUser.getPassword().contentEquals(newUser.getPassword2())) {
             Usuario usuario = Usuario.builder()
                     .password(passwordEncoder.encode(newUser.getPassword()))
@@ -37,6 +34,37 @@ public class UsuarioService extends BaseService<Usuario, Long, UsuarioRepository
                     .nombre(newUser.getFullname())
                     .email(newUser.getEmail())
                     .rol(UserRole.PROPIETARIO)
+                    .build();
+            return save(usuario);
+        } else {
+            return null;
+        }
+    }
+
+    public Usuario saveAdmin(CreatedUserDto newUser) {
+        if (newUser.getPassword().contentEquals(newUser.getPassword2())) {
+            Usuario usuario = Usuario.builder()
+                    .password(passwordEncoder.encode(newUser.getPassword()))
+                    .avatar(newUser.getAvatar())
+                    .nombre(newUser.getFullname())
+                    .email(newUser.getEmail())
+                    .rol(UserRole.ADMIN)
+                    .build();
+            return save(usuario);
+        } else {
+            return null;
+        }
+    }
+
+
+    public Usuario saveGestor(CreatedUserDto newUser) {
+        if (newUser.getPassword().contentEquals(newUser.getPassword2())) {
+            Usuario usuario = Usuario.builder()
+                    .password(passwordEncoder.encode(newUser.getPassword()))
+                    .avatar(newUser.getAvatar())
+                    .nombre(newUser.getFullname())
+                    .email(newUser.getEmail())
+                    .rol(UserRole.GESTOR)
                     .build();
             return save(usuario);
         } else {

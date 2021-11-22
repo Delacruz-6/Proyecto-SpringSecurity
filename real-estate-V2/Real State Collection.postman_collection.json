@@ -1,0 +1,449 @@
+{
+	"info": {
+		"_postman_id": "03dca0ac-6abe-4901-b0f2-4b3175b91cef",
+		"name": "Real State Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Viviendas",
+			"item": [
+				{
+					"name": "FindAll Vivienda",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiBaseUrl}}/vivienda/?page=0&size=50",
+							"host": [
+								"{{apiBaseUrl}}"
+							],
+							"path": [
+								"vivienda",
+								""
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "50"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post add inmobiliaria to vivienda",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{apiBaseUrl}}/vivienda/1/inmobiliaria/1",
+							"host": [
+								"{{apiBaseUrl}}"
+							],
+							"path": [
+								"vivienda",
+								"1",
+								"inmobiliaria",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete vivienda/id/inmobiliaria",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{apiBaseUrl}}/vivienda/1/inmobiliaria/",
+							"host": [
+								"{{apiBaseUrl}}"
+							],
+							"path": [
+								"vivienda",
+								"1",
+								"inmobiliaria",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "viviendaById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiBaseUrl}}/vivienda/4",
+							"host": [
+								"{{apiBaseUrl}}"
+							],
+							"path": [
+								"vivienda",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "viviendaEdit",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 4,\r\n    \"titulo\": \"Casa Distinta\",\r\n    \"descripcion\": \"Una descripcion muy diferente\",\r\n    \"avatar\": \"assets/vivienda/vi1.jpg\",\r\n    \"latitudLongitud\": \"55.235241/ 125.75050\",\r\n    \"direccion\": \"Calle Condes De Bustillo\",\r\n    \"codigoPostal\": \"41005\",\r\n    \"ciudad\": \"Sevilla\",\r\n    \"provincia\": \"Sevilla\",\r\n    \"tipo\": \"ALQUILER\",\r\n    \"precio\": 5000.0,\r\n    \"numHabitaciones\": 15,\r\n    \"metrosCuadrados\": 250,\r\n    \"numBanos\": 9,\r\n    \"tienePiscina\": false,\r\n    \"tieneAscensor\": true,\r\n    \"tieneGaraje\": false,\r\n    \"propietario\": {\r\n        \"id\": 45,\r\n        \"nombre\": \"Minny\",\r\n        \"apellidos\": \"Cremins\",\r\n        \"direccion\": \"4 Mesta Court\",\r\n        \"email\": \"mcremins27@alibaba.com\",\r\n        \"telefono\": \"+358-132-708-3461\",\r\n        \"avatar\": \"assets/usuarios/u8.jpg\"\r\n    },\r\n    \"inmobiliaria\": {\r\n        \"id\": 10,\r\n        \"nombre\": \"Blogpad\",\r\n        \"email\": \"ewyeld9@bizjournals.com\",\r\n        \"telefono\": \"+63-787-817-6119\",\r\n        \"avatar\": \"assets/inmobiliaria/i9.jpg\"\r\n    }}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiBaseUrl}}/vivienda/4",
+							"host": [
+								"{{apiBaseUrl}}"
+							],
+							"path": [
+								"vivienda",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete vivienda",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{apiBaseUrl}}/vivienda/1",
+							"host": [
+								"{{apiBaseUrl}}"
+							],
+							"path": [
+								"vivienda",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FindTopVivienda",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiBaseUrl}}/vivienda/top?n=10",
+							"host": [
+								"{{apiBaseUrl}}"
+							],
+							"path": [
+								"vivienda",
+								"top"
+							],
+							"query": [
+								{
+									"key": "n",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Propietario",
+			"item": [
+				{
+					"name": "FindAll Propietario",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiBaseUrl}}/propietario/",
+							"host": [
+								"{{apiBaseUrl}}"
+							],
+							"path": [
+								"propietario",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteOne Propietario",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{apiBaseUrl}}/propietario/1",
+							"host": [
+								"{{apiBaseUrl}}"
+							],
+							"path": [
+								"propietario",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FindOne Propietario",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiBaseUrl}}/propietario/1",
+							"host": [
+								"{{apiBaseUrl}}"
+							],
+							"path": [
+								"propietario",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Inmobiliaria",
+			"item": [
+				{
+					"name": "AddOne Inmobiliaria",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{apiBaseUrl}}/inmobiliaria/",
+							"host": [
+								"{{apiBaseUrl}}"
+							],
+							"path": [
+								"inmobiliaria",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FindAll Inmobiliaria",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiBaseUrl}}/inmobiliaria/",
+							"host": [
+								"{{apiBaseUrl}}"
+							],
+							"path": [
+								"inmobiliaria",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FindOne Inmobiliaria",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiBaseUrl}}/inmobiliaria/3",
+							"host": [
+								"{{apiBaseUrl}}"
+							],
+							"path": [
+								"inmobiliaria",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteOne Inmobiliaria",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{apiBaseUrl}}/inmobiliaria/3",
+							"host": [
+								"{{apiBaseUrl}}"
+							],
+							"path": [
+								"inmobiliaria",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Interesado",
+			"item": [
+				{
+					"name": "findOne interesado",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiBaseUrl}}/interesado/4",
+							"host": [
+								"{{apiBaseUrl}}"
+							],
+							"path": [
+								"interesado",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FindAll Interesado",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiBaseUrl}}/interesado/",
+							"host": [
+								"{{apiBaseUrl}}"
+							],
+							"path": [
+								"interesado",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "InteresPorUnaVivienda",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{apiBaseUrl}}/vivienda/9/meInteresa/170",
+							"host": [
+								"{{apiBaseUrl}}"
+							],
+							"path": [
+								"vivienda",
+								"9",
+								"meInteresa",
+								"170"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Vivienda existente Interesado nuevo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\":\"Pepito\",\r\n    \"apellidos\":\"Perez\",\r\n    \"direccion\":\"C/ Nunca jamas\",\r\n    \"email\":\"PepitoPerez@gmail.com\",\r\n    \"telefono\":\"654737289\",\r\n    \"avatar\":\"assets/usuarios/u8.jpg\",\r\n    \"mensaje\":\"Esta casa literalmente es la casa de mis sueños\",\r\n    \"viviendaId\":\"1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiBaseUrl}}/vivienda/1/meinteresa",
+							"host": [
+								"{{apiBaseUrl}}"
+							],
+							"path": [
+								"vivienda",
+								"1",
+								"meinteresa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Vivienda existente Interesado existente",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mensaje\":\"No se como esta casa no esta ya en manos de alguien me interesa\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiBaseUrl}}/vivienda/1/meinteresa/23",
+							"host": [
+								"{{apiBaseUrl}}"
+							],
+							"path": [
+								"vivienda",
+								"1",
+								"meinteresa",
+								"23"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "apiBaseUrl",
+			"value": "localhost:8080"
+		}
+	]
+}

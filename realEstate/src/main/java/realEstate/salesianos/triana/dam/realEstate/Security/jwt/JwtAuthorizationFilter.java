@@ -27,7 +27,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     private final UsuarioService userService;
     private final JwtTokenProvider jwtProvider;
 
-    private String getJwtFromRequest(HttpServletRequest request) {
+    public String getJwtFromRequest(HttpServletRequest request) {
         String bearerToken = request.getHeader(JwtTokenProvider.TOKEN_HEADER);
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(JwtTokenProvider.TOKEN_PREFIX)) {
             return bearerToken.substring(JwtTokenProvider.TOKEN_PREFIX.length());

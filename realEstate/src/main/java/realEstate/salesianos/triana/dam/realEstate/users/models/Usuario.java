@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,10 +26,15 @@ import java.util.List;
 @EntityListeners(AuditingEntityListener.class)
 @Builder
 public class Usuario  implements UserDetails{
-
-    @Id
+    /*
+    @Id(GenerationType.IDENTITY)
     @GeneratedValue
     private Long id;
+     */
+
+    @Id
+    private UUID id;
+
 
     @NaturalId
     @Column(unique = true, updatable = false)
@@ -112,6 +118,10 @@ public class Usuario  implements UserDetails{
     @PreRemove
     public void nullearPropietarioDeViviendas(){
         viviendas.forEach(vivienda -> vivienda.setPropietario(null));
+    }
+
+    public Usuario() {
+        id = UUID.randomUUID();
     }
 
 

@@ -15,6 +15,7 @@ import realEstate.salesianos.triana.dam.realEstate.users.models.Usuario;
 import realEstate.salesianos.triana.dam.realEstate.users.repositories.UsuarioRepository;
 
 import javax.management.relation.RoleNotFoundException;
+import java.util.Optional;
 
 
 @Service
@@ -30,9 +31,15 @@ public class UsuarioService extends BaseService<Usuario, Long, UsuarioRepository
                 .orElseThrow(()-> new UsernameNotFoundException(email + " no encontrado"));
     }
 
-    public Page<Usuario> loadUserByRol(UserRole rol , Pageable pageable)  {
+    public Page<Usuario> loadUserByRol(UserRole rol , Pageable pageable) throws UsernameNotFoundException {
         return this.repositorio.findByRol(rol, pageable);
     }
+
+    public Optional<Usuario> loadUserById(Long id) throws UsernameNotFoundException{
+        return this.repositorio.findById(id);
+    }
+
+
 
     public Usuario savePropietario(CreatedUserDto newUser) {
         if (newUser.getPassword().contentEquals(newUser.getPassword2())) {

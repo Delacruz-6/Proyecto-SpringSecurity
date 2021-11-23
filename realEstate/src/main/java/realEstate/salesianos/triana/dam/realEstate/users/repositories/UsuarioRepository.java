@@ -19,6 +19,11 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     @Query (value = "SELECT u.* FROM usuario u WHERE u.rol:rol;", nativeQuery=true)
     List<Usuario> userByRol(String rol);
-    
+
+    Optional<Usuario> findById(Long id);
+    //Optional<Usuario> findByIdByRol(Long id, UserRole rol);
+    //Optional<Usuario> findByIdNotNull(Long id);
+
+
 
 }

@@ -12,6 +12,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+import realEstate.salesianos.triana.dam.realEstate.Security.jwt.JwtAuthorizationFilter;
+import realEstate.salesianos.triana.dam.realEstate.Security.jwt.JwtTokenProvider;
 import realEstate.salesianos.triana.dam.realEstate.dtos.GetPropietarioConViviendasDto;
 import realEstate.salesianos.triana.dam.realEstate.dtos.GetPropietarioDto;
 import realEstate.salesianos.triana.dam.realEstate.dtos.PropietarioDtoConverter;
@@ -22,7 +24,9 @@ import realEstate.salesianos.triana.dam.realEstate.users.services.UsuarioService
 import realEstate.salesianos.triana.dam.realEstate.util.PaginationLinksUtil;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/propietario")
@@ -35,6 +39,8 @@ public class PropietarioController {
     private final PropietarioDtoConverter dtoConverter;
     private final UsuarioRepository repository;
     private final PaginationLinksUtil paginationLinksUtil;
+    private final JwtAuthorizationFilter jwtAuthorizationFilter;
+    private final JwtTokenProvider jwtProvider;
 
 
     @Operation(summary = "Listar todos los propietarios existentes.")
@@ -77,9 +83,22 @@ public class PropietarioController {
                     description = "No se ha encontrado el propietario.",
                     content = @Content),
     })
+
     @GetMapping("/{id}")
-    public ResponseEntity<GetPropietarioConViviendasDto> findOne(@PathVariable Long id) {
-        return ResponseEntity.of(propietarioService.findById(id).map(dtoConverter::convertPropietarioToGetPropietarioConViviendasDto));
+    public ResponseEntity<List<GetPropietarioConViviendasDto>> findOnePropietario(@PathVariable Long id, HttpServletRequest request) {
+        Optional<Usuario> propietario = propietarioService.loadUserById(id);
+
+        String token = jwtAuthorizationFilter.getJwtFromRequest(request);
+        Long idPropietario = jwtProvider.getUserIdFromJwt(token);
+
+        if(propietario.get().getRol().equals(UserRole.ADMIN) || propietario.get().getRol().equals(idPropietario)){
+            List<GetPropietarioConViviendasDto> propietarioDto = propietario.stream()
+                    .map(dtoConverter::convertPropietarioToGetPropietarioConViviendasDto)
+                    .collect(Collectors.toList());
+            return ResponseEntity.ok().body(propietarioDto);
+        }else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @Operation(summary = "Eliminamos un propietario por su id.")
@@ -93,12 +112,13 @@ public class PropietarioController {
                     content = @Content),
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
-        Optional<Usuario> propietario = propietarioService.findById(id);
-        Usuario p1 = propietario.get();
-
-        if (!propietario.isEmpty()) {
-            p1.nullearPropietarioDeViviendas();
+    public ResponseEntity<?> delete(@PathVariable Long id, HttpServletRequest request) {
+        Optional<Usuario> propietarioOptional = propietarioService.loadUserById(id);
+        String token = jwtAuthorizationFilter.getJwtFromRequest(request);
+        Long idPropietario = jwtProvider.getUserIdFromJwt(token);
+        Usuario propietario = propietarioOptional.get();
+        if (propietarioOptional.isPresent() && (propietario.getRol().equals(UserRole.ADMIN) || propietario.getRol().equals(idPropietario))) {
+            propietario.nullearPropietarioDeViviendas();
             repository.deleteById(id);
         }
         return ResponseEntity.noContent().build();

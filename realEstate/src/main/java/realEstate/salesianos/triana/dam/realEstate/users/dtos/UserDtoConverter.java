@@ -9,12 +9,11 @@ public class UserDtoConverter {
     public GetUserDto convertUserEntityToGetUserDto(Usuario user) {
         return GetUserDto.builder()
                 .avatar(user.getAvatar())
-                .fullName(user.getNombre())
+                .userName(user.getNombre())
                 .email(user.getEmail())
                 .direccion(user.getDireccion())
                 .telefono(user.getTelefono())
                 .rol(user.getRol().name())
                 .build();
-
     }
 }

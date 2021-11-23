@@ -15,6 +15,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import realEstate.salesianos.triana.dam.realEstate.dtos.GetPropietarioConViviendasDto;
 import realEstate.salesianos.triana.dam.realEstate.dtos.GetPropietarioDto;
 import realEstate.salesianos.triana.dam.realEstate.dtos.PropietarioDtoConverter;
+import realEstate.salesianos.triana.dam.realEstate.users.models.UserRole;
 import realEstate.salesianos.triana.dam.realEstate.users.models.Usuario;
 import realEstate.salesianos.triana.dam.realEstate.users.repositories.UsuarioRepository;
 import realEstate.salesianos.triana.dam.realEstate.users.services.UsuarioService;
@@ -28,6 +29,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PropietarioController {
 
+    //private static UserRole rol;
+    //private static final UserRole PROPIETARIO = rol ;
     private final UsuarioService propietarioService;
     private final PropietarioDtoConverter dtoConverter;
     private final UsuarioRepository repository;
@@ -49,7 +52,10 @@ public class PropietarioController {
             @PageableDefault(size = 10, page = 0) Pageable pageable,
             HttpServletRequest request) {
 
-        Page<Usuario> data = propietarioService.findAll(pageable);
+        //UserRole rol = PROPIETARIO ;
+
+        Page<Usuario> data = propietarioService.loadUserByRol(UserRole.PROPIETARIO,pageable);
+        //Page<Usuario> data = propietarioService.findAll(pageable);
 
         if(data.isEmpty()){
             return ResponseEntity.notFound().build();

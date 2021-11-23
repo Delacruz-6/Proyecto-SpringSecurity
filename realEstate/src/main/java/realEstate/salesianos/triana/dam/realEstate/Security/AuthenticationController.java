@@ -48,6 +48,8 @@ public class AuthenticationController {
                 .email(user.getEmail())
                 .avatar(user.getAvatar())
                 .rol(user.getRol().name())
+                .direccion(user.getDireccion())
+                .telefono(user.getTelefono())
                 .token(jwt)
                 .build();
     }

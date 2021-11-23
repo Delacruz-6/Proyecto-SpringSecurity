@@ -11,7 +11,7 @@ public class GetUserDto {
 
     private String email;
     private String rol;
-    private String fullName;
+    private String userName;
     private String direccion;
     private Integer telefono;
     private String avatar;

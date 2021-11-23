@@ -26,7 +26,7 @@ public class JwtTokenProvider {
     @Value("${jwt.secret:luismielmaquinaskjdfhdjfhjdghjgfjgnfgfngfgn}")
     private String jwtSecret;
 
-    @Value ("${jwt.duration:3600}") // 1 hora
+    @Value ("${jwt.duration:86400}") // 1 hora
     private int jwtLifeInSeconds;
 
     /*

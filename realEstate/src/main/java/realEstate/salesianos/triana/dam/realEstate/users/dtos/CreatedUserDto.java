@@ -11,7 +11,10 @@ public class CreatedUserDto {
 
     private String username;
     private String avatar;
-    private String fullname;
+    private String nombre;
+    private String apellidos;
+    private String direccion;
+    private Integer telefono;
     private String email;
     private String password;
     private String password2;

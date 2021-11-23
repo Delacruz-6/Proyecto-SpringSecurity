@@ -31,8 +31,10 @@ public class UsuarioService extends BaseService<Usuario, Long, UsuarioRepository
             Usuario usuario = Usuario.builder()
                     .password(passwordEncoder.encode(newUser.getPassword()))
                     .avatar(newUser.getAvatar())
-                    .nombre(newUser.getFullname())
+                    .nombre(String.format("%s, %s", newUser.getApellidos(), newUser.getNombre()))
                     .email(newUser.getEmail())
+                    .direccion(newUser.getDireccion())
+                    .telefono(newUser.getTelefono())
                     .rol(UserRole.PROPIETARIO)
                     .build();
             return save(usuario);
@@ -46,8 +48,10 @@ public class UsuarioService extends BaseService<Usuario, Long, UsuarioRepository
             Usuario usuario = Usuario.builder()
                     .password(passwordEncoder.encode(newUser.getPassword()))
                     .avatar(newUser.getAvatar())
-                    .nombre(newUser.getFullname())
+                    .nombre(String.format("%s, %s", newUser.getApellidos(), newUser.getNombre()))
                     .email(newUser.getEmail())
+                    .direccion(newUser.getDireccion())
+                    .telefono(newUser.getTelefono())
                     .rol(UserRole.ADMIN)
                     .build();
             return save(usuario);
@@ -62,8 +66,10 @@ public class UsuarioService extends BaseService<Usuario, Long, UsuarioRepository
             Usuario usuario = Usuario.builder()
                     .password(passwordEncoder.encode(newUser.getPassword()))
                     .avatar(newUser.getAvatar())
-                    .nombre(newUser.getFullname())
+                    .nombre(String.format("%s, %s", newUser.getApellidos(), newUser.getNombre()))
                     .email(newUser.getEmail())
+                    .direccion(newUser.getDireccion())
+                    .telefono(newUser.getTelefono())
                     .rol(UserRole.GESTOR)
                     .build();
             return save(usuario);

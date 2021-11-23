@@ -76,7 +76,8 @@ public class Vivienda implements Serializable {
     @JoinColumn(name = "inmobiliaria_id", foreignKey = @ForeignKey(name = "FK_VIVIENDA_INMOBILIARIA"))
     private Inmobiliaria inmobiliaria;
 
-    @OneToMany(mappedBy = "viviendas")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id", foreignKey = @ForeignKey(name = "FK_VIVIENDA_USUARIO"))
     private Usuario propietario;
 
 

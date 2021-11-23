@@ -48,10 +48,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/auth/login**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST, "/auth/register/admin**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST, "/auth/register/gestor**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST, "/auth/register/user**").hasAnyRole("ADMIN","PROPIETARIO")
+                .antMatchers(HttpMethod.POST, "/auth/login**").anonymous()            /*.hasRole("ADMIN") */
+                .antMatchers(HttpMethod.POST, "/auth/register/admin**").anonymous()   /*.hasRole("ADMIN") */
+                .antMatchers(HttpMethod.POST, "/auth/register/gestor**").hasRole("ADMIN")  /*.hasRole("ADMIN") */
+                .antMatchers(HttpMethod.POST, "/auth/register/user**").anonymous()    /*.hasAnyRole("ADMIN","PROPIETARIO")  */
                 .antMatchers(HttpMethod.POST, "/auth/**").anonymous()
                 .anyRequest().authenticated();
 

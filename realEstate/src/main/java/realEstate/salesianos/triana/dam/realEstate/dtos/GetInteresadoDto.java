@@ -13,7 +13,8 @@ import lombok.experimental.SuperBuilder;
 public class GetInteresadoDto {
 
     private Long id;
-    private String nombre,apellidos,direccion,telefono,email,avatar;
+    private String nombre,apellidos,direccion,email,avatar;
+    private Integer telefono;
 
 
 }

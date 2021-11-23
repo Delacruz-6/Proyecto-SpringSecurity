@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Data @Builder
 @NoArgsConstructor @AllArgsConstructor
-public class GetInteresadoInteresaVivienda {
+public class GetPropietarioInteresaVivienda {
 
     private String mensaje;
 }

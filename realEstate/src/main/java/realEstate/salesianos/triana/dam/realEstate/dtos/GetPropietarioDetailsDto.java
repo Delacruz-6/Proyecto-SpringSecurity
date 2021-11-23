@@ -16,6 +16,6 @@ public class GetPropietarioDetailsDto {
     private String apellidos;
     private String direccion;
     private String email;
-    private String telefono;
+    private Integer telefono;
     private String avatar;
 }

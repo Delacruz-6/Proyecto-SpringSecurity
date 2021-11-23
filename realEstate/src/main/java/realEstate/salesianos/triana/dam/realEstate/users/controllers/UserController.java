@@ -25,21 +25,19 @@ public class UserController {
         return buildResponse(saved);
     }
 
-    @PreAuthorize ("hasRole('ADMIN')")
+    //@PreAuthorize ("hasRole('ADMIN')")
     @PostMapping ("/auth/register/admin")
     public ResponseEntity<GetUserDto> nuevoAdmin(@RequestBody CreatedUserDto newUser) {
         Usuario saved = usuarioService.saveAdmin(newUser);
         return buildResponse(saved);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     @PostMapping ("/auth/register/gestor")
     public ResponseEntity<GetUserDto> nuevoGestor(@RequestBody CreatedUserDto newUser) {
         Usuario saved = usuarioService.saveGestor(newUser);
         return buildResponse(saved);
     }
-
-
 
 
     private ResponseEntity<GetUserDto> buildResponse (Usuario data){

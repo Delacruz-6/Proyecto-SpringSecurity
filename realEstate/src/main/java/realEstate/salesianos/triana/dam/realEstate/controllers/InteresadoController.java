@@ -19,7 +19,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 import realEstate.salesianos.triana.dam.realEstate.dtos.GetInteresadoDto;
 import realEstate.salesianos.triana.dam.realEstate.dtos.GetInteresadoDto2;
 import realEstate.salesianos.triana.dam.realEstate.dtos.InteresadoDtoConverter;
-import realEstate.salesianos.triana.dam.realEstate.services.InteresadoService;
+import realEstate.salesianos.triana.dam.realEstate.users.models.Usuario;
+import realEstate.salesianos.triana.dam.realEstate.users.services.UsuarioService;
 import realEstate.salesianos.triana.dam.realEstate.util.PaginationLinksUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,7 +35,8 @@ import java.util.stream.Collectors;
 public class InteresadoController {
 
     private final PaginationLinksUtil paginationLinksUtil;
-    private final InteresadoService iService;
+    //private final InteresadoService iService;
+    private final UsuarioService usuarioService;
     private final InteresadoDtoConverter interesadoDtoConverter;
 
     @Operation(summary = "Listar todos los interesados existentes.")
@@ -42,7 +44,7 @@ public class InteresadoController {
             @ApiResponse(responseCode = "200",
                     description = "Se listan todos los interesados",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Interesado.class))}),
+                            schema = @Schema(implementation = Usuario.class))}),
             @ApiResponse(responseCode = "404",
                     description = "No se ha encontrado ningun interesado.",
                     content = @Content),
@@ -51,7 +53,7 @@ public class InteresadoController {
     @GetMapping("/")
     public ResponseEntity<?> findAll(@PageableDefault(size = 10, page = 0) Pageable pageable,
                                      HttpServletRequest request) {
-        Page<Interesado> data = iService.findAll(pageable);
+        Page<Usuario> data = usuarioService.findAll(pageable);
 
         if(data.isEmpty()){
             return ResponseEntity.notFound().build();
@@ -68,7 +70,7 @@ public class InteresadoController {
             @ApiResponse(responseCode = "200",
                     description = "Se ven todos los atributos de un interesado con éxito",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Interesado.class))}),
+                            schema = @Schema(implementation = Usuario.class))}),
             @ApiResponse(responseCode = "404",
                     description = "No se ha encontrado ningun interesado con ese identificador",
                     content = @Content),
@@ -76,7 +78,7 @@ public class InteresadoController {
     @GetMapping("/{id}")
     public ResponseEntity<List<GetInteresadoDto>> findOne (@PathVariable("id") Long id){
 
-        Optional<Interesado> interesadoOptional = iService.findById(id);
+        Optional<Usuario> interesadoOptional = usuarioService.findById(id);
 
         if(interesadoOptional.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

@@ -11,7 +11,8 @@ import java.util.Date;
 @AllArgsConstructor @NoArgsConstructor
 public class GetInteresadoInteresaDto{
 
-    private String nombre,apellidos,direccion,telefono,email,avatar;
+    private String nombre,apellidos,direccion,email,avatar;
+    private Integer telefono;
     private String mensaje;
 
 

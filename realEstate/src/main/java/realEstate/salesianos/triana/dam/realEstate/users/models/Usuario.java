@@ -59,9 +59,24 @@ public class Usuario  implements UserDetails{
     @ManyToOne
     private Inmobiliaria inmobiliaria;
 
-    @OneToMany(mappedBy = "usuario")
+    @Builder.Default
+    @OneToMany(mappedBy = "propietario")
     private List<Vivienda> viviendas = new ArrayList<>();
 
+    public Usuario(String nombre, String apellidos) {
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+    }
+
+
+    public Usuario(String email, String avatar, String nombre, String apellidos, String direccion, Integer telefono) {
+        this.email = email;
+        this.avatar = avatar;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.direccion = direccion;
+        this.telefono = telefono;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -92,6 +107,13 @@ public class Usuario  implements UserDetails{
     public boolean isEnabled() {
         return true;
     }
+
+    //HELPERS
+    @PreRemove
+    public void nullearPropietarioDeViviendas(){
+        viviendas.forEach(vivienda -> vivienda.setPropietario(null));
+    }
+
 
 
 

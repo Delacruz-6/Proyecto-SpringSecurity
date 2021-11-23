@@ -18,7 +18,7 @@ public class GetPropietarioConViviendasDto extends GetPropietarioDetailsDto{
    // @Builder.Default
     private List<GetViviendaSinPropietarioDto> viviendas = new ArrayList<>();
 
-    public GetPropietarioConViviendasDto(Long id, String nombre, String apellidos, String direccion, String email, String telefono, String avatar, List<GetViviendaSinPropietarioDto> viviendas) {
+    public GetPropietarioConViviendasDto(Long id, String nombre, String apellidos, String direccion, String email, Integer telefono, String avatar, List<GetViviendaSinPropietarioDto> viviendas) {
         super(id, nombre, apellidos, direccion, email, telefono, avatar);
         this.viviendas = viviendas;
     }

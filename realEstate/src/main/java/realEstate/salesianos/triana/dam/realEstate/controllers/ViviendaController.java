@@ -47,7 +47,7 @@ public class ViviendaController {
       private final PaginationLinksUtil paginationLinksUtil;
       private final UsuarioService usuarioService;
       private final InteresaService interesaService;
-      private final InteresadoDtoConverter interesadoDtoConverter;
+      private final InteresadoDtoConverter propietarioDtoConverter;
 
 
     @Operation(summary = "Se crea una vivienda y si el propietario no existe, también lo crea")
@@ -226,7 +226,7 @@ public class ViviendaController {
             content = @Content),
     })
     @PostMapping("/{id}/meinteresa/{id2}")
-    public ResponseEntity<GetInteresadoInteresaVivienda> createInteresadoExistente(@PathVariable Long id, @PathVariable Long id2,
+    public ResponseEntity<GetPropietarioInteresaVivienda> createInteresadoExistente(@PathVariable Long id, @PathVariable Long id2,
                                                                                    @RequestBody CreateInteresadoInteresaVivienda g){
 
         Optional<Vivienda> vivOp = viviendaService.findById(id);
@@ -244,7 +244,7 @@ public class ViviendaController {
             interesa.addToVivienda(v);
             usuarioService.save(i);
             interesaService.save(interesa);
-            GetInteresadoInteresaVivienda interesadoInteresaVivienda = interesadoDtoConverter.interesadoToGetInteresadoInteresaVivienda(interesa);
+            GetPropietarioInteresaVivienda interesadoInteresaVivienda = propietarioDtoConverter.interesadoToGetInteresadoInteresaVivienda(interesa);
             return ResponseEntity.status(HttpStatus.CREATED).body(interesadoInteresaVivienda);
         }
 

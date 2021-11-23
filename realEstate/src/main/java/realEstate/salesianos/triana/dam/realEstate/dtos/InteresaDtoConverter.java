@@ -12,11 +12,11 @@ public class InteresaDtoConverter {
 
         GetInteresaDto result = new GetInteresaDto();
 
-        result.setInteresado_id(i.getInteresado().getId());
+        result.setInteresado_id(i.getUsuario().getId());
         result.setVivienda_id(i.getVivienda().getId());
         result.setCreatedDate(i.getCreatedDate());
         result.setMensaje(i.getMensaje());
-        result.setInteresadoDto(interesadoDtoConverter.interesadoToGetInteresadoDto(i.getInteresado()));
+        result.setInteresadoDto(interesadoDtoConverter.interesadoToGetInteresadoDto(i.getUsuario()));
 
         return result;
     }

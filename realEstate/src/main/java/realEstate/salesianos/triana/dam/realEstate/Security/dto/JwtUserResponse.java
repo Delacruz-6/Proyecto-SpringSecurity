@@ -12,5 +12,7 @@ public class JwtUserResponse {
     private String avatar;
     private String rol;
     private String token;
+    private String direccion;
+    private Integer telefono;
 
 }

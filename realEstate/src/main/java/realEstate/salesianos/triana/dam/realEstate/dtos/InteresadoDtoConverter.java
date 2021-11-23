@@ -2,21 +2,22 @@ package realEstate.salesianos.triana.dam.realEstate.dtos;
 
 import org.springframework.stereotype.Component;
 import realEstate.salesianos.triana.dam.realEstate.models.Interesa;
+import realEstate.salesianos.triana.dam.realEstate.users.models.Usuario;
 
 @Component
 public class InteresadoDtoConverter {
-    public Interesado createInteresadoDtoToInteresado(CreateInteresadoInteresaDto c){
-        return new Interesado(
+    public Usuario createInteresadoDtoToInteresado(CreateInteresadoInteresaDto c){
+        return new Usuario(
                 c.getNombre(),
                 c.getApellidos(),
                 c.getDireccion(),
                 c.getEmail(),
-                c.getTelefono(),
-                c.getAvatar()
+                c.getAvatar(),
+                c.getTelefono()
         );
     }
 
-    public GetInteresadoDto interesadoToGetInteresadoDto(Interesado i){
+    public GetInteresadoDto interesadoToGetInteresadoDto(Usuario i){
         GetInteresadoDto result = new GetInteresadoDto();
         result.setId(i.getId());
         result.setNombre(i.getNombre());
@@ -28,7 +29,7 @@ public class InteresadoDtoConverter {
         return result;
     }
 
-    public GetInteresadoDto2 interesadoToGetInteresadoDto2(Interesado i){
+    public GetInteresadoDto2 interesadoToGetInteresadoDto2(Usuario i){
         GetInteresadoDto2 result = new GetInteresadoDto2();
         result.setId(i.getId());
         result.setNombre(i.getNombre());
@@ -36,7 +37,7 @@ public class InteresadoDtoConverter {
         result.setAvatar(i.getAvatar());
         return result;
     }
-    public GetInteresadoInteresaDto interesadoToGetInteresadoInteresaDto(Interesado i, Interesa in){
+    public GetInteresadoInteresaDto interesadoToGetInteresadoInteresaDto(Usuario i, Interesa in){
         return GetInteresadoInteresaDto.builder()
                 .nombre(i.getNombre())
                 .apellidos(i.getApellidos())
@@ -47,10 +48,11 @@ public class InteresadoDtoConverter {
                 .mensaje(in.getMensaje())
                 .build();
     }
-    public GetInteresadoInteresaVivienda interesadoToGetInteresadoInteresaVivienda(Interesa in){
-        return GetInteresadoInteresaVivienda.builder()
+    public GetPropietarioInteresaVivienda interesadoToGetInteresadoInteresaVivienda(Interesa in){
+        return GetPropietarioInteresaVivienda.builder()
                 .mensaje(in.getMensaje())
                 .build();
     }
+
 }
 

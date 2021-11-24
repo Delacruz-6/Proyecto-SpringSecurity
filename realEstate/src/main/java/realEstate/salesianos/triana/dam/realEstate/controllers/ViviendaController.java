@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -63,10 +64,28 @@ public class ViviendaController {
                     content = @Content)
     })
     @PostMapping("/")
-    public ResponseEntity<Vivienda> createVivienda(@RequestBody Vivienda vivienda) {
+    public ResponseEntity<Vivienda> createVivienda(@RequestBody Vivienda vivienda, @AuthenticationPrincipal Usuario usuario) {
+        /*
         Optional<Usuario> usuarioOptional = usuarioService.loadUserById(vivienda.getPropietario().getId(),UserRole.PROPIETARIO);
         if (usuarioOptional.isEmpty()) {
+            usuarioService.save(vivienda.getPropietario());}
+         */
+        /*
+        if (usuarioService.findById(vivienda.getPropietario().getId()).isEmpty()) {
             usuarioService.save(vivienda.getPropietario());
+        }else
+         */
+            if(!usuario.getRol().equals(UserRole.PROPIETARIO)){
+            return new ResponseEntity<Vivienda>(HttpStatus.UNAUTHORIZED);
+        }else{
+                /*
+                Optional<Usuario> propietario = usuarioService.findById(usuario.getId());
+                Optional<GetPropietarioConViviendasDto> propietarioDtoOptional = propietario
+                        .map(dtoConverter::convertPropietarioToGetPropietarioConViviendasDto);
+                GetPropietarioConViviendasDto propietarioDto = propietarioDtoOptional.get();
+            vivienda.setPropietario(propietarioDto);
+                 */
+            vivienda.setPropietario(usuario);
         }
         return ResponseEntity
                 .status(HttpStatus.CREATED)

@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -36,14 +37,11 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PropietarioController {
 
-    //private static UserRole adminRol;
-    //private static final UserRole ADMIN = adminRol ;
     private final UsuarioService propietarioService;
     private final PropietarioDtoConverter dtoConverter;
     private final UsuarioRepository repository;
     private final PaginationLinksUtil paginationLinksUtil;
-    private final JwtAuthorizationFilter jwtAuthorizationFilter;
-    private final JwtTokenProvider jwtProvider;
+
 
 
 
@@ -99,7 +97,7 @@ public class PropietarioController {
 
 
         }else {
-            return ResponseEntity.notFound().build();
+            return new ResponseEntity<List<?>>(HttpStatus.UNAUTHORIZED);
         }
     }
 
@@ -128,6 +126,6 @@ public class PropietarioController {
             propietario.nullearPropietarioDeViviendas();
             repository.deleteById(id);
         }
-        return ResponseEntity.noContent().build();
+        return new ResponseEntity<List<?>>(HttpStatus.UNAUTHORIZED);
     }
 }

@@ -11,14 +11,13 @@ import org.springframework.stereotype.Service;
 import realEstate.salesianos.triana.dam.realEstate.models.Inmobiliaria;
 import realEstate.salesianos.triana.dam.realEstate.services.InmobiliariaService;
 import realEstate.salesianos.triana.dam.realEstate.services.base.BaseService;
-import realEstate.salesianos.triana.dam.realEstate.users.dtos.CreatedUserDto;
+import realEstate.salesianos.triana.dam.realEstate.users.dtos.usuario.CreatedUserDto;
 import realEstate.salesianos.triana.dam.realEstate.users.dtos.gestor.CreatedGestorDto;
 import realEstate.salesianos.triana.dam.realEstate.users.models.UserRole;
 import realEstate.salesianos.triana.dam.realEstate.users.models.Usuario;
 import realEstate.salesianos.triana.dam.realEstate.users.repositories.UsuarioRepository;
 
 import java.util.Optional;
-import java.util.UUID;
 
 
 @Service
@@ -109,10 +108,12 @@ public class UsuarioService extends BaseService<Usuario, Long, UsuarioRepository
             Optional<Inmobiliaria> inmobiliaria = inmobiliariaService.findById(newUser.getIdInmobiliaria());
             if (inmobiliaria.isPresent()){
                 usuario.addInmobiliaria(inmobiliaria.get());
+            } else{
+                usuario.addInmobiliaria(null);
             }
-
              */
             return save(usuario);
+
         } else {
             return null;
         }

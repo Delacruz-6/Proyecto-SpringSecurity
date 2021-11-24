@@ -1,4 +1,4 @@
-package realEstate.salesianos.triana.dam.realEstate.users.dtos;
+package realEstate.salesianos.triana.dam.realEstate.users.dtos.usuario;
 
 import lombok.*;
 import realEstate.salesianos.triana.dam.realEstate.users.models.UserRole;

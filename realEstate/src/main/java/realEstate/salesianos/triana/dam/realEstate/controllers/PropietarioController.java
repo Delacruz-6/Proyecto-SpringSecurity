@@ -26,6 +26,7 @@ import realEstate.salesianos.triana.dam.realEstate.util.PaginationLinksUtil;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -58,10 +59,7 @@ public class PropietarioController {
             @PageableDefault(size = 10, page = 0) Pageable pageable,
             HttpServletRequest request) {
 
-        //UserRole rol = PROPIETARIO ;
-
         Page<Usuario> data = propietarioService.loadUserByRol(UserRole.PROPIETARIO,pageable);
-        //Page<Usuario> data = propietarioService.findAll(pageable);
 
         if(data.isEmpty()){
             return ResponseEntity.notFound().build();
@@ -85,13 +83,14 @@ public class PropietarioController {
     })
 
     @GetMapping("/{id}")
-    public ResponseEntity<List<GetPropietarioConViviendasDto>> findOnePropietario(@PathVariable Long id, HttpServletRequest request) {
-        Optional<Usuario> propietario = propietarioService.loadUserById(id);
+    public ResponseEntity<List<?>> findOnePropietario(@PathVariable Long id, HttpServletRequest request) {
+        Optional<Usuario> propietario = propietarioService.loadUserById(UserRole.PROPIETARIO,id);
 
         String token = jwtAuthorizationFilter.getJwtFromRequest(request);
         Long idPropietario = jwtProvider.getUserIdFromJwt(token);
+        Optional<Usuario> propietarioCreado = propietarioService.loadUserById(UserRole.PROPIETARIO,idPropietario);
 
-        if(propietario.get().getRol().equals(UserRole.ADMIN) || propietario.get().getRol().equals(idPropietario)){
+        if(propietario.get().getRol().equals(UserRole.ADMIN) || propietario.get().equals(propietarioCreado)){
             List<GetPropietarioConViviendasDto> propietarioDto = propietario.stream()
                     .map(dtoConverter::convertPropietarioToGetPropietarioConViviendasDto)
                     .collect(Collectors.toList());
@@ -113,11 +112,15 @@ public class PropietarioController {
     })
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id, HttpServletRequest request) {
-        Optional<Usuario> propietarioOptional = propietarioService.loadUserById(id);
+        Optional<Usuario> propietarioOptional = propietarioService.loadUserById(UserRole.PROPIETARIO,id);
         String token = jwtAuthorizationFilter.getJwtFromRequest(request);
         Long idPropietario = jwtProvider.getUserIdFromJwt(token);
         Usuario propietario = propietarioOptional.get();
-        if (propietarioOptional.isPresent() && (propietario.getRol().equals(UserRole.ADMIN) || propietario.getRol().equals(idPropietario))) {
+        if (propietarioOptional.isEmpty() && !propietario.getRol().equals(UserRole.ADMIN)
+                && !propietario.getRol().equals(idPropietario)) {
+            return ResponseEntity.notFound().build();
+        }
+        else{
             propietario.nullearPropietarioDeViviendas();
             repository.deleteById(id);
         }

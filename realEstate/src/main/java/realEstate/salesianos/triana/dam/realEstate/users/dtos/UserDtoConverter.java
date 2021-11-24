@@ -8,7 +8,7 @@ public class UserDtoConverter {
 
     public GetUserDto convertUserEntityToGetUserDto(Usuario user) {
         return GetUserDto.builder()
-                .avatar(user.getAvatar())
+                //.avatar(user.getAvatar())
                 .userName(user.getNombre())
                 .email(user.getEmail())
                 .direccion(user.getDireccion())

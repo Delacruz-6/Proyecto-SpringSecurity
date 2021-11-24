@@ -10,6 +10,7 @@ import realEstate.salesianos.triana.dam.realEstate.users.models.Usuario;
 import realEstate.salesianos.triana.dam.realEstate.users.services.UsuarioService;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class InteresaService extends BaseService<Interesa, Long, InteresaRepository> {
@@ -26,7 +27,7 @@ public class InteresaService extends BaseService<Interesa, Long, InteresaReposit
 
     //Este método sirve para eliminar el interes de un interesado por una vivienda, se borra así una
     //línea de la tabala Interesa.
-    public void eliminarInteresaPorPk(Long id1,Long id2){
+    public void eliminarInteresaPorPk(Long id1, Long id2){
 
         //Se consigue una instancia de los objetos con los que trabajaremos.
         Vivienda vivienda = viviendaService.findById(id1).get();

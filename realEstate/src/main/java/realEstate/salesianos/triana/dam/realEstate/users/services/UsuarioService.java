@@ -14,8 +14,8 @@ import realEstate.salesianos.triana.dam.realEstate.users.models.UserRole;
 import realEstate.salesianos.triana.dam.realEstate.users.models.Usuario;
 import realEstate.salesianos.triana.dam.realEstate.users.repositories.UsuarioRepository;
 
-import javax.management.relation.RoleNotFoundException;
 import java.util.Optional;
+import java.util.UUID;
 
 
 @Service
@@ -35,8 +35,8 @@ public class UsuarioService extends BaseService<Usuario, Long, UsuarioRepository
         return this.repositorio.findByRol(rol, pageable);
     }
 
-    public Optional<Usuario> loadUserById(Long id) throws UsernameNotFoundException{
-        return this.repositorio.findById(id);
+    public Optional<Usuario> loadUserById(UserRole rol , Long id) throws UsernameNotFoundException{
+        return this.repositorio.findByIdAndRol( id, rol);
     }
 
 
@@ -47,6 +47,7 @@ public class UsuarioService extends BaseService<Usuario, Long, UsuarioRepository
                     .password(passwordEncoder.encode(newUser.getPassword()))
                     .avatar(newUser.getAvatar())
                     .nombre(newUser.getNombre())
+                    .apellidos(newUser.getApellidos())
                     .email(newUser.getEmail())
                     .direccion(newUser.getDireccion())
                     .telefono(newUser.getTelefono())
@@ -63,7 +64,8 @@ public class UsuarioService extends BaseService<Usuario, Long, UsuarioRepository
             Usuario usuario = Usuario.builder()
                     .password(passwordEncoder.encode(newUser.getPassword()))
                     .avatar(newUser.getAvatar())
-                    .nombre(String.format("%s, %s", newUser.getApellidos(), newUser.getNombre()))
+                    .nombre(newUser.getNombre())
+                    .apellidos(newUser.getApellidos())
                     .email(newUser.getEmail())
                     .direccion(newUser.getDireccion())
                     .telefono(newUser.getTelefono())
@@ -81,7 +83,8 @@ public class UsuarioService extends BaseService<Usuario, Long, UsuarioRepository
             Usuario usuario = Usuario.builder()
                     .password(passwordEncoder.encode(newUser.getPassword()))
                     .avatar(newUser.getAvatar())
-                    .nombre(String.format("%s, %s", newUser.getApellidos(), newUser.getNombre()))
+                    .nombre(newUser.getNombre())
+                    .apellidos(newUser.getApellidos())
                     .email(newUser.getEmail())
                     .direccion(newUser.getDireccion())
                     .telefono(newUser.getTelefono())

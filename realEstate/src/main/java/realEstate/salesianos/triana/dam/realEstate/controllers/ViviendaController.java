@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import realEstate.salesianos.triana.dam.realEstate.repositories.ViviendaRepository;
 import realEstate.salesianos.triana.dam.realEstate.services.*;
+import realEstate.salesianos.triana.dam.realEstate.users.models.UserRole;
 import realEstate.salesianos.triana.dam.realEstate.users.models.Usuario;
 import realEstate.salesianos.triana.dam.realEstate.users.services.UsuarioService;
 import realEstate.salesianos.triana.dam.realEstate.util.PaginationLinksUtil;
@@ -33,6 +34,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -62,7 +64,8 @@ public class ViviendaController {
     })
     @PostMapping("/")
     public ResponseEntity<Vivienda> createVivienda(@RequestBody Vivienda vivienda) {
-        if (!usuarioService.findById(vivienda.getPropietario().getId()).isPresent()) {
+        Optional<Usuario> usuarioOptional = usuarioService.loadUserById(UserRole.PROPIETARIO,vivienda.getPropietario().getId());
+        if (usuarioOptional.isEmpty()) {
             usuarioService.save(vivienda.getPropietario());
         }
         return ResponseEntity
@@ -82,7 +85,7 @@ public class ViviendaController {
     @DeleteMapping("/{id}")
     @CrossOrigin
     public ResponseEntity<?> delete(@PathVariable Long id) {
-        if(viviendaService.findById(id).isEmpty()){
+        if(viviendaService.findById(id).isEmpty() && viviendaService.findPropietario(id).isEmpty()){
             return ResponseEntity.notFound().build();
         }else{
             viviendaService.findById(id).get().removeViviendasToIntereses();
@@ -107,7 +110,7 @@ public class ViviendaController {
 
         Optional<Vivienda> viviendaOptional=viviendaService.findById(id1);
 
-        if (viviendaOptional.isEmpty()){
+        if (viviendaOptional.isEmpty() && viviendaService.findPropietario(id1).isEmpty()){
             return ResponseEntity.notFound().build();
         }else{
             Vivienda vivienda = viviendaOptional.get();
@@ -141,7 +144,7 @@ public class ViviendaController {
             Pageable pageable, HttpServletRequest request) {
         Page<Vivienda> data = viviendaService.findByArgs(ciudad,precioMax,precioMin,provincia,tamanio,numHabs,tipo, pageable);
 
-        if (data.isEmpty()) {
+    if (data.isEmpty()) {
             return ResponseEntity.notFound().build();
         } else {
             Page<GetViviendaDto> result = data.map(viviendaDtoConverter::viviendaToGetViviendaDto);
@@ -338,12 +341,12 @@ public class ViviendaController {
     @Parameter(description = "ID de la Vivienda que desea buscar")
     @PathVariable Long id,
     @RequestBody CreateViviendaDto dto){
-
-        if(viviendaService.findById(id).isEmpty()){
+            Optional<Vivienda> viviendaOptional = viviendaService.findById(id);
+            Optional<Usuario> propietario = viviendaService.findPropietario(id);
+        if(viviendaOptional.isEmpty() && propietario.isEmpty()){
             return ResponseEntity.notFound().build();
-
     }else{
-            Vivienda vNueva = new Vivienda();
+            Vivienda vNueva;
             vNueva = viviendaDtoConverter.createViviendaDtoToVivienda(dto);
            viviendaService.edit(vNueva);
             return ResponseEntity.status(HttpStatus.CREATED).body(viviendaService.encontrarViviendaPorId(id).map(viviendaDtoConverter::viviendaToGetViviendaDetailDto));

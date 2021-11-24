@@ -13,6 +13,7 @@ import realEstate.salesianos.triana.dam.realEstate.models.Tipo;
 import realEstate.salesianos.triana.dam.realEstate.models.Vivienda;
 import realEstate.salesianos.triana.dam.realEstate.repositories.ViviendaRepository;
 import realEstate.salesianos.triana.dam.realEstate.services.base.BaseService;
+import realEstate.salesianos.triana.dam.realEstate.users.models.Usuario;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -24,6 +25,10 @@ import java.util.Optional;
 
 @Service
 public class ViviendaService extends BaseService<Vivienda,Long,ViviendaRepository> {
+
+    public Optional<Usuario> findPropietario (Long id){
+        return repositorio.findByPropietarioId(id);
+    }
 
     //Cuando se seleccione una vivienda para ver sus detalles se usará este método.
     @EntityGraph("grafo-vivienda-inmobiliaria-propietario")

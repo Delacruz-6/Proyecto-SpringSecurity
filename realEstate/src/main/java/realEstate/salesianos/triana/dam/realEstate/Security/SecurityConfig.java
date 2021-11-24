@@ -53,8 +53,33 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/auth/register/gestor**").hasRole("ADMIN")  /*.hasRole("ADMIN") */
                 .antMatchers(HttpMethod.POST, "/auth/register/user**").anonymous()    /*.hasAnyRole("ADMIN","PROPIETARIO")  */
                 .antMatchers(HttpMethod.POST, "/auth/**").anonymous()
-                .antMatchers(HttpMethod.POST, "/propietario**").hasRole("PROPIETARIO")
-                .antMatchers(HttpMethod.POST, "/propietario/").authenticated()
+
+                .antMatchers(HttpMethod.GET, "/propietario/").authenticated()
+                .antMatchers(HttpMethod.GET, "/propietario/{id}").hasAnyRole("ADMIN","PROPIETARIO")
+                .antMatchers(HttpMethod.DELETE, "/propietario/{id}").hasAnyRole("ADMIN","PROPIETARIO")
+
+                .antMatchers(HttpMethod.POST, "/vivienda/").hasRole("PROPIETARIO")
+                .antMatchers(HttpMethod.GET, "/vivienda/").authenticated()
+                .antMatchers(HttpMethod.GET, "/vivienda/{id}").authenticated()
+                .antMatchers(HttpMethod.DELETE, "/vivienda/{id}").hasAnyRole("ADMIN","PROPIETARIO")
+                .antMatchers(HttpMethod.PUT, "/vivienda/{id}").hasAnyRole("ADMIN","PROPIETARIO")
+                .antMatchers(HttpMethod.DELETE, "/vivienda/{id}/inmobiliaria").hasAnyRole("ADMIN","GESTOR")
+                .antMatchers(HttpMethod.POST, "/vivienda/{id}/inmobiliaria/{id2}").hasAnyRole("ADMIN","PROPIETARIO")
+
+                .antMatchers(HttpMethod.POST, "/inmobiliaria/").hasRole("GESTOR")
+                .antMatchers(HttpMethod.POST, "/inmobiliaria/{id}/gestor").hasAnyRole("ADMIN","GESTOR")
+                .antMatchers(HttpMethod.DELETE, "/inmobiliaria/gestor/{id}").hasAnyRole("ADMIN","GESTOR")
+                .antMatchers(HttpMethod.GET, "/inmobiliaria/gestor").hasAnyRole("ADMIN","GESTOR")
+                .antMatchers(HttpMethod.GET, "/inmobiliaria/").authenticated()
+                .antMatchers(HttpMethod.GET, "/inmobiliaria/{id}").authenticated()
+                .antMatchers(HttpMethod.DELETE, "/inmobiliaria/{id}").hasRole("ADMIN")
+
+                .antMatchers(HttpMethod.POST, "/vivienda/{id}/meinteresa").hasRole("PROPIETARIO")
+                .antMatchers(HttpMethod.DELETE, "/inmobiliaria/{id}/meinteresa").hasAnyRole("ADMIN","PROPIETARIO")
+                .antMatchers(HttpMethod.GET, "/interesado").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/interesado/{id}").hasAnyRole("ADMIN","PROPIETARIO")
+                .antMatchers(HttpMethod.GET, "/top").authenticated()
+
                 .anyRequest().authenticated();
 
         http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);

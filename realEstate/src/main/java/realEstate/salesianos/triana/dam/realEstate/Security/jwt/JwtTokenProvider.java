@@ -26,11 +26,10 @@ public class JwtTokenProvider {
     @Value("${jwt.secret:luismielmaquinaskjdfhdjfhjdghjgfjgnfgfngfgn}")
     private String jwtSecret;
 
-    @Value ("${jwt.duration:86400}") // 1 hora
+    @Value ("${jwt.duration:86400}") // 1 dia
     private int jwtLifeInSeconds;
 
-    /*
-    --- NO FUNCIONA EL parserBuilder() ---
+
     private JwtParser parser;
     @PostConstruct
     public void init() {
@@ -38,7 +37,7 @@ public class JwtTokenProvider {
                 .setSigningKey(Keys.hmacShaKeyFor(jwtSecret.getBytes()))
                 .build();
     }
-    */
+
 
 
     public String generateToken(Authentication authentication) {
@@ -63,18 +62,21 @@ public class JwtTokenProvider {
     }
 
     public Long getUserIdFromJwt(String token) {
+        /*
         Claims claims = Jwts.parser()
                 .setSigningKey(Keys.hmacShaKeyFor(jwtSecret.getBytes()))
                 .parseClaimsJws(token)
                 .getBody();
         return Long.parseLong(claims.getSubject());
-        //return Long.valueOf(parser.parseClaimsJws(token).getBody().getSubject());
+
+         */
+        return Long.valueOf(parser.parseClaimsJws(token).getBody().getSubject());
     }
 
     public boolean validateToken(String token) {
         try {
-            Jwts.parser().setSigningKey(jwtSecret.getBytes()).parseClaimsJws(token);
-            //parser.parseClaimsJws(token);
+            //Jwts.parser().setSigningKey(jwtSecret.getBytes()).parseClaimsJws(token);
+            parser.parseClaimsJws(token);
             return true;
         } catch (SignatureException | MalformedJwtException | ExpiredJwtException | UnsupportedJwtException | IllegalArgumentException ex) {
             log.info("Error con el token: " + ex.getMessage());

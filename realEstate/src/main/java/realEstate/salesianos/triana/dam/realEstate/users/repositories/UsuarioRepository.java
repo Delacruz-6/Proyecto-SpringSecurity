@@ -9,6 +9,7 @@ import realEstate.salesianos.triana.dam.realEstate.users.models.Usuario;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
@@ -20,9 +21,11 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     @Query (value = "SELECT u.* FROM usuario u WHERE u.rol:rol;", nativeQuery=true)
     List<Usuario> userByRol(String rol);
 
-    Optional<Usuario> findById(Long id);
+    Optional<Usuario> findByIdAndRol(Long id, UserRole rol);
+    //Optional<Usuario> findByIdAndRol_PROPIETARIO(Long id);
     //Optional<Usuario> findByIdByRol(Long id, UserRole rol);
     //Optional<Usuario> findByIdNotNull(Long id);
+
 
 
 

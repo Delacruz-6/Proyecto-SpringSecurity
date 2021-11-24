@@ -29,8 +29,14 @@ public class PropietarioDtoConverter {
     }
 
     public GetPropietarioConViviendasDto convertPropietarioToGetPropietarioConViviendasDto(Usuario p){
-        GetPropietarioConViviendasDto dto= new GetPropietarioConViviendasDto(p.getId(), p.getNombre(), p.getApellidos(), p.getDireccion(), p.getEmail(), p.getTelefono(), p.getAvatar(), p.getViviendas().stream().map(this::convertViviendaToGetViviendaSinPropietarioDto).collect(Collectors.toList()));
+        GetPropietarioConViviendasDto dto= new GetPropietarioConViviendasDto(
+                p.getId(), p.getNombre(),
+                p.getApellidos(), p.getDireccion(),
+                p.getEmail(), p.getTelefono(),
+                p.getAvatar(),
+                p.getViviendas().stream().map(this::convertViviendaToGetViviendaSinPropietarioDto).collect(Collectors.toList()));
     return dto;
+
     }
 
     public GetViviendaSinPropietarioDto convertViviendaToGetViviendaSinPropietarioDto(Vivienda v){

@@ -18,22 +18,23 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
-@AllArgsConstructor
-@NoArgsConstructor
+@AllArgsConstructor @NoArgsConstructor
 @Getter @Setter
 @Entity
 @Table(name = "users")
 @EntityListeners(AuditingEntityListener.class)
 @Builder
 public class Usuario  implements UserDetails{
-    /*
-    @Id(GenerationType.IDENTITY)
-    @GeneratedValue
-    private Long id;
-     */
 
     @Id
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    /*
+        @Id
+    private UUID id = UUID.randomUUID();
+     */
+
 
 
     @NaturalId
@@ -120,9 +121,11 @@ public class Usuario  implements UserDetails{
         viviendas.forEach(vivienda -> vivienda.setPropietario(null));
     }
 
+    /*
     public Usuario() {
         id = UUID.randomUUID();
     }
+     */
 
 
 

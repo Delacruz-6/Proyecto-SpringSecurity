@@ -14,7 +14,7 @@ public class GetUserDto {
     private String userName;
     private String direccion;
     private Integer telefono;
-    private String avatar;
+
 
 
 }

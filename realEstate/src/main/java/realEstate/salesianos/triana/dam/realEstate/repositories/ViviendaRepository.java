@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import realEstate.salesianos.triana.dam.realEstate.dtos.GetViviendaDto;
 import realEstate.salesianos.triana.dam.realEstate.models.Vivienda;
+import realEstate.salesianos.triana.dam.realEstate.users.models.Usuario;
 
 import javax.swing.text.html.Option;
 import java.util.List;
@@ -33,5 +34,13 @@ public interface ViviendaRepository extends JpaRepository<Vivienda,Long>, JpaSpe
             """, nativeQuery = true)
     List<Vivienda> findAllTopViviendas (@Param("limit") int limit);
 
+    @Query (value = """
+            SELECT v.* 
+            FROM VIVIENDA v JOIN USUARIO p ON (v.PROPIETARIO.ID = p.ID)
+            WHERE v.PROPIETARIO.ID=p.ID
+            AND v.ID=id
+            GROUP BY v.ID
+            """, nativeQuery=true)
+    Optional<Usuario> findByPropietarioId(Long id);
     //List<Vivienda> findTop10ByOrderByInteresesDesc();
 }

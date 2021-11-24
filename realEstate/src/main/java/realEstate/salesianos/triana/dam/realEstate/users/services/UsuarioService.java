@@ -35,9 +35,20 @@ public class UsuarioService extends BaseService<Usuario, Long, UsuarioRepository
         return this.repositorio.findByRol(rol, pageable);
     }
 
-    public Optional<Usuario> loadUserById(UserRole rol , Long id) throws UsernameNotFoundException{
+    public UserRole loadUserByRolB(UserRole rol ) throws UsernameNotFoundException {
+        return this.repositorio.findByRol(rol);
+    }
+
+    public Optional<Usuario> loadUserById(Long id,UserRole rol ) throws UsernameNotFoundException{
         return this.repositorio.findByIdAndRol( id, rol);
     }
+
+
+
+    public Optional<Usuario> loadUserById2(Long id ) throws UsernameNotFoundException{
+        return this.repositorio.findById(id);
+    }
+
 
 
 

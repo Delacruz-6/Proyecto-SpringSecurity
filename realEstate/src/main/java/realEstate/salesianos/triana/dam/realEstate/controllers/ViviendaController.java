@@ -64,7 +64,7 @@ public class ViviendaController {
     })
     @PostMapping("/")
     public ResponseEntity<Vivienda> createVivienda(@RequestBody Vivienda vivienda) {
-        Optional<Usuario> usuarioOptional = usuarioService.loadUserById(UserRole.PROPIETARIO,vivienda.getPropietario().getId());
+        Optional<Usuario> usuarioOptional = usuarioService.loadUserById(vivienda.getPropietario().getId(),UserRole.PROPIETARIO);
         if (usuarioOptional.isEmpty()) {
             usuarioService.save(vivienda.getPropietario());
         }

@@ -10,8 +10,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+import realEstate.salesianos.triana.dam.realEstate.Security.dto.JwtUserResponse;
 import realEstate.salesianos.triana.dam.realEstate.Security.jwt.JwtAuthorizationFilter;
 import realEstate.salesianos.triana.dam.realEstate.Security.jwt.JwtTokenProvider;
 import realEstate.salesianos.triana.dam.realEstate.dtos.GetPropietarioConViviendasDto;
@@ -34,14 +36,15 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PropietarioController {
 
-    //private static UserRole rol;
-    //private static final UserRole PROPIETARIO = rol ;
+    //private static UserRole adminRol;
+    //private static final UserRole ADMIN = adminRol ;
     private final UsuarioService propietarioService;
     private final PropietarioDtoConverter dtoConverter;
     private final UsuarioRepository repository;
     private final PaginationLinksUtil paginationLinksUtil;
     private final JwtAuthorizationFilter jwtAuthorizationFilter;
     private final JwtTokenProvider jwtProvider;
+
 
 
     @Operation(summary = "Listar todos los propietarios existentes.")
@@ -81,20 +84,17 @@ public class PropietarioController {
                     description = "No se ha encontrado el propietario.",
                     content = @Content),
     })
-
     @GetMapping("/{id}")
-    public ResponseEntity<List<?>> findOnePropietario(@PathVariable Long id, HttpServletRequest request) {
-        Optional<Usuario> propietario = propietarioService.loadUserById(UserRole.PROPIETARIO,id);
-
-        String token = jwtAuthorizationFilter.getJwtFromRequest(request);
-        Long idPropietario = jwtProvider.getUserIdFromJwt(token);
-        Optional<Usuario> propietarioCreado = propietarioService.loadUserById(UserRole.PROPIETARIO,idPropietario);
-
-        if(propietario.get().getRol().equals(UserRole.ADMIN) || propietario.get().equals(propietarioCreado)){
+    public ResponseEntity<List<?>> findOnePropietario(@PathVariable Long id, @AuthenticationPrincipal Usuario usuario) {
+        Optional<Usuario> propietario = propietarioService.loadUserById2(id);
+        if( usuario.getRol().equals(UserRole.ADMIN) ||
+                (propietario.get().getRol().equals(usuario.getRol()) &&  propietario.get().getId().equals(usuario.getId()))){
             List<GetPropietarioConViviendasDto> propietarioDto = propietario.stream()
                     .map(dtoConverter::convertPropietarioToGetPropietarioConViviendasDto)
                     .collect(Collectors.toList());
             return ResponseEntity.ok().body(propietarioDto);
+
+
         }else {
             return ResponseEntity.notFound().build();
         }
@@ -111,16 +111,16 @@ public class PropietarioController {
                     content = @Content),
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id, HttpServletRequest request) {
-        Optional<Usuario> propietarioOptional = propietarioService.loadUserById(UserRole.PROPIETARIO,id);
-        String token = jwtAuthorizationFilter.getJwtFromRequest(request);
-        Long idPropietario = jwtProvider.getUserIdFromJwt(token);
-        Usuario propietario = propietarioOptional.get();
-        if (propietarioOptional.isEmpty() && !propietario.getRol().equals(UserRole.ADMIN)
-                && !propietario.getRol().equals(idPropietario)) {
+    public ResponseEntity<?> delete(@PathVariable Long id ,@AuthenticationPrincipal Usuario usuario) {
+
+        Optional<Usuario> propietarioOptional = propietarioService.loadUserById2(id);
+
+        if (usuario.getRol().equals(UserRole.ADMIN) ||
+                (propietarioOptional.get().getRol().equals(usuario.getRol()) &&  propietarioOptional.get().getId().equals(usuario.getId()))) {
             return ResponseEntity.notFound().build();
         }
         else{
+            Usuario propietario = propietarioOptional.get();
             propietario.nullearPropietarioDeViviendas();
             repository.deleteById(id);
         }

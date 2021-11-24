@@ -35,7 +35,7 @@ public interface ViviendaRepository extends JpaRepository<Vivienda,Long>, JpaSpe
     List<Vivienda> findAllTopViviendas (@Param("limit") int limit);
 
     @Query (value = """
-            SELECT v.* 
+            SELECT v.*
             FROM VIVIENDA v JOIN USUARIO p ON (v.PROPIETARIO.ID = p.ID)
             WHERE v.PROPIETARIO.ID=p.ID
             AND v.ID=id

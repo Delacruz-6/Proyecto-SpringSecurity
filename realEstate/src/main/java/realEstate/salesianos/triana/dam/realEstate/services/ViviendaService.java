@@ -143,7 +143,14 @@ public class ViviendaService extends BaseService<Vivienda,Long,ViviendaRepositor
 
         return this.repositorio.findAll(todas,pageable);
 
+
     }
+    /*
+    public Page<UserDto> findAll(Pageable p) {
+        Page<User> page = userRepository.findAll(p); // Page<User>
+        return new PageImpl<UserDto>(UserConverter.convert(page.getContent()), p, page.getTotalElements());
+    }
+     */
 
     public Vivienda saveVivienda(CreateViviendaDto newVivienda) {
             Vivienda vivienda = Vivienda.builder()
@@ -188,7 +195,6 @@ public class ViviendaService extends BaseService<Vivienda,Long,ViviendaRepositor
         result.setTienePiscina(v.isTienePiscina());
         result.setTieneAscensor(v.isTieneAscensor());
         result.setTieneGaraje(v.isTieneGaraje());
-
 
         return result;
     }

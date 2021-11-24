@@ -64,13 +64,15 @@ public class ViviendaController {
                     content = @Content)
     })
     @PostMapping("/")
-    public ResponseEntity<GetViviendaDetailDto> createVivienda(@RequestBody CreateViviendaDto vivienda, @AuthenticationPrincipal Usuario usuario) {
+    public ResponseEntity<?> createVivienda(@RequestBody CreateViviendaDto vivienda, @AuthenticationPrincipal Usuario usuario) {
         Vivienda saved =viviendaService.saveHouse(vivienda);
         if(!usuario.getRol().equals(UserRole.PROPIETARIO)){
-            return new ResponseEntity<GetViviendaDetailDto>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<Vivienda>(HttpStatus.UNAUTHORIZED); /*GetViviendaDetailDto */
         }else{
             saved.setPropietario(usuario);
             //saved.setInmobiliaria(null);
+            //GetViviendaDetailDto result = saved.map(viviendaDtoConverter::viviendaToGetViviendaDto);
+
         }
         return ResponseEntity.ok(viviendaDtoConverter.viviendaToGetViviendaDetailDto(saved));
     }
@@ -149,12 +151,12 @@ public class ViviendaController {
     if (data.isEmpty()) {
             return ResponseEntity.notFound().build();
         } else {
-            Page<GetViviendaDto> result = data.map(viviendaDtoConverter::viviendaToGetViviendaDto);
+            //Page<GetViviendaDto> result = data.map(viviendaDtoConverter::viviendaToGetViviendaDto);
 
             UriComponentsBuilder uriBuilder =
                     UriComponentsBuilder.fromHttpUrl(request.getRequestURL().toString());
 
-            return ResponseEntity.ok().header("link", paginationLinksUtil.createLinkHeader(result, uriBuilder)).body(result);
+            return ResponseEntity.ok().header("link", paginationLinksUtil.createLinkHeader(data, uriBuilder)).body(data);
         }
     }
 

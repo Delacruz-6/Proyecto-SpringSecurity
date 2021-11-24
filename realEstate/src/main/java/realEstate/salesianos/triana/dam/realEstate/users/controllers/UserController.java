@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import realEstate.salesianos.triana.dam.realEstate.users.dtos.CreatedUserDto;
 import realEstate.salesianos.triana.dam.realEstate.users.dtos.GetUserDto;
 import realEstate.salesianos.triana.dam.realEstate.users.dtos.UserDtoConverter;
+import realEstate.salesianos.triana.dam.realEstate.users.dtos.gestor.CreatedGestorDto;
 import realEstate.salesianos.triana.dam.realEstate.users.models.Usuario;
 import realEstate.salesianos.triana.dam.realEstate.users.services.UsuarioService;
 
@@ -34,7 +35,7 @@ public class UserController {
 
     //@PreAuthorize("hasRole('ADMIN')")
     @PostMapping ("/auth/register/gestor")
-    public ResponseEntity<GetUserDto> nuevoGestor(@RequestBody CreatedUserDto newUser) {
+    public ResponseEntity<GetUserDto> nuevoGestor(@RequestBody CreatedGestorDto newUser) {
         Usuario saved = usuarioService.saveGestor(newUser);
         return buildResponse(saved);
     }

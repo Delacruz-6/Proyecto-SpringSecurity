@@ -8,8 +8,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import realEstate.salesianos.triana.dam.realEstate.models.Inmobiliaria;
+import realEstate.salesianos.triana.dam.realEstate.services.InmobiliariaService;
 import realEstate.salesianos.triana.dam.realEstate.services.base.BaseService;
 import realEstate.salesianos.triana.dam.realEstate.users.dtos.CreatedUserDto;
+import realEstate.salesianos.triana.dam.realEstate.users.dtos.gestor.CreatedGestorDto;
 import realEstate.salesianos.triana.dam.realEstate.users.models.UserRole;
 import realEstate.salesianos.triana.dam.realEstate.users.models.Usuario;
 import realEstate.salesianos.triana.dam.realEstate.users.repositories.UsuarioRepository;
@@ -23,6 +26,7 @@ import java.util.UUID;
 public class UsuarioService extends BaseService<Usuario, Long, UsuarioRepository> implements UserDetailsService {
 
     private final PasswordEncoder passwordEncoder;
+    private final InmobiliariaService inmobiliariaService;
 
 
     @Override
@@ -89,7 +93,7 @@ public class UsuarioService extends BaseService<Usuario, Long, UsuarioRepository
     }
 
 
-    public Usuario saveGestor(CreatedUserDto newUser) {
+    public Usuario saveGestor(CreatedGestorDto newUser) {
         if (newUser.getPassword().contentEquals(newUser.getPassword2())) {
             Usuario usuario = Usuario.builder()
                     .password(passwordEncoder.encode(newUser.getPassword()))
@@ -101,6 +105,13 @@ public class UsuarioService extends BaseService<Usuario, Long, UsuarioRepository
                     .telefono(newUser.getTelefono())
                     .rol(UserRole.GESTOR)
                     .build();
+            /*
+            Optional<Inmobiliaria> inmobiliaria = inmobiliariaService.findById(newUser.getIdInmobiliaria());
+            if (inmobiliaria.isPresent()){
+                usuario.addInmobiliaria(inmobiliaria.get());
+            }
+
+             */
             return save(usuario);
         } else {
             return null;

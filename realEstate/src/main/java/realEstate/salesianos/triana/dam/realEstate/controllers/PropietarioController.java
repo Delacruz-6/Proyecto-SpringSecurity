@@ -87,7 +87,10 @@ public class PropietarioController {
     @GetMapping("/{id}")
     public ResponseEntity<List<?>> findOnePropietario(@PathVariable Long id, @AuthenticationPrincipal Usuario usuario) {
         Optional<Usuario> propietario = propietarioService.loadUserById2(id);
-        if( usuario.getRol().equals(UserRole.ADMIN) ||
+
+        if (propietario.isEmpty()){
+            return ResponseEntity.notFound().build();
+        } else if( usuario.getRol().equals(UserRole.ADMIN) ||
                 (propietario.get().getRol().equals(usuario.getRol()) &&  propietario.get().getId().equals(usuario.getId()))){
             List<GetPropietarioConViviendasDto> propietarioDto = propietario.stream()
                     .map(dtoConverter::convertPropietarioToGetPropietarioConViviendasDto)
@@ -115,11 +118,12 @@ public class PropietarioController {
 
         Optional<Usuario> propietarioOptional = propietarioService.loadUserById2(id);
 
-        if (usuario.getRol().equals(UserRole.ADMIN) ||
-                (propietarioOptional.get().getRol().equals(usuario.getRol()) &&  propietarioOptional.get().getId().equals(usuario.getId()))) {
+        if (propietarioOptional.isEmpty()){
             return ResponseEntity.notFound().build();
-        }
-        else{
+        } else if (usuario.getRol().equals(UserRole.ADMIN) ||
+                (propietarioOptional.get().getRol().equals(usuario.getRol()) && propietarioOptional.get().getId().equals(usuario.getId()))) {
+            return ResponseEntity.notFound().build();
+        } else{
             Usuario propietario = propietarioOptional.get();
             propietario.nullearPropietarioDeViviendas();
             repository.deleteById(id);

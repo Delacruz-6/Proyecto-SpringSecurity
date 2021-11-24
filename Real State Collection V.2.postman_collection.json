@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "4a1e6f27-d4c3-4f3a-bc7e-703990c6db9b",
+		"_postman_id": "823665b6-338b-4edc-86c3-64909047dc9e",
 		"name": "Real State Collection V.2",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -176,7 +176,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwiaWF0IjoxNjM3ODAwOTYyLCJ1c2VybmFtZSI6InBydWViYTJAc2FsZXMuY29tIiwicm9sIjoiQURNSU4ifQ.iGj4MGuJRxkHM4-8b3niv91suFB4L5lgUrDCCBpAk8k",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzIiwiaWF0IjoxNjM3ODM5MzM1LCJ1c2VybmFtZSI6InBydWViYUBzYWxlcy5jb20iLCJyb2wiOiJBRE1JTiJ9.IFQW7BiaV5j_057y91Qe0ZqphaaY8cScLKrx6WJZi9E",
 									"type": "string"
 								}
 							]
@@ -204,7 +204,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2IiwiaWF0IjoxNjM3ODAwMzE5LCJ1c2VybmFtZSI6InBydWViYTAwM0BzYWxlcy5jb20iLCJyb2wiOiJQUk9QSUVUQVJJTyJ9.6-l3ntuN9YWzuC3diZCBBGPCulFuiQ_V3tu9L57kwBI",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwiaWF0IjoxNjM3ODM5MjE3LCJ1c2VybmFtZSI6InBydWViYTJAc2FsZXMuY29tIiwicm9sIjoiUFJPUElFVEFSSU8ifQ.jyGT8FEWgW__qiTW8gLmjJkuQKo22PoYaDZrWcs34Fg",
 									"type": "string"
 								}
 							]
@@ -232,7 +232,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwiaWF0IjoxNjM3ODAwOTYyLCJ1c2VybmFtZSI6InBydWViYTJAc2FsZXMuY29tIiwicm9sIjoiQURNSU4ifQ.iGj4MGuJRxkHM4-8b3niv91suFB4L5lgUrDCCBpAk8k",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjM3ODM5NjI1LCJ1c2VybmFtZSI6InBydWViYTFAc2FsZXMuY29tIiwicm9sIjoiUFJPUElFVEFSSU8ifQ.32OJXYLxXMsHCXvfQ-wYJ2NyYHT5rXS64qaDuslxfIo",
 									"type": "string"
 								}
 							]
@@ -469,7 +469,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\" : \"prueba1@sales.com\",\r\n    \"password\" : \"1234\"\r\n\r\n}",
+							"raw": "{\r\n    \"email\" : \"prueba8@sales.com\",\r\n    \"password\" : \"1234\"\r\n\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -496,7 +496,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"avatar\" : \"kfdjkgjkgmgf.jpg\",\r\n    \"nombre\" : \"Arturo\",\r\n    \"apellidos\" : \"Perez Reverte\",\r\n    \"email\" : \"prueba003@sales.com\",\r\n    \"password\" : \"1234\",\r\n    \"password2\" : \"1234\",\r\n    \"direccion\": \"C/ sin numero\",\r\n    \"telefono\": 673457845\r\n}\r\n\r\n",
+							"raw": "{\r\n    \"avatar\" : \"kfdjkgjkgmgf.jpg\",\r\n    \"nombre\" : \"Arturo\",\r\n    \"apellidos\" : \"Perez Reverte\",\r\n    \"email\" : \"prueba2@sales.com\",\r\n    \"password\" : \"1234\",\r\n    \"password2\" : \"1234\",\r\n    \"direccion\": \"C/ sin numero\",\r\n    \"telefono\": 673457845\r\n}\r\n\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -519,13 +519,25 @@
 				},
 				{
 					"name": "Gestor",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"pm.collectionVariables.set(\"token\", jsonData.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI3IiwiaWF0IjoxNjM3Njk4OTc2LCJ1c2VybmFtZSI6InBydWViYTJAc2FsZXMuY29tIiwicm9sIjoiQURNSU4ifQ.3tpf0jD7FC1lYqHyGalv6PdojfSsqwpLQ5UbNnYxKi4",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1IiwiaWF0IjoxNjM3ODQzMzE4LCJ1c2VybmFtZSI6InBydWViYThAc2FsZXMuY29tIiwicm9sIjoiQURNSU4ifQ.myVviyvbTP9lRwGeOVKqFHULQoBlmHPIInIFv3ukQqI",
 									"type": "string"
 								}
 							]
@@ -534,7 +546,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\" : \"Arturito\",\r\n    \"avatar\" : \"kfdjkgjkgmgf.jpg\",\r\n    \"nombre\" : \"Arturo\",\r\n    \"apellidos\" : \"Perez Reverte\",\r\n    \"email\" : \"prueba3@sales.com\",\r\n    \"password\" : \"1234\",\r\n    \"password2\" : \"1234\",\r\n    \"direccion\": \"C/ sin numero\",\r\n    \"telefono\": 673457845\r\n}",
+							"raw": "{\r\n    \"username\" : \"Arturito\",\r\n    \"avatar\" : \"kfdjkgjkgmgf.jpg\",\r\n    \"nombre\" : \"Arturo\",\r\n    \"apellidos\" : \"Perez Reverte\",\r\n    \"email\" : \"prueba98@sales.com\",\r\n    \"password\" : \"1234\",\r\n    \"password2\" : \"1234\",\r\n    \"direccion\": \"C/ sin numero\",\r\n    \"telefono\": 673457845\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -562,7 +574,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\" : \"Arturito\",\r\n    \"avatar\" : \"kfdjkgjkgmgf.jpg\",\r\n    \"nombre\" : \"Arturo\",\r\n    \"apellidos\" : \"Perez Reverte\",\r\n    \"email\" : \"prueba2@sales.com\",\r\n    \"password\" : \"1234\",\r\n    \"password2\" : \"1234\",\r\n    \"direccion\": \"C/ sin numero\",\r\n    \"telefono\": 673457845\r\n}",
+							"raw": "{\r\n    \"username\" : \"Arturito\",\r\n    \"avatar\" : \"kfdjkgjkgmgf.jpg\",\r\n    \"nombre\" : \"Arturo\",\r\n    \"apellidos\" : \"Perez Reverte\",\r\n    \"email\" : \"prueba8@sales.com\",\r\n    \"password\" : \"1234\",\r\n    \"password2\" : \"1234\",\r\n    \"direccion\": \"C/ sin numero\",\r\n    \"telefono\": 673457845\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -610,6 +622,10 @@
 		{
 			"key": "apiBaseUrl",
 			"value": "localhost:8080"
+		},
+		{
+			"key": "token",
+			"value": ""
 		}
 	]
 }

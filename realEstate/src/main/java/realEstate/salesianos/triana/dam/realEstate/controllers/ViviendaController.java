@@ -64,8 +64,9 @@ public class ViviendaController {
                     content = @Content)
     })
     @PostMapping("/")
-    public ResponseEntity<?> createVivienda(@RequestBody CreateViviendaDto vivienda, @AuthenticationPrincipal Usuario usuario) {
-        Vivienda saved =viviendaService.saveHouse(vivienda);
+    public ResponseEntity<?> createVivienda(@RequestBody Vivienda vivienda, @AuthenticationPrincipal Usuario usuario) {
+        Vivienda saved = viviendaService.save(vivienda);
+        //Vivienda saved =viviendaService.saveHouse(vivienda);
         if(!usuario.getRol().equals(UserRole.PROPIETARIO)){
             return new ResponseEntity<Vivienda>(HttpStatus.UNAUTHORIZED); /*GetViviendaDetailDto */
         }else{

@@ -51,7 +51,7 @@ public class ViviendaController {
       private final UsuarioService usuarioService;
       private final InteresaService interesaService;
       private final InteresadoDtoConverter propietarioDtoConverter;
-
+      private final PropietarioDtoConverter propietarioDtoConver;
 
     @Operation(summary = "Se crea una vivienda y si el propietario no existe, también lo crea")
     @ApiResponses(value = {
@@ -64,32 +64,15 @@ public class ViviendaController {
                     content = @Content)
     })
     @PostMapping("/")
-    public ResponseEntity<Vivienda> createVivienda(@RequestBody Vivienda vivienda, @AuthenticationPrincipal Usuario usuario) {
-        /*
-        Optional<Usuario> usuarioOptional = usuarioService.loadUserById(vivienda.getPropietario().getId(),UserRole.PROPIETARIO);
-        if (usuarioOptional.isEmpty()) {
-            usuarioService.save(vivienda.getPropietario());}
-         */
-        /*
-        if (usuarioService.findById(vivienda.getPropietario().getId()).isEmpty()) {
-            usuarioService.save(vivienda.getPropietario());
-        }else
-         */
-            if(!usuario.getRol().equals(UserRole.PROPIETARIO)){
-            return new ResponseEntity<Vivienda>(HttpStatus.UNAUTHORIZED);
+    public ResponseEntity<GetViviendaDetailDto> createVivienda(@RequestBody CreateViviendaDto vivienda, @AuthenticationPrincipal Usuario usuario) {
+        Vivienda saved =viviendaService.saveHouse(vivienda);
+        if(!usuario.getRol().equals(UserRole.PROPIETARIO)){
+            return new ResponseEntity<GetViviendaDetailDto>(HttpStatus.UNAUTHORIZED);
         }else{
-                /*
-                Optional<Usuario> propietario = usuarioService.findById(usuario.getId());
-                Optional<GetPropietarioConViviendasDto> propietarioDtoOptional = propietario
-                        .map(dtoConverter::convertPropietarioToGetPropietarioConViviendasDto);
-                GetPropietarioConViviendasDto propietarioDto = propietarioDtoOptional.get();
-            vivienda.setPropietario(propietarioDto);
-                 */
-            vivienda.setPropietario(usuario);
+            saved.setPropietario(usuario);
+            //saved.setInmobiliaria(null);
         }
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(viviendaService.save(vivienda));
+        return ResponseEntity.ok(viviendaDtoConverter.viviendaToGetViviendaDetailDto(saved));
     }
 
     @Operation(summary = "Eliminación de una vivienda por su id.")

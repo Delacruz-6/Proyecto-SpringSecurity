@@ -42,7 +42,7 @@ public class ViviendaDtoConverter {
         List<GetInteresaDto> interesaDtos = new ArrayList<>();
         GetViviendaDetailDto result = new GetViviendaDetailDto();
 
-        result.setId(v.getId());
+        //result.setId(v.getId());
         result.setTitulo(v.getTitulo());
         result.setDescripcion(v.getDescripcion());
         result.setAvatar(v.getAvatar());
@@ -111,7 +111,7 @@ public class ViviendaDtoConverter {
         Vivienda result = new Vivienda();
         Tipo t = Tipo.valueOf(v.getTipo());
 
-        result.setId(v.getId());
+       // result.setId(v.getId());
         result.setTitulo(v.getTitulo());
         result.setDescripcion(v.getDescripcion());
         result.setAvatar(v.getAvatar());

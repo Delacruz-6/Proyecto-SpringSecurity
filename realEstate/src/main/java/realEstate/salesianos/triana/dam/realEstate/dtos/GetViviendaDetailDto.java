@@ -14,7 +14,7 @@ import java.util.List;
 @Builder
 public class GetViviendaDetailDto {
 
-    private Long id;
+    //private Long id;
     private String titulo;
     private String descripcion;
     private String avatar;

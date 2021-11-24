@@ -1,5 +1,6 @@
 package realEstate.salesianos.triana.dam.realEstate.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -8,11 +9,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
-import realEstate.salesianos.triana.dam.realEstate.dtos.GetViviendaDto;
+import realEstate.salesianos.triana.dam.realEstate.dtos.*;
 import realEstate.salesianos.triana.dam.realEstate.models.Tipo;
 import realEstate.salesianos.triana.dam.realEstate.models.Vivienda;
 import realEstate.salesianos.triana.dam.realEstate.repositories.ViviendaRepository;
 import realEstate.salesianos.triana.dam.realEstate.services.base.BaseService;
+import realEstate.salesianos.triana.dam.realEstate.users.dtos.gestor.CreatedGestorDto;
+import realEstate.salesianos.triana.dam.realEstate.users.models.UserRole;
 import realEstate.salesianos.triana.dam.realEstate.users.models.Usuario;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -25,6 +28,11 @@ import java.util.Optional;
 
 @Service
 public class ViviendaService extends BaseService<Vivienda,Long,ViviendaRepository> {
+    private final InteresaDtoConverter interesaDtoConverter = new InteresaDtoConverter();
+    private final PropietarioDtoConverter propietarioDtoConverter = new PropietarioDtoConverter();
+    private final InmobiliariaDtoConverter inmobiliariaDtoConverter = new InmobiliariaDtoConverter();
+    @Autowired
+    private  InmobiliariaService inmobiliariaService ;
 
     public Optional<Usuario> findPropietario (Long id){
         return repositorio.findByPropietarioId(id);
@@ -135,5 +143,53 @@ public class ViviendaService extends BaseService<Vivienda,Long,ViviendaRepositor
 
         return this.repositorio.findAll(todas,pageable);
 
+    }
+
+    public Vivienda saveVivienda(CreateViviendaDto newVivienda) {
+            Vivienda vivienda = Vivienda.builder()
+                    .titulo(newVivienda.getTitulo())
+                    .descripcion(newVivienda.getDescripcion())
+                    .direccion(newVivienda.getDireccion())
+                    .metrosCuadrados(newVivienda.getMetrosCuadrados())
+                    .codigoPostal(newVivienda.getCodigoPostal())
+                    .numBanos(newVivienda.getNumBanos())
+                    .numHabitaciones(newVivienda.getNumHabitaciones())
+                    .precio(newVivienda.getPrecio())
+                    .avatar(newVivienda.getAvatar())
+                    .provincia(newVivienda.getProvincia())
+                    .poblacion(newVivienda.getCiudad())
+                    .tieneGaraje(newVivienda.isTieneGaraje())
+                    .tieneAscensor(newVivienda.isTieneAscensor())
+                    .tienePiscina(newVivienda.isTienePiscina())
+                    .latitudLongitud(newVivienda.getLatitudLongitud())
+                    .build();
+            return save(vivienda);
+
+    }
+
+    public Vivienda saveHouse  (CreateViviendaDto v) {
+
+        Vivienda result = new Vivienda();
+        Tipo t = Tipo.valueOf(v.getTipo());
+        //result.setId(v.getId());
+        result.setTitulo(v.getTitulo());
+        result.setDescripcion(v.getDescripcion());
+        result.setAvatar(v.getAvatar());
+        result.setLatitudLongitud(v.getLatitudLongitud());
+        result.setDireccion(v.getDireccion());
+        result.setCodigoPostal(v.getCodigoPostal());
+        result.setPoblacion(v.getCiudad());
+        result.setProvincia(v.getProvincia());
+        result.setTipo(t);
+        result.setPrecio(v.getPrecio());
+        result.setNumHabitaciones(v.getNumHabitaciones());
+        result.setMetrosCuadrados(v.getMetrosCuadrados());
+        result.setNumBanos(v.getNumBanos());
+        result.setTienePiscina(v.isTienePiscina());
+        result.setTieneAscensor(v.isTieneAscensor());
+        result.setTieneGaraje(v.isTieneGaraje());
+
+
+        return result;
     }
 }

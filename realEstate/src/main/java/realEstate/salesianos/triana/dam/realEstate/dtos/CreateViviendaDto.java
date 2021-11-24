@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class CreateViviendaDto {
-    private Long id;
+    //private Long id;
     private String titulo;
     private String descripcion;
     private String avatar;

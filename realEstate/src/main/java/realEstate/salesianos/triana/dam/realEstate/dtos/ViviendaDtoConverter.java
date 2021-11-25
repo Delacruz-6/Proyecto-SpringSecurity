@@ -130,7 +130,6 @@ public class ViviendaDtoConverter {
         result.setTieneGaraje(v.isTieneGaraje());
         result.setInmobiliaria(inmobiliariaService.findById(v.getInmobiliaria().getId()).get());
         result.setPropietario(propietarioService.findById(v.getPropietario().getId()).get());
-
         return result;
     }
 }

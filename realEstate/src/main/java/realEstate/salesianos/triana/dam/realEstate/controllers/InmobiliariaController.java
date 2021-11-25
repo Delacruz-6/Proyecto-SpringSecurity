@@ -24,6 +24,7 @@ import realEstate.salesianos.triana.dam.realEstate.services.InmobiliariaService;
 import org.springframework.web.bind.annotation.*;
 import realEstate.salesianos.triana.dam.realEstate.users.models.UserRole;
 import realEstate.salesianos.triana.dam.realEstate.users.models.Usuario;
+import realEstate.salesianos.triana.dam.realEstate.users.services.UsuarioService;
 import realEstate.salesianos.triana.dam.realEstate.util.PaginationLinksUtil;
 import realEstate.salesianos.triana.dam.realEstate.services.ViviendaService;
 
@@ -42,6 +43,7 @@ public class InmobiliariaController {
     private final InmobiliariaService inmobiliariaService;
     private final InmobiliariaDtoConverter inmobiliariaDtoConverter;
     private final ViviendaService viviendaService;
+    private final UsuarioService usuarioService;
 
 
     @Operation(summary = "Listar todas las inmobiliarias existentes.")
@@ -183,17 +185,21 @@ public class InmobiliariaController {
     @PostMapping("/{id}/gestor")
     public ResponseEntity<Inmobiliaria> createGestor(@RequestBody Usuario gestor,@PathVariable Long id, @AuthenticationPrincipal Usuario usuario) {
         Optional<Inmobiliaria> inmobiliariaOptional = inmobiliariaService.findById(id);
-        List<Usuario> gestores= inmobiliariaOptional.get().getGestores();
+        //List<Usuario> gestores= inmobiliariaOptional.get().getGestores();
         if(inmobiliariaOptional.isEmpty()){
             return ResponseEntity.notFound().build();
         }else if (usuario.getRol().equals(UserRole.ADMIN) ||
-                !gestores.stream().filter(g -> g.getRol().equals(UserRole.GESTOR)).findFirst().isEmpty()){
+                ((usuario.getRol().equals(UserRole.GESTOR) && (inmobiliariaOptional.get().getId().equals(usuario.getInmobiliaria().getId()))))) {
             Inmobiliaria inmobiliaria = inmobiliariaOptional.get();
             gestor.addInmobiliaria(inmobiliaria);
+            usuarioService.save(gestor);
+            inmobiliariaService.save(inmobiliaria);
 
             return ResponseEntity
                     .status(HttpStatus.CREATED)
                     .body(inmobiliariaService.save(inmobiliaria));
+            // crear dto que devuelva un gestor sin inmobiliarias
+
         }else{
             return new ResponseEntity<Inmobiliaria>(HttpStatus.UNAUTHORIZED);
         }

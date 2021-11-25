@@ -14,6 +14,7 @@ import java.util.List;
 public class GetInmobiliariaViviendasDto extends GetInmobiliariaDto{
 
     private List<String> nombreVivienda;
+    private List<String> nombreGestor;
 
     public GetInmobiliariaViviendasDto(Long id, String nombre, String avatar, int numViviendas, List<String> nombreVivienda) {
         super(id, nombre, avatar, numViviendas);

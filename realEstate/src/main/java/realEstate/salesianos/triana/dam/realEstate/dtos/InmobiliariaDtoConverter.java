@@ -31,12 +31,17 @@ public class InmobiliariaDtoConverter {
         for (int j = 0; j < i.getViviendas().size(); j++){
             nombres.add(i.getViviendas().get(j).getTitulo());
         }
+        List<String> nombresGestores = new ArrayList<>();
+        for (int j = 0; j < i.getViviendas().size(); j++){
+            nombres.add(i.getGestores().get(j).getNombre());
+        }
         return GetInmobiliariaViviendasDto.builder()
                 .id(i.getId())
                 .nombre(i.getNombre())
                 .avatar(i.getAvatar())
                 .numViviendas(i.getViviendas().size())
                 .nombreVivienda(nombres)
+                .nombreGestor(nombresGestores)
                 .build();
     }
 

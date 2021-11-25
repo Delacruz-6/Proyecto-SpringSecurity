@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "81d54789-51a9-4344-9f7d-3b5ed53e751b",
+		"_postman_id": "3e9f7676-569b-4661-a21a-18b4597cf116",
 		"name": "Real State Collection V.2",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -16,7 +16,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzIiwiaWF0IjoxNjM3ODk0MzU3LCJ1c2VybmFtZSI6InBydWViYTFAc2FsZXMuY29tIiwicm9sIjoiUFJPUElFVEFSSU8ifQ.g38_-S-JEsl38ona-RhSSPC_eEi0q76KEPgzgmtfHaI",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjM3OTIzNDk2LCJ1c2VybmFtZSI6ImFkbWluQHNhbGVzLmNvbSIsInJvbCI6IkFETUlOIn0.C_kEajiJeNBGBiWyJKzFFqUmzenGuwqQBV3kPHPltrU",
 									"type": "string"
 								}
 							]
@@ -54,7 +54,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0IiwiaWF0IjoxNjM3ODk0NTQyLCJ1c2VybmFtZSI6ImFkbWluQHNhbGVzLmNvbSIsInJvbCI6IkFETUlOIn0.0pG_g3jW-KopTDIk55kWscDT_ODiITp9-str4I8YVn4",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjM3OTIzNDk2LCJ1c2VybmFtZSI6ImFkbWluQHNhbGVzLmNvbSIsInJvbCI6IkFETUlOIn0.C_kEajiJeNBGBiWyJKzFFqUmzenGuwqQBV3kPHPltrU",
 									"type": "string"
 								}
 							]
@@ -113,7 +113,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzIiwiaWF0IjoxNjM3ODk0MzU3LCJ1c2VybmFtZSI6InBydWViYTFAc2FsZXMuY29tIiwicm9sIjoiUFJPUElFVEFSSU8ifQ.g38_-S-JEsl38ona-RhSSPC_eEi0q76KEPgzgmtfHaI",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjM3OTIzNDk2LCJ1c2VybmFtZSI6ImFkbWluQHNhbGVzLmNvbSIsInJvbCI6IkFETUlOIn0.C_kEajiJeNBGBiWyJKzFFqUmzenGuwqQBV3kPHPltrU",
 									"type": "string"
 								}
 							]
@@ -361,7 +361,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0IiwiaWF0IjoxNjM3ODk0MzMwLCJ1c2VybmFtZSI6ImFkbWluQHNhbGVzLmNvbSIsInJvbCI6IkFETUlOIn0.HuAqGTGSqbAYefUQSWtDsfnmI_bFRbEccOIUVQ2V_Zg",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI3IiwiaWF0IjoxNjM3OTI2NzU2LCJ1c2VybmFtZSI6ImFkbWluMkBzYWxlcy5jb20iLCJyb2wiOiJBRE1JTiJ9.j9CmxBsmK5M8YhKSD-7ZduAWBf9h78bv3vBjPaFc17c",
 									"type": "string"
 								}
 							]
@@ -398,7 +398,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzIiwiaWF0IjoxNjM3ODk0MzU3LCJ1c2VybmFtZSI6InBydWViYTFAc2FsZXMuY29tIiwicm9sIjoiUFJPUElFVEFSSU8ifQ.g38_-S-JEsl38ona-RhSSPC_eEi0q76KEPgzgmtfHaI",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMCIsImlhdCI6MTYzNzkyNjgxNCwidXNlcm5hbWUiOiJnZXN0b3JAc2FsZXMuY29tIiwicm9sIjoiR0VTVE9SIn0.p2ftG4MXQXHQAx_gXHwk9QraxhuY4XII4dyritfkgY0",
 									"type": "string"
 								}
 							]
@@ -426,7 +426,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0IiwiaWF0IjoxNjM3ODg5MTkwLCJ1c2VybmFtZSI6ImFkbWluQHNhbGVzLmNvbSIsInJvbCI6IkFETUlOIn0.IhKiiBR2uXzaTMvxMNvwg_Na2VQkthnXWlniSLI0kEs",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMCIsImlhdCI6MTYzNzkyNjgxNCwidXNlcm5hbWUiOiJnZXN0b3JAc2FsZXMuY29tIiwicm9sIjoiR0VTVE9SIn0.p2ftG4MXQXHQAx_gXHwk9QraxhuY4XII4dyritfkgY0",
 									"type": "string"
 								}
 							]
@@ -454,7 +454,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0IiwiaWF0IjoxNjM3ODg5MTkwLCJ1c2VybmFtZSI6ImFkbWluQHNhbGVzLmNvbSIsInJvbCI6IkFETUlOIn0.IhKiiBR2uXzaTMvxMNvwg_Na2VQkthnXWlniSLI0kEs",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjM3OTI1NDM0LCJ1c2VybmFtZSI6ImFkbWluQHNhbGVzLmNvbSIsInJvbCI6IkFETUlOIn0.ha95mi3eld2SHUZDSge9TcnsjUXbklW_FEByclaWaW0",
 									"type": "string"
 								}
 							]
@@ -469,6 +469,44 @@
 							"path": [
 								"inmobiliaria",
 								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post gestor inmobiliaria",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI3IiwiaWF0IjoxNjM3OTI2ODY2LCJ1c2VybmFtZSI6ImFkbWluMkBzYWxlcy5jb20iLCJyb2wiOiJBRE1JTiJ9.-oKu285A-bpjgY79kgOxzmjoo0uiHN3TPYGmAff-h9E",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\" : \"Arturito\",\r\n    \"avatar\" : \"kfdjkgjkgmgf.jpg\",\r\n    \"nombre\" : \"Arturo\",\r\n    \"apellidos\" : \"Perez Reverte\",\r\n    \"email\" : \"gestor256@sales.com\",\r\n    \"password\" : \"1234\",\r\n    \"password2\" : \"1234\",\r\n    \"direccion\": \"C/ sin numero\",\r\n    \"telefono\": 673457845\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiBaseUrl}}/inmobiliaria/1/gestor",
+							"host": [
+								"{{apiBaseUrl}}"
+							],
+							"path": [
+								"inmobiliaria",
+								"1",
+								"gestor"
 							]
 						}
 					},
@@ -614,7 +652,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\" : \"admin@sales.com\",\r\n    \"password\" : \"1234\"\r\n\r\n}",
+							"raw": "{\r\n    \"email\" : \"admin2@sales.com\",\r\n    \"password\" : \"1234\"\r\n\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -641,7 +679,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"avatar\" : \"kfdjkgjkgmgf.jpg\",\r\n    \"nombre\" : \"Arturo\",\r\n    \"apellidos\" : \"Perez Reverte\",\r\n    \"email\" : \"prueba1@sales.com\",\r\n    \"password\" : \"1234\",\r\n    \"password2\" : \"1234\",\r\n    \"direccion\": \"C/ sin numero\",\r\n    \"telefono\": 673457845\r\n}\r\n\r\n",
+							"raw": "{\r\n    \"avatar\" : \"kfdjkgjkgmgf.jpg\",\r\n    \"nombre\" : \"Arturo\",\r\n    \"apellidos\" : \"Perez Reverte\",\r\n    \"email\" : \"propietario3@sales.com\",\r\n    \"password\" : \"1234\",\r\n    \"password2\" : \"1234\",\r\n    \"direccion\": \"C/ sin numero\",\r\n    \"telefono\": 673457845\r\n}\r\n\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -681,7 +719,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzIiwiaWF0IjoxNjM3ODcxMDEwLCJ1c2VybmFtZSI6InBydWViYUBzYWxlcy5jb20iLCJyb2wiOiJBRE1JTiJ9.xAIWPbVixaIoAhtS72dc4nb8kFdk9qFnP2lsIkU5Crg",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI3IiwiaWF0IjoxNjM3OTI2ODY2LCJ1c2VybmFtZSI6ImFkbWluMkBzYWxlcy5jb20iLCJyb2wiOiJBRE1JTiJ9.-oKu285A-bpjgY79kgOxzmjoo0uiHN3TPYGmAff-h9E",
 									"type": "string"
 								}
 							]
@@ -690,7 +728,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\" : \"Arturito\",\r\n    \"avatar\" : \"kfdjkgjkgmgf.jpg\",\r\n    \"nombre\" : \"Arturo\",\r\n    \"apellidos\" : \"Perez Reverte\",\r\n    \"email\" : \"prueba98@sales.com\",\r\n    \"password\" : \"1234\",\r\n    \"password2\" : \"1234\",\r\n    \"direccion\": \"C/ sin numero\",\r\n    \"telefono\": 673457845,\r\n    \"idInmobiliaria\" : 1\r\n}",
+							"raw": "{\r\n    \"username\" : \"Arturito\",\r\n    \"avatar\" : \"kfdjkgjkgmgf.jpg\",\r\n    \"nombre\" : \"Arturo\",\r\n    \"apellidos\" : \"Perez Reverte\",\r\n    \"email\" : \"gestor2@sales.com\",\r\n    \"password\" : \"1234\",\r\n    \"password2\" : \"1234\",\r\n    \"direccion\": \"C/ sin numero\",\r\n    \"telefono\": 673457845\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

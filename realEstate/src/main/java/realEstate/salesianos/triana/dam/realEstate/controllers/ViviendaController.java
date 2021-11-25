@@ -89,13 +89,19 @@ public class ViviendaController {
                     content = @Content),})
     @DeleteMapping("/{id}")
     @CrossOrigin
-    public ResponseEntity<?> delete(@PathVariable Long id) {
+    public ResponseEntity<?> delete(@PathVariable Long id, @AuthenticationPrincipal Usuario usuario) {
+        Optional<Usuario> propietario =viviendaService.findPropietario(id);
         if(viviendaService.findById(id).isEmpty() && viviendaService.findPropietario(id).isEmpty()){
             return ResponseEntity.notFound().build();
-        }else{
+        }else if( usuario.getRol().equals(UserRole.ADMIN) ||
+                (usuario.getRol().equals(propietario.get().getRol()) &&
+                        usuario.getId().equals(propietario.get().getId()))){
             viviendaService.findById(id).get().removeViviendasToIntereses();
             viviendaService.deleteById(id);
             return ResponseEntity.noContent().build();
+        } else{
+            return new ResponseEntity<List<?>>(HttpStatus.UNAUTHORIZED);
+
         }
     }
 
@@ -109,21 +115,28 @@ public class ViviendaController {
                     description = "No se ha encontrado una inmobiliaria en esta vivienda con ese id.",
                     content = @Content),
     })
-    @DeleteMapping("/{id1}/inmobiliaria/")
+    @DeleteMapping("/{id1}/inmobiliaria")
     @CrossOrigin
-    public ResponseEntity<?> deleteInmobiliariaToVivienda(@PathVariable Long id1) {
+    public ResponseEntity<?> deleteInmobiliariaToVivienda(@PathVariable Long id1, @AuthenticationPrincipal Usuario usuario) {
 
         Optional<Vivienda> viviendaOptional=viviendaService.findById(id1);
+        Optional<Usuario> propietario = viviendaService.findPropietario(id1);
+        List<Usuario> gestores = viviendaService.findById(id1).get().getInmobiliaria().getGestores();
 
         if (viviendaOptional.isEmpty() && viviendaService.findPropietario(id1).isEmpty()){
             return ResponseEntity.notFound().build();
-        }else{
+        }else if( usuario.getRol().equals(UserRole.ADMIN) || !gestores.stream().filter(gestor -> gestor.getRol().equals(UserRole.GESTOR)).findFirst().isEmpty() ||
+                (usuario.getRol().equals(propietario.get().getRol()) &&
+                        usuario.getId().equals(propietario.get().getId()))){
             Vivienda vivienda = viviendaOptional.get();
             Inmobiliaria inmobiliaria = new Inmobiliaria();
             vivienda.setInmobiliaria(inmobiliaria);
             vivienda.removeFromInmobiliaria(inmobiliaria);
             viviendaService.save(vivienda);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }else{
+            return new ResponseEntity<List<?>>(HttpStatus.UNAUTHORIZED);
+
         }
     }
 
@@ -273,13 +286,15 @@ public class ViviendaController {
                     content = @Content)
     })
     @PostMapping("/{id1}/inmobiliaria/{id2}")
-    public ResponseEntity<?> addViviendaAInmobiliaria ( @PathVariable Long id1, @PathVariable Long id2){
+    public ResponseEntity<?> addViviendaAInmobiliaria ( @PathVariable Long id1, @PathVariable Long id2, @AuthenticationPrincipal Usuario usuario){
         Optional<Vivienda> optionalVivienda=viviendaService.findById(id1);
         Optional<Inmobiliaria> optionalInmobiliaria= inmobiliariaService.findById(id2);
+        Optional<Usuario> propietario = viviendaService.findPropietario(id1);
         if (optionalInmobiliaria.isEmpty() || optionalVivienda.isEmpty()){
             return ResponseEntity.notFound().build();
-        }else{
-
+        }else if( usuario.getRol().equals(UserRole.ADMIN) ||
+                (usuario.getRol().equals(propietario.get().getRol()) &&
+                        usuario.getId().equals(propietario.get().getId()))){
             Vivienda vivienda = optionalVivienda.get();
             Inmobiliaria inmobiliaria = optionalInmobiliaria.get();
             //vivienda.setInmobiliaria(inmobiliaria);
@@ -287,6 +302,8 @@ public class ViviendaController {
             viviendaService.save(vivienda);
             GetViviendaInmobiliariaDto viviendaDto = viviendaDtoConverter.viviendaToGetViviendaInmobiliariaDto(vivienda, inmobiliaria);
             return ResponseEntity.status(HttpStatus.CREATED).body(viviendaDto);
+        }else {
+            return new ResponseEntity<List<?>>(HttpStatus.UNAUTHORIZED);
         }
 
     }
@@ -345,17 +362,23 @@ public class ViviendaController {
     public ResponseEntity<?> editVivienda (
     @Parameter(description = "ID de la Vivienda que desea buscar")
     @PathVariable Long id,
-    @RequestBody CreateViviendaDto dto){
+    @RequestBody CreateViviendaDto dto, @AuthenticationPrincipal Usuario usuario){
             Optional<Vivienda> viviendaOptional = viviendaService.findById(id);
             Optional<Usuario> propietario = viviendaService.findPropietario(id);
         if(viviendaOptional.isEmpty() && propietario.isEmpty()){
             return ResponseEntity.notFound().build();
-    }else{
+
+        } else if( usuario.getRol().equals(UserRole.ADMIN) ||
+                    (usuario.getRol().equals(propietario.get().getRol()) &&
+                            usuario.getId().equals(propietario.get().getId()))){
             Vivienda vNueva;
             vNueva = viviendaDtoConverter.createViviendaDtoToVivienda(dto);
-           viviendaService.edit(vNueva);
+            viviendaService.edit(vNueva);
             return ResponseEntity.status(HttpStatus.CREATED).body(viviendaService.encontrarViviendaPorId(id).map(viviendaDtoConverter::viviendaToGetViviendaDetailDto));
-    
+        }
+            else{
+            return new ResponseEntity<List<?>>(HttpStatus.UNAUTHORIZED);
+
     }
 
     }

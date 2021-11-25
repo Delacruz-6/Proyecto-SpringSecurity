@@ -113,6 +113,19 @@ public class Vivienda implements Serializable {
         inmobiliaria = null;
     }
 
+    public void addToPropietario(Usuario u){
+        propietario = u;
+        if (u.getViviendas() == null){
+            u.setViviendas(new ArrayList<>());
+            u.getViviendas().add(this);
+        }
+    }
+
+    public void removeFromPropietario(Usuario u) {
+        u.getViviendas().remove(this);
+        propietario = null;
+    }
+
 
     @PreRemove
     public void removeViviendasToIntereses(){

@@ -34,8 +34,8 @@ public class ViviendaService extends BaseService<Vivienda,Long,ViviendaRepositor
     @Autowired
     private  InmobiliariaService inmobiliariaService ;
 
-    public Optional<Usuario> findPropietario (Long id){
-        return repositorio.findByPropietarioId(id);
+    public Optional<Vivienda> findPropietario (Long id){
+        return repositorio.findByPropietario_Id(id);
     }
 
     //Cuando se seleccione una vivienda para ver sus detalles se usará este método.

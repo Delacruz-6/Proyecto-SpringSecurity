@@ -94,8 +94,6 @@ public class PropietarioController {
                     .map(dtoConverter::convertPropietarioToGetPropietarioConViviendasDto)
                     .collect(Collectors.toList());
             return ResponseEntity.ok().body(propietarioDto);
-
-
         }else {
             return new ResponseEntity<List<?>>(HttpStatus.UNAUTHORIZED);
         }

@@ -33,7 +33,7 @@ public interface ViviendaRepository extends JpaRepository<Vivienda,Long>, JpaSpe
             LIMIT :limit
             """, nativeQuery = true)
     List<Vivienda> findAllTopViviendas (@Param("limit") int limit);
-
+/*
     @Query (value = """
             SELECT v.*
             FROM VIVIENDA v JOIN USUARIO p ON (v.PROPIETARIO.ID = p.ID)
@@ -41,6 +41,8 @@ public interface ViviendaRepository extends JpaRepository<Vivienda,Long>, JpaSpe
             AND v.ID=id
             GROUP BY v.ID
             """, nativeQuery=true)
-    Optional<Usuario> findByPropietarioId(Long id);
+
+ */
+    Optional<Vivienda> findByPropietario_Id(Long id);
     //List<Vivienda> findTop10ByOrderByInteresesDesc();
 }

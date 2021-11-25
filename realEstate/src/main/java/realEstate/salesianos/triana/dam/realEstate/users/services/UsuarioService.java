@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import realEstate.salesianos.triana.dam.realEstate.models.Inmobiliaria;
+import realEstate.salesianos.triana.dam.realEstate.models.Vivienda;
 import realEstate.salesianos.triana.dam.realEstate.services.InmobiliariaService;
 import realEstate.salesianos.triana.dam.realEstate.services.base.BaseService;
 import realEstate.salesianos.triana.dam.realEstate.users.dtos.usuario.CreatedUserDto;
@@ -50,6 +51,10 @@ public class UsuarioService extends BaseService<Usuario, Long, UsuarioRepository
 
     public Optional<Usuario> loadUserById2(Long id ) throws UsernameNotFoundException{
         return this.repositorio.findById(id);
+    }
+
+    public Optional<Usuario> findPropietario (Long id){
+        return repositorio.findByViviendas_Id(id);
     }
 
 

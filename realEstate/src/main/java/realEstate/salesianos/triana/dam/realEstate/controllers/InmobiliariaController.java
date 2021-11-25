@@ -12,6 +12,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +22,8 @@ import realEstate.salesianos.triana.dam.realEstate.dtos.InmobiliariaDtoConverter
 import realEstate.salesianos.triana.dam.realEstate.models.Inmobiliaria;
 import realEstate.salesianos.triana.dam.realEstate.services.InmobiliariaService;
 import org.springframework.web.bind.annotation.*;
+import realEstate.salesianos.triana.dam.realEstate.users.models.UserRole;
+import realEstate.salesianos.triana.dam.realEstate.users.models.Usuario;
 import realEstate.salesianos.triana.dam.realEstate.util.PaginationLinksUtil;
 import realEstate.salesianos.triana.dam.realEstate.services.ViviendaService;
 
@@ -101,22 +104,48 @@ public class InmobiliariaController {
             content = @Content),
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id){
+    public ResponseEntity<?> delete(@PathVariable Long id,@AuthenticationPrincipal Usuario usuario){
         if (inmobiliariaService.findById(id).isEmpty()){
             return ResponseEntity.notFound().build();
-        }
-        else{
+        } else if(usuario.getRol().equals(UserRole.ADMIN)){
             Optional<Inmobiliaria> inmo = inmobiliariaService.findById(id);
             Inmobiliaria inmo1 = inmo.get();
+            inmo1.nullearInmobiliariaDeViviendas();
+            inmobiliariaService.deleteById(id);
+            return ResponseEntity.noContent().build();
+        }else{
+            return new ResponseEntity<Inmobiliaria>(HttpStatus.UNAUTHORIZED);
+        }
+    }
 
+    @Operation(summary = "Borrar un gestor de una inmobiliria por su id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204",
+                    description = "Se ha borrado el gestor correctamente de la inmobiliaria",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Inmobiliaria.class))}),
+            @ApiResponse(responseCode = "404",
+                    description = "No se ha encontrado el gestor o la inmobiliaria",
+                    content = @Content),
+    })
+    @DeleteMapping("/gestor/{id}")
+    public ResponseEntity<?> deleteGestor(@PathVariable Long id, @AuthenticationPrincipal Usuario usuario){
+        Optional<Inmobiliaria> inmobiliariaOptional = inmobiliariaService.findById(id);
+        List<Usuario> gestores= inmobiliariaOptional.get().getGestores();
+        if (inmobiliariaService.findById(id).isEmpty() || inmobiliariaService.findById(id).get().getGestores().isEmpty()){
+            return ResponseEntity.notFound().build();
+        }else if (usuario.getRol().equals(UserRole.ADMIN) ||
+                !gestores.stream().filter(g -> g.getRol().equals(UserRole.GESTOR)).findFirst().isEmpty()){
+            Optional<Inmobiliaria> inmo = inmobiliariaService.findById(id);
+            Inmobiliaria inmo1 = inmo.get();
             if (inmo.isPresent()){
                 inmo1.nullearInmobiliariaDeViviendas();
                 inmobiliariaService.deleteById(id);
-
             }
             return ResponseEntity.noContent().build();
+        } else{
+            return new ResponseEntity<Inmobiliaria>(HttpStatus.UNAUTHORIZED);
         }
-
     }
 
     @Operation(summary = "Agregar una nueva inmobiliaria")
@@ -130,10 +159,45 @@ public class InmobiliariaController {
                     content = @Content),
     })
     @PostMapping("/")
-    public ResponseEntity<Inmobiliaria> create(@RequestBody Inmobiliaria inmobiliaria) {
+    public ResponseEntity<Inmobiliaria> create(@RequestBody Inmobiliaria inmobiliaria, @AuthenticationPrincipal Usuario usuario) {
+        if (usuario.getRol().equals(UserRole.ADMIN)){
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(inmobiliariaService.save(inmobiliaria));
+    }else{
+            return new ResponseEntity<Inmobiliaria>(HttpStatus.UNAUTHORIZED);
+        }
     }
+
+
+    @Operation(summary = "Agregar un nuevo gestor a una inmobiliaria")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201",
+                    description = "Se ha añadido un gestor a una inmobiliaria correctamente",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Inmobiliaria.class))}),
+            @ApiResponse(responseCode = "400",
+                    description = "No se ha podido crear el gestor en inmobiliaria, sintáxis inválida",
+                    content = @Content),
+    })
+    @PostMapping("/{id}/gestor")
+    public ResponseEntity<Inmobiliaria> createGestor(@RequestBody Usuario gestor,@PathVariable Long id, @AuthenticationPrincipal Usuario usuario) {
+        Optional<Inmobiliaria> inmobiliariaOptional = inmobiliariaService.findById(id);
+        List<Usuario> gestores= inmobiliariaOptional.get().getGestores();
+        if(inmobiliariaOptional.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }else if (usuario.getRol().equals(UserRole.ADMIN) ||
+                !gestores.stream().filter(g -> g.getRol().equals(UserRole.GESTOR)).findFirst().isEmpty()){
+            Inmobiliaria inmobiliaria = inmobiliariaOptional.get();
+            gestor.addInmobiliaria(inmobiliaria);
+
+            return ResponseEntity
+                    .status(HttpStatus.CREATED)
+                    .body(inmobiliariaService.save(inmobiliaria));
+        }else{
+            return new ResponseEntity<Inmobiliaria>(HttpStatus.UNAUTHORIZED);
+        }
+    }
+
 
 }

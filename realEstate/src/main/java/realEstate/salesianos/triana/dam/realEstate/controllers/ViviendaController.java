@@ -70,7 +70,9 @@ public class ViviendaController {
         if(!usuario.getRol().equals(UserRole.PROPIETARIO)){
             return new ResponseEntity<Vivienda>(HttpStatus.UNAUTHORIZED); /*GetViviendaDetailDto */
         }else{
-            saved.setPropietario(usuario);
+            saved.addToPropietario(usuario);
+            viviendaService.save(saved);
+
             //saved.setInmobiliaria(null);
             //GetViviendaDetailDto result = saved.map(viviendaDtoConverter::viviendaToGetViviendaDto);
 
@@ -88,14 +90,13 @@ public class ViviendaController {
                     description = "No se ha encontrado una vivienda con ese id.",
                     content = @Content),})
     @DeleteMapping("/{id}")
-    @CrossOrigin
     public ResponseEntity<?> delete(@PathVariable Long id, @AuthenticationPrincipal Usuario usuario) {
-        Optional<Usuario> propietario =viviendaService.findPropietario(id);
+        Usuario propietario = usuarioService.findPropietario(id).get();
         if(viviendaService.findById(id).isEmpty() && viviendaService.findPropietario(id).isEmpty()){
             return ResponseEntity.notFound().build();
         }else if( usuario.getRol().equals(UserRole.ADMIN) ||
-                (usuario.getRol().equals(propietario.get().getRol()) &&
-                        usuario.getId().equals(propietario.get().getId()))){
+                (usuario.getRol().equals(propietario.getRol()) &&
+                        usuario.getId().equals(propietario.getId()))){
             viviendaService.findById(id).get().removeViviendasToIntereses();
             viviendaService.deleteById(id);
             return ResponseEntity.noContent().build();
@@ -116,18 +117,17 @@ public class ViviendaController {
                     content = @Content),
     })
     @DeleteMapping("/{id1}/inmobiliaria")
-    @CrossOrigin
     public ResponseEntity<?> deleteInmobiliariaToVivienda(@PathVariable Long id1, @AuthenticationPrincipal Usuario usuario) {
 
         Optional<Vivienda> viviendaOptional=viviendaService.findById(id1);
-        Optional<Usuario> propietario = viviendaService.findPropietario(id1);
+        Usuario propietario = usuarioService.findPropietario(id1).get();
         List<Usuario> gestores = viviendaService.findById(id1).get().getInmobiliaria().getGestores();
 
         if (viviendaOptional.isEmpty() && viviendaService.findPropietario(id1).isEmpty()){
             return ResponseEntity.notFound().build();
         }else if( usuario.getRol().equals(UserRole.ADMIN) || !gestores.stream().filter(gestor -> gestor.getRol().equals(UserRole.GESTOR)).findFirst().isEmpty() ||
-                (usuario.getRol().equals(propietario.get().getRol()) &&
-                        usuario.getId().equals(propietario.get().getId()))){
+                (usuario.getRol().equals(propietario.getRol()) &&
+                        usuario.getId().equals(propietario.getId()))){
             Vivienda vivienda = viviendaOptional.get();
             Inmobiliaria inmobiliaria = new Inmobiliaria();
             vivienda.setInmobiliaria(inmobiliaria);
@@ -165,12 +165,12 @@ public class ViviendaController {
     if (data.isEmpty()) {
             return ResponseEntity.notFound().build();
         } else {
-            //Page<GetViviendaDto> result = data.map(viviendaDtoConverter::viviendaToGetViviendaDto);
+            Page<GetViviendaDto> result = data.map(viviendaDtoConverter::viviendaToGetViviendaDto);
 
             UriComponentsBuilder uriBuilder =
                     UriComponentsBuilder.fromHttpUrl(request.getRequestURL().toString());
 
-            return ResponseEntity.ok().header("link", paginationLinksUtil.createLinkHeader(data, uriBuilder)).body(data);
+            return ResponseEntity.ok().header("link", paginationLinksUtil.createLinkHeader(data, uriBuilder)).body(result);
         }
     }
 
@@ -289,12 +289,12 @@ public class ViviendaController {
     public ResponseEntity<?> addViviendaAInmobiliaria ( @PathVariable Long id1, @PathVariable Long id2, @AuthenticationPrincipal Usuario usuario){
         Optional<Vivienda> optionalVivienda=viviendaService.findById(id1);
         Optional<Inmobiliaria> optionalInmobiliaria= inmobiliariaService.findById(id2);
-        Optional<Usuario> propietario = viviendaService.findPropietario(id1);
+        Usuario propietario = usuarioService.findPropietario(id1).get();
         if (optionalInmobiliaria.isEmpty() || optionalVivienda.isEmpty()){
             return ResponseEntity.notFound().build();
         }else if( usuario.getRol().equals(UserRole.ADMIN) ||
-                (usuario.getRol().equals(propietario.get().getRol()) &&
-                        usuario.getId().equals(propietario.get().getId()))){
+                (usuario.getRol().equals(propietario.getRol()) &&
+                        usuario.getId().equals(propietario.getId()))){
             Vivienda vivienda = optionalVivienda.get();
             Inmobiliaria inmobiliaria = optionalInmobiliaria.get();
             //vivienda.setInmobiliaria(inmobiliaria);
@@ -364,13 +364,13 @@ public class ViviendaController {
     @PathVariable Long id,
     @RequestBody CreateViviendaDto dto, @AuthenticationPrincipal Usuario usuario){
             Optional<Vivienda> viviendaOptional = viviendaService.findById(id);
-            Optional<Usuario> propietario = viviendaService.findPropietario(id);
-        if(viviendaOptional.isEmpty() && propietario.isEmpty()){
+             Usuario propietario = viviendaService.findById(id).get().getPropietario();
+        if(viviendaOptional.isEmpty()){
             return ResponseEntity.notFound().build();
 
         } else if( usuario.getRol().equals(UserRole.ADMIN) ||
-                    (usuario.getRol().equals(propietario.get().getRol()) &&
-                            usuario.getId().equals(propietario.get().getId()))){
+                    (usuario.getRol().equals(UserRole.PROPIETARIO) &&
+                            usuario.getId().equals(propietario.getId()))){
             Vivienda vNueva;
             vNueva = viviendaDtoConverter.createViviendaDtoToVivienda(dto);
             viviendaService.edit(vNueva);

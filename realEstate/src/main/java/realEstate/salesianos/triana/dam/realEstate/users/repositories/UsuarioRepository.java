@@ -28,6 +28,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     Optional<Usuario> findById(Long id);
 
+    Optional<Usuario> findByViviendas_Id(Long id);
+
     //Optional<Usuario> findByIdAndRol_PROPIETARIO(Long id);
     //Optional<Usuario> findByIdByRol(Long id, UserRole rol);
     //Optional<Usuario> findByIdNotNull(Long id);

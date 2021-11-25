@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -77,17 +78,20 @@ public class InteresadoController {
                     content = @Content),
     })
     @GetMapping("/{id}")
-    public ResponseEntity<List<GetInteresadoDto>> findOne (@PathVariable("id") Long id){
+    public ResponseEntity<List<GetInteresadoDto>> findOne (@PathVariable("id") Long id, @AuthenticationPrincipal Usuario usuario){
 
         Optional<Usuario> interesadoOptional = usuarioService.findById(id);
 
         if(interesadoOptional.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }else {
+        }else if(interesadoOptional.get().getRol().equals(usuario.getRol()) &&
+                interesadoOptional.get().getId().equals(usuario.getId())) {
             List<GetInteresadoDto> interesadoDto = interesadoOptional
-                    .stream().map(interesadoDtoConverter ::interesadoToGetInteresadoDto)
+                    .stream().map(interesadoDtoConverter::interesadoToGetInteresadoDto)
                     .collect(Collectors.toList());
             return ResponseEntity.ok().body(interesadoDto);
+        }else {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
 

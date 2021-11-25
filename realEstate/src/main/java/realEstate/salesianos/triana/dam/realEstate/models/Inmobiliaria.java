@@ -47,9 +47,22 @@ public class Inmobiliaria implements Serializable {
         this.nombre = nombre;
         this.avatar = avatar;
     }
+
     @PreRemove
     public void nullearInmobiliariaDeViviendas(){
         viviendas.forEach(vivienda -> vivienda.setInmobiliaria(null));
+    }
+    /*
+    @PreRemove
+    public void nullearInmobiliariaDeGestores(){
+        gestores.forEach(gestor -> gestor.setInmobiliaria(null));
+    }
+
+     */
+
+    public void addToGestor (List<Usuario> u){
+        gestores.forEach(inmobiliaria -> inmobiliaria.addInmobiliaria(this));
+
     }
 
 

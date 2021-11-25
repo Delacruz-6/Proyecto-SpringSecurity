@@ -79,11 +79,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/interesado").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/interesado/{id}").hasAnyRole("ADMIN","PROPIETARIO")
                 .antMatchers(HttpMethod.GET, "/top").authenticated()
+                .antMatchers("/h2-console/**").permitAll()
 
                 .anyRequest().authenticated();
 
-        http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
 
+        http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
+        http.headers().frameOptions().disable();
     }
 
     @Bean

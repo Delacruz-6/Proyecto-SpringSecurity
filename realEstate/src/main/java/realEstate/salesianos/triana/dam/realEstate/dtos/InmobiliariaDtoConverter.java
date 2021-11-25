@@ -2,6 +2,8 @@ package realEstate.salesianos.triana.dam.realEstate.dtos;
 
 import org.springframework.stereotype.Component;
 import realEstate.salesianos.triana.dam.realEstate.models.Inmobiliaria;
+import realEstate.salesianos.triana.dam.realEstate.models.Interesa;
+import realEstate.salesianos.triana.dam.realEstate.users.models.Usuario;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +16,35 @@ public class InmobiliariaDtoConverter {
                 c.getNombre(),
                 c.getAvatar()
         );
+    }
+    public GetInmobiliariaGestorPostDto inmobiliariaToGetInmobiliariaGestorDtoPost(Usuario u, Inmobiliaria i){
+
+        List<String> nombresGestores = new ArrayList<>();
+        for (int j = 0; j < i.getGestores().size(); j++){
+            nombresGestores.add(i.getGestores().get(j).getNombre());
+        }
+
+        return GetInmobiliariaGestorPostDto.builder()
+                .id(i.getId())
+                .nombre(i.getNombre())
+                .avatar(i.getAvatar())
+                .idGestor(u.getId())
+                .build();
+    }
+
+    public GetInmobiliariaGestorDetailDto inmobiliariaToGetInmobiliariaViviendasDtoDetail(Inmobiliaria i){
+
+        List<String> nombresGestores = new ArrayList<>();
+        for (int j = 0; j < i.getGestores().size(); j++){
+            nombresGestores.add(i.getGestores().get(j).getNombre());
+        }
+        return GetInmobiliariaGestorDetailDto.builder()
+                .id(i.getId())
+                .nombre(i.getNombre())
+                .avatar(i.getAvatar())
+                .numViviendas(i.getViviendas().size())
+                .nombresGestores(nombresGestores)
+                .build();
     }
 
     public GetInmobiliariaDto inmobiliariaToGetInmobiliariaDto(Inmobiliaria i){

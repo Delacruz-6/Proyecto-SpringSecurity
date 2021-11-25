@@ -97,28 +97,25 @@ public class UsuarioService extends BaseService<Usuario, Long, UsuarioRepository
     }
 
 
-    public Usuario saveGestor(CreatedGestorDto newUser) {
-        if (newUser.getPassword().contentEquals(newUser.getPassword2())) {
+
+    public Usuario saveGestor(CreatedGestorDto nuevoGestor){
+        Optional <Inmobiliaria> inmobiliaria= inmobiliariaService.findById(nuevoGestor.getIdInmobiliaria());
+        Inmobiliaria inmo = inmobiliaria.get();
+        if (nuevoGestor.getPassword().contentEquals(nuevoGestor.getPassword2())) {
             Usuario usuario = Usuario.builder()
-                    .password(passwordEncoder.encode(newUser.getPassword()))
-                    .avatar(newUser.getAvatar())
-                    .nombre(newUser.getNombre())
-                    .apellidos(newUser.getApellidos())
-                    .email(newUser.getEmail())
-                    .direccion(newUser.getDireccion())
-                    .telefono(newUser.getTelefono())
+                    .password(passwordEncoder.encode(nuevoGestor.getPassword()))
+                    .avatar(nuevoGestor.getAvatar())
+                    .nombre(nuevoGestor.getNombre())
+                    .apellidos(nuevoGestor.getApellidos())
+                    .email(nuevoGestor.getEmail())
+                    .telefono(nuevoGestor.getTelefono())
+                    .inmobiliaria(inmo)
+                    .direccion(nuevoGestor.getDireccion())
                     .rol(UserRole.GESTOR)
                     .build();
-            /*
-            Optional<Inmobiliaria> inmobiliaria = inmobiliariaService.findById(newUser.getIdInmobiliaria());
-            if (inmobiliaria.isPresent()){
-                usuario.addInmobiliaria(inmobiliaria.get());
-            } else{
-                usuario.addInmobiliaria(null);
-            }
-             */
-            return save(usuario);
 
+            usuario.addInmobiliaria(inmobiliaria.get());
+            return save(usuario);
         } else {
             return null;
         }

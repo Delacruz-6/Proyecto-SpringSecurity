@@ -6,6 +6,7 @@ import realEstate.salesianos.triana.dam.realEstate.users.models.Usuario;
 
 @Component
 public class InteresadoDtoConverter {
+    /*
     public Usuario createInteresadoDtoToInteresado(CreateInteresadoInteresaDto c){
         return new Usuario(
                 c.getNombre(),
@@ -16,6 +17,8 @@ public class InteresadoDtoConverter {
                 c.getTelefono()
         );
     }
+
+     */
 
     public GetInteresadoDto interesadoToGetInteresadoDto(Usuario i){
         GetInteresadoDto result = new GetInteresadoDto();

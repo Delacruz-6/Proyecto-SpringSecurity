@@ -17,8 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
-import realEstate.salesianos.triana.dam.realEstate.dtos.GetInmobiliariaDto;
-import realEstate.salesianos.triana.dam.realEstate.dtos.InmobiliariaDtoConverter;
+import realEstate.salesianos.triana.dam.realEstate.dtos.*;
 import realEstate.salesianos.triana.dam.realEstate.models.Inmobiliaria;
 import realEstate.salesianos.triana.dam.realEstate.services.InmobiliariaService;
 import org.springframework.web.bind.annotation.*;
@@ -82,15 +81,15 @@ public class InmobiliariaController {
             content = @Content),
     })
     @GetMapping("/{id}")
-    public ResponseEntity<List<GetInmobiliariaDto>> findOne(@PathVariable Long id){
+    public ResponseEntity<List<GetInmobiliariaGestorDetailDto>> findOne(@PathVariable Long id){
 
         Optional<Inmobiliaria> inmo = inmobiliariaService.findById(id);
         if (inmobiliariaService.findById(id).isEmpty()){
             return ResponseEntity.notFound().build();
         }
         else{
-            List<GetInmobiliariaDto> inmobiliariaDto = inmo.stream()
-                    .map(inmobiliariaDtoConverter::inmobiliariaToGetInmobiliariaViviendasDto)
+            List<GetInmobiliariaGestorDetailDto> inmobiliariaDto = inmo.stream()
+                    .map(inmobiliariaDtoConverter::inmobiliariaToGetInmobiliariaViviendasDtoDetail)
                     .collect(Collectors.toList());
             return ResponseEntity.ok().body(inmobiliariaDto);
         }
@@ -141,8 +140,9 @@ public class InmobiliariaController {
             Optional<Inmobiliaria> inmo = inmobiliariaService.findById(id);
             Inmobiliaria inmo1 = inmo.get();
             if (inmo.isPresent()){
-                inmo1.nullearInmobiliariaDeViviendas();
-                inmobiliariaService.deleteById(id);
+                //inmo1.nullearInmobiliariaDeGestores();
+                //usuarioService.deleteById(id);
+                //inmobiliariaService.findAll().
             }
             return ResponseEntity.noContent().build();
         } else{
@@ -183,25 +183,29 @@ public class InmobiliariaController {
                     content = @Content),
     })
     @PostMapping("/{id}/gestor")
-    public ResponseEntity<Inmobiliaria> createGestor(@RequestBody Usuario gestor,@PathVariable Long id, @AuthenticationPrincipal Usuario usuario) {
+    public ResponseEntity<GetInmobiliariaGestorPostDto> createGestor(@RequestBody CreateGestorDto dtoGestor , @PathVariable Long id, @AuthenticationPrincipal Usuario usuario) {
         Optional<Inmobiliaria> inmobiliariaOptional = inmobiliariaService.findById(id);
-        //List<Usuario> gestores= inmobiliariaOptional.get().getGestores();
         if(inmobiliariaOptional.isEmpty()){
             return ResponseEntity.notFound().build();
         }else if (usuario.getRol().equals(UserRole.ADMIN) ||
                 ((usuario.getRol().equals(UserRole.GESTOR) && (inmobiliariaOptional.get().getId().equals(usuario.getInmobiliaria().getId()))))) {
             Inmobiliaria inmobiliaria = inmobiliariaOptional.get();
-            gestor.addInmobiliaria(inmobiliaria);
-            usuarioService.save(gestor);
+            Usuario gestor = Usuario.builder()
+                    .id(dtoGestor.getIdGestor())
+                    .build();
+            Optional<Usuario> usuariodataOptional= usuarioService.findById(dtoGestor.getIdGestor());
+            Usuario usuarioData = usuariodataOptional.get();
+            usuarioData.addInmobiliaria(inmobiliaria);
+            usuarioService.save(usuarioData);
             inmobiliariaService.save(inmobiliaria);
+            GetInmobiliariaGestorPostDto iDto = inmobiliariaDtoConverter.inmobiliariaToGetInmobiliariaGestorDtoPost(gestor,inmobiliaria);
 
             return ResponseEntity
                     .status(HttpStatus.CREATED)
-                    .body(inmobiliariaService.save(inmobiliaria));
-            // crear dto que devuelva un gestor sin inmobiliarias
+                    .body(iDto);
 
         }else{
-            return new ResponseEntity<Inmobiliaria>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
 

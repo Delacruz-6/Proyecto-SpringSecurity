@@ -136,7 +136,6 @@ public class ViviendaController {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }else{
             return new ResponseEntity<List<?>>(HttpStatus.UNAUTHORIZED);
-
         }
     }
 
@@ -210,25 +209,24 @@ public class ViviendaController {
             description = "Ha introducido datos erroneos",
             content = @Content)
     })
-    // CAMBIAR INTERESADO POR USUARIO
     @PostMapping("/{id}/meinteresa")
-    public ResponseEntity<GetInteresadoInteresaDto> createInteresado(@PathVariable("id") Long id, @RequestBody CreateInteresadoInteresaDto dto){
-
+    public ResponseEntity<GetInteresadoInteresaDto> createInteresado(@PathVariable("id") Long id, @RequestBody CreateInteresadoInteresaDto dto, @AuthenticationPrincipal Usuario usuario){
 
         if (viviendaService.findById(id).isEmpty()){
             return ResponseEntity.notFound().build();
-        }
-        else {
+        }else if(!usuario.getRol().equals(UserRole.PROPIETARIO) ){
+            return new ResponseEntity<GetInteresadoInteresaDto>(HttpStatus.UNAUTHORIZED);
+        }else {
             Optional<Vivienda> v = viviendaService.findById(id);
-            Usuario propietario = propietarioDtoConverter.createInteresadoDtoToInteresado(dto);
+            //Usuario propietario = propietarioDtoConverter.createInteresadoDtoToInteresado(dto);
             Interesa interesa = Interesa.builder()
                     .mensaje(dto.getMensaje())
                     .build();
-            interesa.addToUsuario(propietario);
+            interesa.addToUsuario(usuario);
             interesa.addToVivienda(v.get());
-            usuarioService.save(propietario);
+            //usuarioService.save(usuario);
             interesaService.save(interesa);
-            GetInteresadoInteresaDto iDto = propietarioDtoConverter.interesadoToGetInteresadoInteresaDto(propietario,interesa);
+            GetInteresadoInteresaDto iDto = propietarioDtoConverter.interesadoToGetInteresadoInteresaDto(usuario,interesa);
             return ResponseEntity.status(HttpStatus.CREATED).body(iDto);
         }
     }
@@ -394,7 +392,6 @@ public class ViviendaController {
                     content = @Content),
     })
     @DeleteMapping("/{id1}/meInteresa/{id2}")
-    @CrossOrigin
     public ResponseEntity<?> deleteInteresDeInteresado(@PathVariable Long id1,@PathVariable Long id2) {
 
         if (viviendaService.findById(id1).isEmpty() || usuarioService.findById(id2).isEmpty() || interesaService.findByInteresaPk(id1,id2)==null) { //el método findByInteresaService debería no puede acceder al método isEmpty().

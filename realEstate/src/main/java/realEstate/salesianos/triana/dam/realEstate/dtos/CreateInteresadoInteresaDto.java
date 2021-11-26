@@ -11,9 +11,9 @@ import java.util.Date;
 @AllArgsConstructor @NoArgsConstructor
 public class CreateInteresadoInteresaDto {
 
-    private String nombre,apellidos,direccion,email,avatar;
-    private Integer telefono;
+    //private String nombre,apellidos,direccion,email,avatar;
+    //private Integer telefono;
     private Date createdDate;
     private String mensaje;
-    private Long viviendaId;
+    //private Long viviendaId;
 }

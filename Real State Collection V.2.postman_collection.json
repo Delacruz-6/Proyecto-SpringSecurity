@@ -16,7 +16,11 @@
 							"bearer": [
 								{
 									"key": "token",
+<<<<<<< HEAD
 									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjM3OTIzNDk2LCJ1c2VybmFtZSI6ImFkbWluQHNhbGVzLmNvbSIsInJvbCI6IkFETUlOIn0.C_kEajiJeNBGBiWyJKzFFqUmzenGuwqQBV3kPHPltrU",
+=======
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwiaWF0IjoxNjM3OTY0MzQ4LCJ1c2VybmFtZSI6InByb3BpZXRhcmlvQHNhbGVzLmNvbSIsInJvbCI6IlBST1BJRVRBUklPIn0.nDC9GtV03_6hvNbIdd9ujj8BJFdYxBl2Vk5xdrIe7dA",
+>>>>>>> 68c4d883b2cdd771887bcaa265b26eb765feda44
 									"type": "string"
 								}
 							]
@@ -54,7 +58,11 @@
 							"bearer": [
 								{
 									"key": "token",
+<<<<<<< HEAD
 									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjM3OTIzNDk2LCJ1c2VybmFtZSI6ImFkbWluQHNhbGVzLmNvbSIsInJvbCI6IkFETUlOIn0.C_kEajiJeNBGBiWyJKzFFqUmzenGuwqQBV3kPHPltrU",
+=======
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI3IiwiaWF0IjoxNjM3OTYyMTQ1LCJ1c2VybmFtZSI6InByb3BpZXRhcmlvQHNhbGVzLmNvbSIsInJvbCI6IlBST1BJRVRBUklPIn0.qLEyrIaCdr9gAYKhJEZ2mH5kgTEe9AI-VOjYGAQNanY",
+>>>>>>> 68c4d883b2cdd771887bcaa265b26eb765feda44
 									"type": "string"
 								}
 							]
@@ -71,7 +79,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{apiBaseUrl}}/vivienda/1/inmobiliaria/1",
+							"raw": "{{apiBaseUrl}}/vivienda/1/inmobiliaria/3",
 							"host": [
 								"{{apiBaseUrl}}"
 							],
@@ -79,7 +87,7 @@
 								"vivienda",
 								"1",
 								"inmobiliaria",
-								"1"
+								"3"
 							]
 						}
 					},
@@ -88,6 +96,16 @@
 				{
 					"name": "Delete vivienda/id/inmobiliaria",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5IiwiaWF0IjoxNjM3OTQ5MDU0LCJ1c2VybmFtZSI6ImFkbWluMUBzYWxlcy5jb20iLCJyb2wiOiJBRE1JTiJ9.cIcOmwNrNv6i0psLKxQDzinPP1gg-cMV70rqMkdAKPE",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
@@ -113,7 +131,11 @@
 							"bearer": [
 								{
 									"key": "token",
+<<<<<<< HEAD
 									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjM3OTIzNDk2LCJ1c2VybmFtZSI6ImFkbWluQHNhbGVzLmNvbSIsInJvbCI6IkFETUlOIn0.C_kEajiJeNBGBiWyJKzFFqUmzenGuwqQBV3kPHPltrU",
+=======
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5IiwiaWF0IjoxNjM3OTQ5MDU0LCJ1c2VybmFtZSI6ImFkbWluMUBzYWxlcy5jb20iLCJyb2wiOiJBRE1JTiJ9.cIcOmwNrNv6i0psLKxQDzinPP1gg-cMV70rqMkdAKPE",
+>>>>>>> 68c4d883b2cdd771887bcaa265b26eb765feda44
 									"type": "string"
 								}
 							]
@@ -201,6 +223,16 @@
 				{
 					"name": "FindTopVivienda",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwiaWF0IjoxNjM3OTY0MzQ4LCJ1c2VybmFtZSI6InByb3BpZXRhcmlvQHNhbGVzLmNvbSIsInJvbCI6IlBST1BJRVRBUklPIn0.nDC9GtV03_6hvNbIdd9ujj8BJFdYxBl2Vk5xdrIe7dA",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -361,7 +393,11 @@
 							"bearer": [
 								{
 									"key": "token",
+<<<<<<< HEAD
 									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI3IiwiaWF0IjoxNjM3OTI2NzU2LCJ1c2VybmFtZSI6ImFkbWluMkBzYWxlcy5jb20iLCJyb2wiOiJBRE1JTiJ9.j9CmxBsmK5M8YhKSD-7ZduAWBf9h78bv3vBjPaFc17c",
+=======
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjM3OTY3MTMxLCJ1c2VybmFtZSI6ImFkbWluMUBzYWxlcy5jb20iLCJyb2wiOiJBRE1JTiJ9.ywefPVPWB1Qwn5zciSOBlgPUZtl3kv4toWeUov2vsno",
+>>>>>>> 68c4d883b2cdd771887bcaa265b26eb765feda44
 									"type": "string"
 								}
 							]
@@ -398,7 +434,11 @@
 							"bearer": [
 								{
 									"key": "token",
+<<<<<<< HEAD
 									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMCIsImlhdCI6MTYzNzkyNjgxNCwidXNlcm5hbWUiOiJnZXN0b3JAc2FsZXMuY29tIiwicm9sIjoiR0VTVE9SIn0.p2ftG4MXQXHQAx_gXHwk9QraxhuY4XII4dyritfkgY0",
+=======
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjM3OTU1MjM4LCJ1c2VybmFtZSI6ImFkbWluQHNhbGVzLmNvbSIsInJvbCI6IkFETUlOIn0.VBHXawZtPH8JVY-kNeCHJs_Qub6XwCJQOTIKJdl1y-4",
+>>>>>>> 68c4d883b2cdd771887bcaa265b26eb765feda44
 									"type": "string"
 								}
 							]
@@ -426,7 +466,11 @@
 							"bearer": [
 								{
 									"key": "token",
+<<<<<<< HEAD
 									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMCIsImlhdCI6MTYzNzkyNjgxNCwidXNlcm5hbWUiOiJnZXN0b3JAc2FsZXMuY29tIiwicm9sIjoiR0VTVE9SIn0.p2ftG4MXQXHQAx_gXHwk9QraxhuY4XII4dyritfkgY0",
+=======
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjM3OTYxOTMyLCJ1c2VybmFtZSI6ImFkbWluQHNhbGVzLmNvbSIsInJvbCI6IkFETUlOIn0.Q-5s9CMGGxdVj5beDZV5leal-jIm1m7dpzTK7mb69JI",
+>>>>>>> 68c4d883b2cdd771887bcaa265b26eb765feda44
 									"type": "string"
 								}
 							]
@@ -434,13 +478,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{apiBaseUrl}}/inmobiliaria/3",
+							"raw": "{{apiBaseUrl}}/inmobiliaria/2",
 							"host": [
 								"{{apiBaseUrl}}"
 							],
 							"path": [
 								"inmobiliaria",
-								"3"
+								"2"
 							]
 						}
 					},
@@ -475,14 +519,22 @@
 					"response": []
 				},
 				{
+<<<<<<< HEAD
 					"name": "Post gestor inmobiliaria",
+=======
+					"name": "POST inmobiliaria gestor",
+>>>>>>> 68c4d883b2cdd771887bcaa265b26eb765feda44
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
+<<<<<<< HEAD
 									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI3IiwiaWF0IjoxNjM3OTI2ODY2LCJ1c2VybmFtZSI6ImFkbWluMkBzYWxlcy5jb20iLCJyb2wiOiJBRE1JTiJ9.-oKu285A-bpjgY79kgOxzmjoo0uiHN3TPYGmAff-h9E",
+=======
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzMSIsImlhdCI6MTYzNzk4NjQzOSwidXNlcm5hbWUiOiJhZG1pbjFAc2FsZXMuY29tIiwicm9sIjoiQURNSU4ifQ.N2Ah3lRMwp9QwrqKIlBBOMfZVThYOd0Z25U3KWXljWo",
+>>>>>>> 68c4d883b2cdd771887bcaa265b26eb765feda44
 									"type": "string"
 								}
 							]
@@ -491,7 +543,11 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
+<<<<<<< HEAD
 							"raw": "{\r\n    \"username\" : \"Arturito\",\r\n    \"avatar\" : \"kfdjkgjkgmgf.jpg\",\r\n    \"nombre\" : \"Arturo\",\r\n    \"apellidos\" : \"Perez Reverte\",\r\n    \"email\" : \"gestor256@sales.com\",\r\n    \"password\" : \"1234\",\r\n    \"password2\" : \"1234\",\r\n    \"direccion\": \"C/ sin numero\",\r\n    \"telefono\": 673457845\r\n}",
+=======
+							"raw": "{\r\n    \"idGestor\" : 2\r\n}",
+>>>>>>> 68c4d883b2cdd771887bcaa265b26eb765feda44
 							"options": {
 								"raw": {
 									"language": "json"
@@ -511,6 +567,38 @@
 						}
 					},
 					"response": []
+<<<<<<< HEAD
+=======
+				},
+				{
+					"name": "Delete gestor inmobiliaria",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzMSIsImlhdCI6MTYzNzk4NjQzOSwidXNlcm5hbWUiOiJhZG1pbjFAc2FsZXMuY29tIiwicm9sIjoiQURNSU4ifQ.N2Ah3lRMwp9QwrqKIlBBOMfZVThYOd0Z25U3KWXljWo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{apiBaseUrl}}/inmobiliaria/gestor/1",
+							"host": [
+								"{{apiBaseUrl}}"
+							],
+							"path": [
+								"inmobiliaria",
+								"gestor",
+								"1"
+							]
+						}
+					},
+					"response": []
+>>>>>>> 68c4d883b2cdd771887bcaa265b26eb765feda44
 				}
 			]
 		},
@@ -520,16 +608,26 @@
 				{
 					"name": "findOne interesado",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzMSIsImlhdCI6MTYzNzk4NzM3NSwidXNlcm5hbWUiOiJhZG1pbkBzYWxlcy5jb20iLCJyb2wiOiJBRE1JTiJ9.99RubtvkQPwwcwmQ2kg6UWHBD0uR0435-Gwk5dQhQ8g",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{apiBaseUrl}}/interesado/4",
+							"raw": "{{apiBaseUrl}}/interesado/8",
 							"host": [
 								"{{apiBaseUrl}}"
 							],
 							"path": [
 								"interesado",
-								"4"
+								"8"
 							]
 						}
 					},
@@ -538,6 +636,16 @@
 				{
 					"name": "FindAll Interesado",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzMSIsImlhdCI6MTYzNzk4NzM3NSwidXNlcm5hbWUiOiJhZG1pbkBzYWxlcy5jb20iLCJyb2wiOiJBRE1JTiJ9.99RubtvkQPwwcwmQ2kg6UWHBD0uR0435-Gwk5dQhQ8g",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -556,10 +664,20 @@
 				{
 					"name": "InteresPorUnaVivienda",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzMSIsImlhdCI6MTYzNzk4NzM3NSwidXNlcm5hbWUiOiJhZG1pbkBzYWxlcy5jb20iLCJyb2wiOiJBRE1JTiJ9.99RubtvkQPwwcwmQ2kg6UWHBD0uR0435-Gwk5dQhQ8g",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{apiBaseUrl}}/vivienda/9/meInteresa/170",
+							"raw": "{{apiBaseUrl}}/vivienda/9/meInteresa/",
 							"host": [
 								"{{apiBaseUrl}}"
 							],
@@ -567,7 +685,7 @@
 								"vivienda",
 								"9",
 								"meInteresa",
-								"170"
+								""
 							]
 						}
 					},
@@ -576,11 +694,21 @@
 				{
 					"name": "Vivienda existente Interesado nuevo",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjM3OTUxMzYwLCJ1c2VybmFtZSI6InBydWViYTJAc2FsZXMuY29tIiwicm9sIjoiUFJPUElFVEFSSU8ifQ.WpCTNxbAe9aHqCW8gTTRGAwarelDh0mis6ICDOPKXvs",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nombre\":\"Pepito\",\r\n    \"apellidos\":\"Perez\",\r\n    \"direccion\":\"C/ Nunca jamas\",\r\n    \"email\":\"PepitoPerez@gmail.com\",\r\n    \"telefono\":\"654737289\",\r\n    \"avatar\":\"assets/usuarios/u8.jpg\",\r\n    \"mensaje\":\"Esta casa literalmente es la casa de mis sueños\",\r\n    \"viviendaId\":\"1\"\r\n}",
+							"raw": "{\r\n    \"mensaje\":\"Esta casa literalmente es la casa de mis sueños\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -588,13 +716,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{apiBaseUrl}}/vivienda/1/meinteresa",
+							"raw": "{{apiBaseUrl}}/vivienda/6/meinteresa",
 							"host": [
 								"{{apiBaseUrl}}"
 							],
 							"path": [
 								"vivienda",
-								"1",
+								"6",
 								"meinteresa"
 							]
 						}

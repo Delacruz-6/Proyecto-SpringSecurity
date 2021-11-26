@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import realEstate.salesianos.triana.dam.realEstate.dtos.GetInteresadoDto;
 import realEstate.salesianos.triana.dam.realEstate.dtos.GetInteresadoDto2;
 import realEstate.salesianos.triana.dam.realEstate.dtos.InteresadoDtoConverter;
+import realEstate.salesianos.triana.dam.realEstate.users.models.UserRole;
 import realEstate.salesianos.triana.dam.realEstate.users.models.Usuario;
 import realEstate.salesianos.triana.dam.realEstate.users.services.UsuarioService;
 import realEstate.salesianos.triana.dam.realEstate.util.PaginationLinksUtil;
@@ -49,20 +51,25 @@ public class InteresadoController {
             @ApiResponse(responseCode = "404",
                     description = "No se ha encontrado ningun interesado.",
                     content = @Content),
+            @ApiResponse(responseCode = "401",
+                    description = "Usuario no autenticado",
+                    content = @Content),
     })
 
     @GetMapping("/")
     public ResponseEntity<?> findAll(@PageableDefault(size = 10, page = 0) Pageable pageable,
-                                     HttpServletRequest request) {
+                                     HttpServletRequest request, @AuthenticationPrincipal Usuario usuario) {
         Page<Usuario> data = usuarioService.findAll(pageable);
 
         if(data.isEmpty()){
             return ResponseEntity.notFound().build();
-        }else {
+        }else if(usuario.getRol().equals(UserRole.ADMIN)){
             Page<GetInteresadoDto2> result = data
                     .map(interesadoDtoConverter::interesadoToGetInteresadoDto2);
             UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(request.getRequestURL().toString());
             return ResponseEntity.ok().header("link", paginationLinksUtil.createLinkHeader(result, uriBuilder)).body(result);
+        }else{
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
 
@@ -75,19 +82,25 @@ public class InteresadoController {
             @ApiResponse(responseCode = "404",
                     description = "No se ha encontrado ningun interesado con ese identificador",
                     content = @Content),
+            @ApiResponse(responseCode = "401",
+                    description = "Usuario no autenticado",
+                    content = @Content),
     })
     @GetMapping("/{id}")
-    public ResponseEntity<List<GetInteresadoDto>> findOne (@PathVariable("id") Long id){
+    public ResponseEntity<List<GetInteresadoDto>> findOne (@PathVariable("id") Long id, @AuthenticationPrincipal Usuario usuario){
 
         Optional<Usuario> interesadoOptional = usuarioService.findById(id);
 
         if(interesadoOptional.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }else {
+        }else if(usuario.getRol().equals(UserRole.ADMIN)||(interesadoOptional.get().getRol().equals(usuario.getRol()) &&
+                interesadoOptional.get().getId().equals(usuario.getId()))) {
             List<GetInteresadoDto> interesadoDto = interesadoOptional
-                    .stream().map(interesadoDtoConverter ::interesadoToGetInteresadoDto)
+                    .stream().map(interesadoDtoConverter::interesadoToGetInteresadoDto)
                     .collect(Collectors.toList());
             return ResponseEntity.ok().body(interesadoDto);
+        }else {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
 

@@ -88,7 +88,11 @@ public class ViviendaController {
                             schema = @Schema(implementation = Vivienda.class))}),
             @ApiResponse(responseCode = "404",
                     description = "No se ha encontrado una vivienda con ese id.",
-                    content = @Content),})
+                    content = @Content),
+            @ApiResponse(responseCode = "401",
+                    description = "Usuario no autenticado",
+                    content = @Content),
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id, @AuthenticationPrincipal Usuario usuario) {
         Usuario propietario = usuarioService.findPropietario(id).get();
@@ -115,6 +119,9 @@ public class ViviendaController {
             @ApiResponse(responseCode = "404",
                     description = "No se ha encontrado una inmobiliaria en esta vivienda con ese id.",
                     content = @Content),
+            @ApiResponse(responseCode = "401",
+                    description = "Usuario no autenticado",
+                    content = @Content),
     })
     @DeleteMapping("/{id1}/inmobiliaria")
     public ResponseEntity<?> deleteInmobiliariaToVivienda(@PathVariable Long id1, @AuthenticationPrincipal Usuario usuario) {
@@ -136,7 +143,6 @@ public class ViviendaController {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }else{
             return new ResponseEntity<List<?>>(HttpStatus.UNAUTHORIZED);
-
         }
     }
 
@@ -148,6 +154,9 @@ public class ViviendaController {
                         schema = @Schema(implementation = Vivienda.class))}),
         @ApiResponse(responseCode = "404",
                 description = "No se ha encontrado ninguna vivienda",
+                content = @Content),
+        @ApiResponse(responseCode = "401",
+                description = "Usuario no autenticado",
                 content = @Content),
 })
     @GetMapping("/")
@@ -183,6 +192,9 @@ public class ViviendaController {
             @ApiResponse(responseCode = "404",
                     description = "No se ha encontrado la vivienda con el id proporcionado.",
                     content = @Content),
+            @ApiResponse(responseCode = "401",
+                    description = "Usuario no autenticado",
+                    content = @Content),
     })
     @GetMapping("{id}")
     public ResponseEntity<?> detalleVivienda (
@@ -208,69 +220,31 @@ public class ViviendaController {
             content = @Content),
             @ApiResponse(responseCode = "400",
             description = "Ha introducido datos erroneos",
-            content = @Content)
+            content = @Content),
+            @ApiResponse(responseCode = "401",
+                    description = "Usuario no autenticado",
+                    content = @Content)
     })
-    // CAMBIAR INTERESADO POR USUARIO
     @PostMapping("/{id}/meinteresa")
-    public ResponseEntity<GetInteresadoInteresaDto> createInteresado(@PathVariable("id") Long id, @RequestBody CreateInteresadoInteresaDto dto){
-
+    public ResponseEntity<GetInteresadoInteresaDto> createInteresado(@PathVariable("id") Long id, @RequestBody CreateInteresadoInteresaDto dto, @AuthenticationPrincipal Usuario usuario){
 
         if (viviendaService.findById(id).isEmpty()){
             return ResponseEntity.notFound().build();
-        }
-        else {
+        }else if(!usuario.getRol().equals(UserRole.PROPIETARIO) ){
+            return new ResponseEntity<GetInteresadoInteresaDto>(HttpStatus.UNAUTHORIZED);
+        }else {
             Optional<Vivienda> v = viviendaService.findById(id);
-            Usuario propietario = propietarioDtoConverter.createInteresadoDtoToInteresado(dto);
             Interesa interesa = Interesa.builder()
                     .mensaje(dto.getMensaje())
                     .build();
-            interesa.addToUsuario(propietario);
+            interesa.addToUsuario(usuario);
             interesa.addToVivienda(v.get());
-            usuarioService.save(propietario);
             interesaService.save(interesa);
-            GetInteresadoInteresaDto iDto = propietarioDtoConverter.interesadoToGetInteresadoInteresaDto(propietario,interesa);
+            GetInteresadoInteresaDto iDto = propietarioDtoConverter.interesadoToGetInteresadoInteresaDto(usuario,interesa);
             return ResponseEntity.status(HttpStatus.CREATED).body(iDto);
         }
     }
 
-    @Operation(summary = "Se añade a una vivienda existente un interesado existente")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "201",
-            description = "Se añade correctamente el interesado a la vivienda",
-            content = {@Content(mediaType = "application/json",
-            schema = @Schema(implementation = Usuario.class))}),
-            @ApiResponse(responseCode = "400",
-            description = "Ha introducido datos erroneos",
-            content = @Content),
-            @ApiResponse(responseCode = "404",
-            description = "No se encuentra la vivienda o el interesado",
-            content = @Content),
-    })
-    @PostMapping("/{id}/meinteresa/{id2}")
-    public ResponseEntity<GetPropietarioInteresaVivienda> createInteresadoExistente(@PathVariable Long id, @PathVariable Long id2,
-                                                                                   @RequestBody CreateInteresadoInteresaVivienda g){
-
-        Optional<Vivienda> vivOp = viviendaService.findById(id);
-        Optional<Usuario> inteOp = usuarioService.findById(id2);
-        if (viviendaService.findById(id).isEmpty() || usuarioService.findById(id2).isEmpty()){
-            return ResponseEntity.notFound().build();
-        }
-        else{
-            Vivienda v = vivOp.get();
-            Usuario i = inteOp.get();
-            Interesa interesa = Interesa.builder()
-                    .mensaje(g.getMensaje())
-                    .build();
-            interesa.addToUsuario(i);
-            interesa.addToVivienda(v);
-            usuarioService.save(i);
-            interesaService.save(interesa);
-            GetPropietarioInteresaVivienda interesadoInteresaVivienda = propietarioDtoConverter.interesadoToGetInteresadoInteresaVivienda(interesa);
-            return ResponseEntity.status(HttpStatus.CREATED).body(interesadoInteresaVivienda);
-        }
-
-
-    }
 
     @Operation(summary = "Se añade una inmobiliaria existente a una vivienda existente")
     @ApiResponses(value = {
@@ -283,7 +257,10 @@ public class ViviendaController {
                     content = @Content),
             @ApiResponse(responseCode = "400",
                     description = "Los datos introducidos son erroneos",
-                    content = @Content)
+                    content = @Content),
+            @ApiResponse(responseCode = "401",
+                    description = "Usuario no autenticado",
+                    content = @Content),
     })
     @PostMapping("/{id1}/inmobiliaria/{id2}")
     public ResponseEntity<?> addViviendaAInmobiliaria ( @PathVariable Long id1, @PathVariable Long id2, @AuthenticationPrincipal Usuario usuario){
@@ -316,7 +293,10 @@ public class ViviendaController {
                             schema = @Schema(implementation = Vivienda.class))}),
             @ApiResponse(responseCode = "404",
                     description = "No se ha encontrado ninguna vivienda.",
-                    content = @Content)
+                    content = @Content),
+            @ApiResponse(responseCode = "401",
+                    description = "Usuario no autenticado",
+                    content = @Content),
     })
     @GetMapping("/top")
     public ResponseEntity<List<?>> buscarViviendaParametros (
@@ -356,7 +336,10 @@ public class ViviendaController {
                         content = @Content),
                 @ApiResponse(responseCode = "400",
                         description = "Los datos introducidos son erroneos",
-                        content = @Content)
+                        content = @Content),
+                @ApiResponse(responseCode = "401",
+                        description = "Usuario no autenticado",
+                        content = @Content),
         })
     @PutMapping("/{id}")
     public ResponseEntity<?> editVivienda (
@@ -392,18 +375,23 @@ public class ViviendaController {
             @ApiResponse(responseCode = "404",
                     description = "No se ha encontrado una vivienda con el id aportado.",
                     content = @Content),
+            @ApiResponse(responseCode = "401",
+                    description = "Usuario no autenticado",
+                    content = @Content),
     })
-    @DeleteMapping("/{id1}/meInteresa/{id2}")
-    @CrossOrigin
-    public ResponseEntity<?> deleteInteresDeInteresado(@PathVariable Long id1,@PathVariable Long id2) {
-
-        if (viviendaService.findById(id1).isEmpty() || usuarioService.findById(id2).isEmpty() || interesaService.findByInteresaPk(id1,id2)==null) { //el método findByInteresaService debería no puede acceder al método isEmpty().
+    @DeleteMapping("/{id1}/meInteresa/")
+    public ResponseEntity<?> deleteInteresDeInteresado(@PathVariable Long id1, @AuthenticationPrincipal Usuario usuario) {
+            Optional<Vivienda> viviendaOptional = viviendaService.findById(id1);
+        if (viviendaService.findById(id1).isEmpty() || usuarioService.findById(usuario.getId()).isEmpty() || interesaService.findByInteresaPk(id1,usuario.getId())==null) { //el método findByInteresaService debería no puede acceder al método isEmpty().
             return ResponseEntity.notFound().build();
 
-        } else {
-            interesaService.eliminarInteresaPorPk(id1,id2);
+        } else if (usuario.getRol().equals(UserRole.PROPIETARIO) && usuario.getId().equals(viviendaOptional.get().getPropietario().getId()) ) {
+            interesaService.eliminarInteresaPorPk(id1,usuario.getId());
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }else
+
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
 
-}
+

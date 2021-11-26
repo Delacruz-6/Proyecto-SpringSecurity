@@ -131,12 +131,13 @@ public class Usuario  implements UserDetails{
     public void addInmobiliaria( Inmobiliaria i){
         this.inmobiliaria= i;
         i.getGestores().add(this);
-
     }
     public void deleteInmobiliaria ( Inmobiliaria i){
         i.getGestores().remove(this);
         this.inmobiliaria = null;
     }
+
+
 
 
 

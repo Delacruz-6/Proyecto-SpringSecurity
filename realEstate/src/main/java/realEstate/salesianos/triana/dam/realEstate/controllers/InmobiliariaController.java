@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -41,7 +42,6 @@ public class InmobiliariaController {
     private final PaginationLinksUtil paginationLinksUtil;
     private final InmobiliariaService inmobiliariaService;
     private final InmobiliariaDtoConverter inmobiliariaDtoConverter;
-    private final ViviendaService viviendaService;
     private final UsuarioService usuarioService;
 
 
@@ -108,7 +108,7 @@ public class InmobiliariaController {
                     content = @Content),
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id,@AuthenticationPrincipal Usuario usuario){
+    public ResponseEntity<Inmobiliaria> delete(@PathVariable Long id,@AuthenticationPrincipal Usuario usuario){
         if (inmobiliariaService.findById(id).isEmpty()){
             return ResponseEntity.notFound().build();
         } else if(usuario.getRol().equals(UserRole.ADMIN)){
@@ -118,7 +118,7 @@ public class InmobiliariaController {
             inmobiliariaService.deleteById(id);
             return ResponseEntity.noContent().build();
         }else{
-            return new ResponseEntity<Inmobiliaria>(HttpStatus.FORBIDDEN);
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
     }
 
@@ -133,7 +133,7 @@ public class InmobiliariaController {
                     content = @Content)
     })
     @DeleteMapping("/gestor/{id}")
-    public ResponseEntity<?> deleteGestor(@PathVariable Long id, @AuthenticationPrincipal Usuario usuario){
+    public ResponseEntity<Usuario> deleteGestor(@PathVariable Long id, @AuthenticationPrincipal Usuario usuario){
         Optional<Inmobiliaria> inmobiliariaOptional = inmobiliariaService.findById(id);
         List<Usuario> gestores= inmobiliariaOptional.get().getGestores();
         if (inmobiliariaService.findById(id).isEmpty() || inmobiliariaService.findById(id).get().getGestores().isEmpty()){
@@ -149,7 +149,7 @@ public class InmobiliariaController {
             }
             return ResponseEntity.noContent().build();
         } else{
-            return new ResponseEntity<Inmobiliaria>(HttpStatus.FORBIDDEN);
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
     }
 
@@ -173,7 +173,7 @@ public class InmobiliariaController {
                 .status(HttpStatus.CREATED)
                 .body(inmobiliariaService.save(inmobiliaria));
     }else{
-            return new ResponseEntity<Inmobiliaria>(HttpStatus.FORBIDDEN);
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
     }
 
@@ -214,9 +214,38 @@ public class InmobiliariaController {
                     .body(iDto);
 
         }else{
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
     }
+
+    @Operation(summary = "Listar todos los gestores de una inmobiliaria.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Se listan todas las inmobiliarias",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Inmobiliaria.class))}),
+            @ApiResponse(responseCode = "404",
+                    description = "No se ha encontrado ninguna inmobiliaria.",
+                    content = @Content),
+    })
+    @GetMapping("/{id}/gestor")
+    public ResponseEntity<?> findAllGestores(@PageableDefault(size = 10, page = 0) Pageable pageable,
+                                     HttpServletRequest request, @PathVariable Long id, @AuthenticationPrincipal Usuario usuario) {
+        List<Usuario> data = inmobiliariaService.findById(id).get().getGestores();
+        Page<Usuario> pages = new PageImpl<Usuario>(data, pageable, data.size());
+        if(usuario.getRol().equals(UserRole.GESTOR) && !usuario.getInmobiliaria().getGestores().equals(data)){
+            Page<GetGestorInmobiliaria> result = pages.map(inmobiliariaDtoConverter::gestoresToGetGestorDto);
+
+            UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(request.getRequestURL().toString());
+            return ResponseEntity.ok().header("link", paginationLinksUtil.createLinkHeader(result, uriBuilder)).body(result);
+        }
+        else if(data.isEmpty()){
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+    }
+
 
 
 }

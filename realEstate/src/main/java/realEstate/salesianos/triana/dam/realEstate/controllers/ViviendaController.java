@@ -108,7 +108,7 @@ public class ViviendaController {
             viviendaService.deleteById(id);
             return ResponseEntity.noContent().build();
         } else{
-            return new ResponseEntity<List<?>>(HttpStatus.FORBIDDEN);
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 
         }
     }
@@ -145,7 +145,7 @@ public class ViviendaController {
             viviendaService.save(vivienda);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }else{
-            return new ResponseEntity<List<?>>(HttpStatus.FORBIDDEN);
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
     }
 
@@ -283,7 +283,7 @@ public class ViviendaController {
             GetViviendaInmobiliariaDto viviendaDto = viviendaDtoConverter.viviendaToGetViviendaInmobiliariaDto(vivienda, inmobiliaria);
             return ResponseEntity.status(HttpStatus.CREATED).body(viviendaDto);
         }else {
-            return new ResponseEntity<List<?>>(HttpStatus.FORBIDDEN);
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
 
     }
@@ -360,7 +360,7 @@ public class ViviendaController {
             return ResponseEntity.status(HttpStatus.CREATED).body(viviendaService.encontrarViviendaPorId(id).map(viviendaDtoConverter::viviendaToGetViviendaDetailDto));
         }
             else{
-            return new ResponseEntity<List<?>>(HttpStatus.FORBIDDEN);
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 
     }
 
@@ -390,7 +390,7 @@ public class ViviendaController {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }else
 
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
     }
 

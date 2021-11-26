@@ -98,7 +98,7 @@ public class PropietarioController {
                     .collect(Collectors.toList());
             return ResponseEntity.ok().body(propietarioDto);
         }else {
-            return new ResponseEntity<List<?>>(HttpStatus.FORBIDDEN);
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
     }
 
@@ -130,6 +130,6 @@ public class PropietarioController {
             propietario.nullearPropietarioDeViviendas();
             repository.deleteById(id);
         }
-        return new ResponseEntity<List<?>>(HttpStatus.FORBIDDEN);
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 }

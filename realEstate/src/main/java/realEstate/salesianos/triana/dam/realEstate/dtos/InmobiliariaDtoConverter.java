@@ -57,6 +57,19 @@ public class InmobiliariaDtoConverter {
         return result;
 
     }
+    public GetGestorInmobiliaria gestoresToGetGestorDto(Usuario u){
+
+        return GetGestorInmobiliaria.builder()
+                .id(u.getId())
+                .nombre(u.getNombre())
+                .apellidos(u.getApellidos())
+                .dirrecion(u.getDireccion())
+                .avatar(u.getAvatar())
+                .telefono(u.getTelefono())
+                .build();
+
+    }
+
     public GetInmobiliariaViviendasDto inmobiliariaToGetInmobiliariaViviendasDto(Inmobiliaria i){
         List<String> nombres = new ArrayList<>();
         for (int j = 0; j < i.getViviendas().size(); j++){

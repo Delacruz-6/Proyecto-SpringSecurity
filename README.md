@@ -44,7 +44,7 @@
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "vivienda")
     private List<Interesa> intereses = new ArrayList<>();
 ```
-#### Interesado
+#### Usuario (interesado)
 ```sh
 @Builder.Default
     @OneToMany(mappedBy = "interesado")
@@ -86,7 +86,7 @@ public class InteresaPK implements Serializable {
 ```
 
 ## ManyToOne bidireccional (Propietario -> Vivienda)
-#### Propietario
+#### Usuario (propietario)
 ```sh
 @OneToMany(mappedBy = "propietario")
     private List<Vivienda> viviendas = new ArrayList<>();
@@ -97,9 +97,5 @@ public class InteresaPK implements Serializable {
     @JoinColumn(name = "propietario_id", foreignKey = @ForeignKey(name = "FK_VIVIENDA_PROPIETARIO"))
     private Propietario propietario;
 ```
->## Herencia
-Hemos creido conveniente que la clase Persona sea abstracta porque dadas las peticiones y el esquema proporcionado por el profesorado, nunca se va a instanciar la clase Persona, simplemente esta extiende a las otras dos clases (propietario y interesado). Para ello utilizaremos la anotacion @MappedSuperclass con la cual definimos que sera usada como clase base y no se trata como una entidad en si en la bbdd.
-```sh
-@MappedSuperclass
-public abstract class Persona 
+
 ```

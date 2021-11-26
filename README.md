@@ -23,8 +23,9 @@
 | Models | [RealEstate/Models](https://github.com/Delacruz-6/Proyecto-SpringSecurity/tree/main/realEstate/src/main/java/realEstate/salesianos/triana/dam/realEstate/models) |
 | Repositories | [RealEstate/Repositories](https://github.com/Delacruz-6/Proyecto-SpringSecurity/tree/main/realEstate/src/main/java/realEstate/salesianos/triana/dam/realEstate/repositories)
 | Services | [RealEstate/Services](https://github.com/Delacruz-6/Proyecto-SpringSecurity/tree/main/realEstate/src/main/java/realEstate/salesianos/triana/dam/realEstate/services)
-| Util | [RealEstate/Utils](https://github.com/Delacruz-6/Proyecto-SpringSecurity/tree/main/realEstate/src/main/java/realEstate/salesianos/triana/dam/realEstate/utils)
+| Util | [RealEstate/Utils](https://github.com/Delacruz-6/Proyecto-SpringSecurity/tree/main/realEstate/src/main/java/realEstate/salesianos/triana/dam/realEstate/util)
 | Config | [RealEstate/Config](https://github.com/Delacruz-6/Proyecto-SpringSecurity/tree/main/realEstate/src/main/java/realEstate/salesianos/triana/dam/realEstate/config)
+| Security | [RealEstate/Security](https://github.com/Delacruz-6/Proyecto-SpringSecurity/tree/main/realEstate/src/main/java/realEstate/salesianos/triana/dam/realEstate/Security)
 
 >## Entidades
   Contamos con 5 entidades que son:

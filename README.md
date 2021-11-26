@@ -19,12 +19,12 @@
 | Paquete | URL |
 | ------ | ------ |
 | Controllers | [RealEstate/Controllers](https://github.com/miguelcamposedu/g4-realstate-backend/tree/master/realEstate/src/main/java/realEstate/salesianos/triana/dam/realEstate/controllers) |
-| DTOs | [RealEstate/DTOs](https://github.com/miguelcamposedu/g4-realstate-backend/tree/master/realEstate/src/main/java/realEstate/salesianos/triana/dam/realEstate/DTOs) |
-| Models | [RealEstate/Models](https://github.com/miguelcamposedu/g4-realstate-backend/tree/master/realEstate/src/main/java/realEstate/salesianos/triana/dam/realEstate/models) |
-| Repositories | [RealEstate/Repositories](https://github.com/miguelcamposedu/g4-realstate-backend/tree/master/realEstate/src/main/java/realEstate/salesianos/triana/dam/realEstate/repositories)
-| Services | [RealEstate/Services](https://github.com/miguelcamposedu/g4-realstate-backend/tree/master/realEstate/src/main/java/realEstate/salesianos/triana/dam/realEstate/services)
-| Util | [RealEstate/Utils](https://github.com/miguelcamposedu/g4-realstate-backend/tree/master/realEstate/src/main/java/realEstate/salesianos/triana/dam/realEstate/utils)
-| Config | [RealEstate/Config](https://github.com/miguelcamposedu/g4-realstate-backend/tree/master/realEstate/src/main/java/realEstate/salesianos/triana/dam/realEstate/config)
+| DTOs | [RealEstate/DTOs](https://github.com/Delacruz-6/Proyecto-SpringSecurity/tree/main/realEstate/src/main/java/realEstate/salesianos/triana/dam/realEstate/dtos) |
+| Models | [RealEstate/Models](https://github.com/Delacruz-6/Proyecto-SpringSecurity/tree/main/realEstate/src/main/java/realEstate/salesianos/triana/dam/realEstate/models) |
+| Repositories | [RealEstate/Repositories](https://github.com/Delacruz-6/Proyecto-SpringSecurity/tree/main/realEstate/src/main/java/realEstate/salesianos/triana/dam/realEstate/repositories)
+| Services | [RealEstate/Services](https://github.com/Delacruz-6/Proyecto-SpringSecurity/tree/main/realEstate/src/main/java/realEstate/salesianos/triana/dam/realEstate/services)
+| Util | [RealEstate/Utils](https://github.com/Delacruz-6/Proyecto-SpringSecurity/tree/main/realEstate/src/main/java/realEstate/salesianos/triana/dam/realEstate/utils)
+| Config | [RealEstate/Config](https://github.com/Delacruz-6/Proyecto-SpringSecurity/tree/main/realEstate/src/main/java/realEstate/salesianos/triana/dam/realEstate/config)
 
 >## Entidades
   Contamos con 5 entidades que son:

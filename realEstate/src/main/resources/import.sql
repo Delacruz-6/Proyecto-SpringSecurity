@@ -20,7 +20,7 @@ insert into inmobiliaria (id, avatar, email, nombre, telefono) values (19, 'http
 insert into inmobiliaria (id, avatar, email, nombre, telefono) values (20, 'https://robohash.org/istesitrerum.png?size=50x50&set=set1', 'kancliffj@state.tx.us', 'Huels, Denesik and Bode', 666975772);
 
 
-
+--PROPEITARIO  -- PASSWORD:hola
 insert into users (id, apellidos, avatar, direccion, email, nombre, password, rol, telefono) values (1, 'Schwander', 'https://robohash.org/laborumipsaea.png?size=50x50&set=set1', '9455 Lake View Hill', 'tschwandedr0@dagdondesign.com', 'Tessi', '$2a$09$NuVqDIXwwIUvr8Ma8cebSOxNFOtUHQx9LDdyIHoxiSuycRZRqmi36', 1, 689084011);
 insert into users (id, apellidos, avatar, direccion, email, nombre, password, rol, telefono) values (2, 'Mallison', 'https://robohash.org/ipsaporroitaque.png?size=50x50&set=set1', '979 Valley Edge Place', 'gmaldlison1@ow.ly', 'Gallagher',  '$2a$12$WkhJcPFmN7TKOCJaDqmx9uu9mXgVOpoI40E3QtQguiqmrAxzIJfNa' , 1, 677489925);
 insert into users (id, apellidos, avatar, direccion, email, nombre, password, rol, telefono) values (3, 'Musico', 'https://robohash.org/quieaerror.png?size=50x50&set=set1', '5113 Dennis Street', 'dmusicdo2@hatdena.ne.jp', 'Dino',  '$2a$12$WkhJcPFmN7TKOCJaDqmx9uu9mXgVOpoI40E3QtQguiqmrAxzIJfNa', 1, 606587939);
@@ -44,18 +44,21 @@ insert into users (id, apellidos, avatar, direccion, email, nombre, password, ro
 insert into users (id, apellidos, avatar, direccion, email, nombre, password, rol, telefono, inmobiliaria_id) values (21, 'Kaley', 'https://robohash.org/ullamexcepturicum.png?size=50x50&set=set1', '290 Spaight Terrace', 'mkaleygd@ca.gov', 'Merridie',  '$2a$12$WkhJcPFmN7TKOCJaDqmx9uu9mXgVOpoI40E3QtQguiqmrAxzIJfNa' , 2, 626850425,1);
 
 
-
+--ADMIN  -- PASSWORD:hola
 insert into users (id, apellidos, avatar, direccion, email, nombre, password, rol, telefono) values (22, 'Ivashov', 'https://robohash.org/nametlibero.png?size=50x50&set=set1', '85054 Clyde Gallagher Hill', 'mivashovl@gov.uk', 'Marthe',  '$2a$12$WkhJcPFmN7TKOCJaDqmx9uu9mXgVOpoI40E3QtQguiqmrAxzIJfNa' , 0, 641058299);
 insert into users (id, apellidos, avatar, direccion, email, nombre, password, rol, telefono) values (23, 'Crampton', 'https://robohash.org/dolorminimalaudantium.png?size=50x50&set=set1', '58 Linden Hill', 'icramptonm@lulu.com', 'Ingemar',  '$2a$12$WkhJcPFmN7TKOCJaDqmx9uu9mXgVOpoI40E3QtQguiqmrAxzIJfNa' , 0, 619294691);
 insert into users (id, apellidos, avatar, direccion, email, nombre, password, rol, telefono) values (24, 'Cunniff', 'https://robohash.org/ipsailloaut.png?size=50x50&set=set1', '233 Stone Corner Point', 'ncunniffn@reddit.com', 'Norbert',  '$2a$12$WkhJcPFmN7TKOCJaDqmx9uu9mXgVOpoI40E3QtQguiqmrAxzIJfNa' , 0, 609030089);
 insert into users (id, apellidos, avatar, direccion, email, nombre, password, rol, telefono) values (25, 'Huntar', 'https://robohash.org/consequunturesteius.png?size=50x50&set=set1', '87 Novick Plaza', 'phuntaro@xing.com', 'Pascal',  '$2a$12$WkhJcPFmN7TKOCJaDqmx9uu9mXgVOpoI40E3QtQguiqmrAxzIJfNa' , 0, 648152281);
 insert into users (id, apellidos, avatar, direccion, email, nombre, password, rol, telefono) values (26, 'Jewitt', 'https://robohash.org/teneturrerumiusto.png?size=50x50&set=set1', '2538 Banding Point', 'djewittp@economist.com', 'Dave',  '$2a$12$WkhJcPFmN7TKOCJaDqmx9uu9mXgVOpoI40E3QtQguiqmrAxzIJfNa' , 0, 649715422);
 
+
+--GESTOR  -- PASSWORD:hola
 insert into users (id, apellidos, avatar, direccion, email, nombre, password, rol, telefono, inmobiliaria_id) values (27, 'Hedderly', 'https://robohash.org/etrerumomnis.png?size=50x50&set=set1', '47 Arapahoe Drive', 'khedderlyh@youtube.com', 'Kirk',  '$2a$12$WkhJcPFmN7TKOCJaDqmx9uu9mXgVOpoI40E3QtQguiqmrAxzIJfNa' , 2, 612662362,2);
 insert into users (id, apellidos, avatar, direccion, email, nombre, password, rol, telefono, inmobiliaria_id) values (28, 'Qualtro', 'https://robohash.org/suntharumiusto.png?size=50x50&set=set1', '8 Bluestem Trail', 'dqualtroi@elpais.com', 'Dorene',  '$2a$12$WkhJcPFmN7TKOCJaDqmx9uu9mXgVOpoI40E3QtQguiqmrAxzIJfNa', 2, 669597384,5);
 insert into users (id, apellidos, avatar, direccion, email, nombre, password, rol, telefono, inmobiliaria_id) values (29, 'Gannan', 'https://robohash.org/hicnisirepellat.png?size=50x50&set=set1', '88585 Veith Street', 'pgannanj@cargocollective.com', 'Padraig',  '$2a$12$WkhJcPFmN7TKOCJaDqmx9uu9mXgVOpoI40E3QtQguiqmrAxzIJfNa' , 2, 607877279,7);
 insert into users (id, apellidos, avatar, direccion, email, nombre, password, rol, telefono, inmobiliaria_id) values (30, 'Castellone', 'https://robohash.org/etcumincidunt.png?size=50x50&set=set1', '530 Shopko Hill', 'scastellonek@mashable.com', 'Sammy',  '$2a$12$WkhJcPFmN7TKOCJaDqmx9uu9mXgVOpoI40E3QtQguiqmrAxzIJfNa', 2, 696784427,1);
--- PASSWORD:hola
+
+
 
 insert into vivienda (id, avatar, codigoPostal, descripcion, direccion, latitudLongitud, metrosCuadrados, numHabitaciones, numBanos, tienePiscina, tieneAscensor, tieneGaraje, poblacion, precio, provincia, tipo, titulo, inmobiliaria_id, usuario_id) values (1, 'https://robohash.org/doloraperiamreiciendis.png?size=50x50&set=set1', '410234', 'Pellentesque at nulla. Suspendisse potenti.', 623712219, 43.42993, 153, 1, 2, false, true, true, 'Lugo', 1712385, 'Las', 'OBRA_NUEVA', 'Casa', 16, null);
 insert into vivienda (id, avatar, codigoPostal, descripcion, direccion, latitudLongitud, metrosCuadrados, numHabitaciones, numBanos, tienePiscina, tieneAscensor, tieneGaraje, poblacion, precio, provincia, tipo, titulo, inmobiliaria_id, usuario_id) values (2, 'https://robohash.org/doloribusquisofficia.png?size=50x50&set=set1', '410974', 'Aliquam erat volutpat.', 680306561, 34.7671945, 60, 1, 2, true, true, true, 'Guadalajara', 255515, 'Hinojosa de San Vicente', 'OBRA_NUEVA', 'Duplex', 3, 3);

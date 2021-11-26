@@ -103,6 +103,9 @@ public class InmobiliariaController {
             @ApiResponse(responseCode = "404",
             description = "No se ha encontrado la inmobiliaria",
             content = @Content),
+            @ApiResponse(responseCode = "403",
+                    description = "Acceso denegado",
+                    content = @Content),
     })
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id,@AuthenticationPrincipal Usuario usuario){
@@ -115,7 +118,7 @@ public class InmobiliariaController {
             inmobiliariaService.deleteById(id);
             return ResponseEntity.noContent().build();
         }else{
-            return new ResponseEntity<Inmobiliaria>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<Inmobiliaria>(HttpStatus.FORBIDDEN);
         }
     }
 
@@ -125,9 +128,9 @@ public class InmobiliariaController {
                     description = "Se ha borrado el gestor correctamente de la inmobiliaria",
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = Inmobiliaria.class))}),
-            @ApiResponse(responseCode = "404",
-                    description = "No se ha encontrado el gestor o la inmobiliaria",
-                    content = @Content),
+            @ApiResponse(responseCode = "403",
+                    description = "Acceso denegado",
+                    content = @Content)
     })
     @DeleteMapping("/gestor/{id}")
     public ResponseEntity<?> deleteGestor(@PathVariable Long id, @AuthenticationPrincipal Usuario usuario){
@@ -146,7 +149,7 @@ public class InmobiliariaController {
             }
             return ResponseEntity.noContent().build();
         } else{
-            return new ResponseEntity<Inmobiliaria>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<Inmobiliaria>(HttpStatus.FORBIDDEN);
         }
     }
 
@@ -159,8 +162,8 @@ public class InmobiliariaController {
             @ApiResponse(responseCode = "400",
                     description = "No se ha podido crear la inmobiliaria, sintáxis inválida",
                     content = @Content),
-            @ApiResponse(responseCode = "401",
-                    description = "Usuario no autenticado",
+            @ApiResponse(responseCode = "403",
+                    description = "Acceso denegado",
                     content = @Content),
     })
     @PostMapping("/")
@@ -170,7 +173,7 @@ public class InmobiliariaController {
                 .status(HttpStatus.CREATED)
                 .body(inmobiliariaService.save(inmobiliaria));
     }else{
-            return new ResponseEntity<Inmobiliaria>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<Inmobiliaria>(HttpStatus.FORBIDDEN);
         }
     }
 
@@ -184,8 +187,8 @@ public class InmobiliariaController {
             @ApiResponse(responseCode = "400",
                     description = "No se ha podido crear el gestor en inmobiliaria, sintáxis inválida",
                     content = @Content),
-            @ApiResponse(responseCode = "401",
-                    description = "Usuario no autenticado",
+            @ApiResponse(responseCode = "403",
+                    description = "Acceso denegado",
                     content = @Content),
     })
     @PostMapping("/{id}/gestor")
@@ -211,7 +214,7 @@ public class InmobiliariaController {
                     .body(iDto);
 
         }else{
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 

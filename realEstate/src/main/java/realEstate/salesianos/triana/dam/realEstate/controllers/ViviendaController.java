@@ -61,6 +61,9 @@ public class ViviendaController {
                             schema = @Schema(implementation = Vivienda.class))}),
             @ApiResponse(responseCode = "400",
                     description = "La estructura de la petición estaba mal formulada",
+                    content = @Content),
+            @ApiResponse(responseCode = "403",
+                    description = "Acceso denegado",
                     content = @Content)
     })
     @PostMapping("/")
@@ -68,7 +71,7 @@ public class ViviendaController {
         Vivienda saved = viviendaService.save(vivienda);
         //Vivienda saved =viviendaService.saveHouse(vivienda);
         if(!usuario.getRol().equals(UserRole.PROPIETARIO)){
-            return new ResponseEntity<Vivienda>(HttpStatus.UNAUTHORIZED); /*GetViviendaDetailDto */
+            return new ResponseEntity<Vivienda>(HttpStatus.FORBIDDEN); /*GetViviendaDetailDto */
         }else{
             saved.addToPropietario(usuario);
             viviendaService.save(saved);
@@ -89,9 +92,9 @@ public class ViviendaController {
             @ApiResponse(responseCode = "404",
                     description = "No se ha encontrado una vivienda con ese id.",
                     content = @Content),
-            @ApiResponse(responseCode = "401",
-                    description = "Usuario no autenticado",
-                    content = @Content),
+            @ApiResponse(responseCode = "403",
+                    description = "Acceso denegado",
+                    content = @Content)
     })
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id, @AuthenticationPrincipal Usuario usuario) {
@@ -105,7 +108,7 @@ public class ViviendaController {
             viviendaService.deleteById(id);
             return ResponseEntity.noContent().build();
         } else{
-            return new ResponseEntity<List<?>>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<List<?>>(HttpStatus.FORBIDDEN);
 
         }
     }
@@ -119,9 +122,9 @@ public class ViviendaController {
             @ApiResponse(responseCode = "404",
                     description = "No se ha encontrado una inmobiliaria en esta vivienda con ese id.",
                     content = @Content),
-            @ApiResponse(responseCode = "401",
-                    description = "Usuario no autenticado",
-                    content = @Content),
+            @ApiResponse(responseCode = "403",
+                    description = "Acceso denegado",
+                    content = @Content)
     })
     @DeleteMapping("/{id1}/inmobiliaria")
     public ResponseEntity<?> deleteInmobiliariaToVivienda(@PathVariable Long id1, @AuthenticationPrincipal Usuario usuario) {
@@ -142,7 +145,7 @@ public class ViviendaController {
             viviendaService.save(vivienda);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }else{
-            return new ResponseEntity<List<?>>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<List<?>>(HttpStatus.FORBIDDEN);
         }
     }
 
@@ -221,9 +224,9 @@ public class ViviendaController {
             @ApiResponse(responseCode = "400",
             description = "Ha introducido datos erroneos",
             content = @Content),
-            @ApiResponse(responseCode = "401",
-                    description = "Usuario no autenticado",
-                    content = @Content)
+            @ApiResponse(responseCode = "403",
+                    description = "Acceso denegado",
+                    content = @Content),
     })
     @PostMapping("/{id}/meinteresa")
     public ResponseEntity<GetInteresadoInteresaDto> createInteresado(@PathVariable("id") Long id, @RequestBody CreateInteresadoInteresaDto dto, @AuthenticationPrincipal Usuario usuario){
@@ -231,7 +234,7 @@ public class ViviendaController {
         if (viviendaService.findById(id).isEmpty()){
             return ResponseEntity.notFound().build();
         }else if(!usuario.getRol().equals(UserRole.PROPIETARIO) ){
-            return new ResponseEntity<GetInteresadoInteresaDto>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<GetInteresadoInteresaDto>(HttpStatus.FORBIDDEN);
         }else {
             Optional<Vivienda> v = viviendaService.findById(id);
             Interesa interesa = Interesa.builder()
@@ -258,8 +261,8 @@ public class ViviendaController {
             @ApiResponse(responseCode = "400",
                     description = "Los datos introducidos son erroneos",
                     content = @Content),
-            @ApiResponse(responseCode = "401",
-                    description = "Usuario no autenticado",
+            @ApiResponse(responseCode = "403",
+                    description = "Acceso denegado",
                     content = @Content),
     })
     @PostMapping("/{id1}/inmobiliaria/{id2}")
@@ -280,7 +283,7 @@ public class ViviendaController {
             GetViviendaInmobiliariaDto viviendaDto = viviendaDtoConverter.viviendaToGetViviendaInmobiliariaDto(vivienda, inmobiliaria);
             return ResponseEntity.status(HttpStatus.CREATED).body(viviendaDto);
         }else {
-            return new ResponseEntity<List<?>>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<List<?>>(HttpStatus.FORBIDDEN);
         }
 
     }
@@ -293,10 +296,7 @@ public class ViviendaController {
                             schema = @Schema(implementation = Vivienda.class))}),
             @ApiResponse(responseCode = "404",
                     description = "No se ha encontrado ninguna vivienda.",
-                    content = @Content),
-            @ApiResponse(responseCode = "401",
-                    description = "Usuario no autenticado",
-                    content = @Content),
+                    content = @Content)
     })
     @GetMapping("/top")
     public ResponseEntity<List<?>> buscarViviendaParametros (
@@ -337,8 +337,8 @@ public class ViviendaController {
                 @ApiResponse(responseCode = "400",
                         description = "Los datos introducidos son erroneos",
                         content = @Content),
-                @ApiResponse(responseCode = "401",
-                        description = "Usuario no autenticado",
+                @ApiResponse(responseCode = "403",
+                        description = "Acceso denegado",
                         content = @Content),
         })
     @PutMapping("/{id}")
@@ -360,7 +360,7 @@ public class ViviendaController {
             return ResponseEntity.status(HttpStatus.CREATED).body(viviendaService.encontrarViviendaPorId(id).map(viviendaDtoConverter::viviendaToGetViviendaDetailDto));
         }
             else{
-            return new ResponseEntity<List<?>>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<List<?>>(HttpStatus.FORBIDDEN);
 
     }
 
@@ -375,8 +375,8 @@ public class ViviendaController {
             @ApiResponse(responseCode = "404",
                     description = "No se ha encontrado una vivienda con el id aportado.",
                     content = @Content),
-            @ApiResponse(responseCode = "401",
-                    description = "Usuario no autenticado",
+            @ApiResponse(responseCode = "403",
+                    description = "Acceso denegado",
                     content = @Content),
     })
     @DeleteMapping("/{id1}/meInteresa/")
@@ -390,7 +390,7 @@ public class ViviendaController {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }else
 
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 

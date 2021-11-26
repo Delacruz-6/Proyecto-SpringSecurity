@@ -51,8 +51,8 @@ public class InteresadoController {
             @ApiResponse(responseCode = "404",
                     description = "No se ha encontrado ningun interesado.",
                     content = @Content),
-            @ApiResponse(responseCode = "401",
-                    description = "Usuario no autenticado",
+            @ApiResponse(responseCode = "403",
+                    description = "Acceso denegado",
                     content = @Content),
     })
 
@@ -69,7 +69,7 @@ public class InteresadoController {
             UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(request.getRequestURL().toString());
             return ResponseEntity.ok().header("link", paginationLinksUtil.createLinkHeader(result, uriBuilder)).body(result);
         }else{
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 
@@ -82,9 +82,9 @@ public class InteresadoController {
             @ApiResponse(responseCode = "404",
                     description = "No se ha encontrado ningun interesado con ese identificador",
                     content = @Content),
-            @ApiResponse(responseCode = "401",
-                    description = "Usuario no autenticado",
-                    content = @Content),
+            @ApiResponse(responseCode = "403",
+                    description = "Acceso denegado",
+                    content = @Content)
     })
     @GetMapping("/{id}")
     public ResponseEntity<List<GetInteresadoDto>> findOne (@PathVariable("id") Long id, @AuthenticationPrincipal Usuario usuario){
@@ -100,7 +100,7 @@ public class InteresadoController {
                     .collect(Collectors.toList());
             return ResponseEntity.ok().body(interesadoDto);
         }else {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
 

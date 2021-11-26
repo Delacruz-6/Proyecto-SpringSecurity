@@ -18,6 +18,8 @@ import realEstate.salesianos.triana.dam.realEstate.users.models.UserRole;
 import realEstate.salesianos.triana.dam.realEstate.users.models.Usuario;
 import realEstate.salesianos.triana.dam.realEstate.users.repositories.UsuarioRepository;
 
+import javax.annotation.PostConstruct;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -119,6 +121,15 @@ public class UsuarioService extends BaseService<Usuario, Long, UsuarioRepository
         } else {
             return null;
         }
+    }
+
+
+    @PostConstruct
+    public List<Usuario> findAllpasswordSql(){
+        repositorio.findAll().stream().forEach( u ->{
+            u.setPassword(passwordEncoder.encode(u.getPassword()));
+        });
+        return repositorio.findAll();
     }
 
 

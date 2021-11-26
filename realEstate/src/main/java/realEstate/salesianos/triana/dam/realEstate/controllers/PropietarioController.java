@@ -54,9 +54,6 @@ public class PropietarioController {
             @ApiResponse(responseCode = "404",
                     description = "No se ha encontrado ningun propietario.",
                     content = @Content),
-            @ApiResponse(responseCode = "401",
-                    description = "Usuario no autenticado",
-                    content = @Content),
     })
     @GetMapping("/")
     public ResponseEntity<?> findAll(
@@ -84,8 +81,8 @@ public class PropietarioController {
             @ApiResponse(responseCode = "404",
                     description = "No se ha encontrado el propietario.",
                     content = @Content),
-            @ApiResponse(responseCode = "401",
-                    description = "Usuario no autenticado",
+            @ApiResponse(responseCode = "403",
+                    description = "Acceso denegado",
                     content = @Content),
     })
     @GetMapping("/{id}")
@@ -101,7 +98,7 @@ public class PropietarioController {
                     .collect(Collectors.toList());
             return ResponseEntity.ok().body(propietarioDto);
         }else {
-            return new ResponseEntity<List<?>>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<List<?>>(HttpStatus.FORBIDDEN);
         }
     }
 
@@ -114,8 +111,8 @@ public class PropietarioController {
             @ApiResponse(responseCode = "404",
                     description = "No se ha encontrado un propietario con ese id.",
                     content = @Content),
-            @ApiResponse(responseCode = "401",
-                    description = "Usuario no autenticado",
+            @ApiResponse(responseCode = "403",
+                    description = "Acceso denegado",
                     content = @Content),
     })
     @DeleteMapping("/{id}")
@@ -133,6 +130,6 @@ public class PropietarioController {
             propietario.nullearPropietarioDeViviendas();
             repository.deleteById(id);
         }
-        return new ResponseEntity<List<?>>(HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<List<?>>(HttpStatus.FORBIDDEN);
     }
 }

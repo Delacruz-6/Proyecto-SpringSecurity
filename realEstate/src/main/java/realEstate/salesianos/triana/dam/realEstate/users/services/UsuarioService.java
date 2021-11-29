@@ -50,6 +50,10 @@ public class UsuarioService extends BaseService<Usuario, Long, UsuarioRepository
     }
 
 
+    public List<Vivienda> findAllViviendasToPropietario(Long id ) throws UsernameNotFoundException{
+        return this.repositorio.findAllViviendasToPropietario(id);
+    }
+
 
     public Optional<Usuario> loadUserById2(Long id ) throws UsernameNotFoundException{
         return this.repositorio.findById(id);

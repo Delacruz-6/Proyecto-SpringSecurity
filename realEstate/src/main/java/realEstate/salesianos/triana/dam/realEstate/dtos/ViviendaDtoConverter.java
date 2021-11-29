@@ -36,6 +36,26 @@ public class ViviendaDtoConverter {
         return result;
     }
 
+    public GetViviendaToInteresadoDto viviendaToGetViviendaToInteresadoDto (Vivienda v){
+        GetViviendaToInteresadoDto result = new GetViviendaToInteresadoDto();
+        result.setCiudad(v.getPoblacion());
+        result.setDireccion(v.getDireccion());
+        result.setPrecio(v.getPrecio());
+        result.setProvincia(v.getProvincia());
+        result.setId(v.getId());
+        result.setAvatar(v.getAvatar());
+
+        result.setTipo(v.getTipo().toString());
+        result.setTitulo(v.getTitulo());
+
+        if(v.getIntereses().isEmpty()){
+            result.setInteresUsuario("Estas interesado");
+        }else
+            result.setInteresUsuario("No estas interesado");
+        return result;
+
+    }
+
 
     public GetViviendaDetailDto viviendaToGetViviendaDetailDto (Vivienda v) {
         List<Interesa> listaInteresados = new ArrayList<>();

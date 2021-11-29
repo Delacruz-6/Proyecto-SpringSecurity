@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import realEstate.salesianos.triana.dam.realEstate.models.Vivienda;
 import realEstate.salesianos.triana.dam.realEstate.users.models.UserRole;
 import realEstate.salesianos.triana.dam.realEstate.users.models.Usuario;
 
@@ -30,9 +31,24 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     Optional<Usuario> findByViviendas_Id(Long id);
 
-    //Optional<Usuario> findByIdAndRol_PROPIETARIO(Long id);
-    //Optional<Usuario> findByIdByRol(Long id, UserRole rol);
-    //Optional<Usuario> findByIdNotNull(Long id);
+/*
+    @Query (value = """
+            select realEstate.salesianos.triana.dam.realEstate.dtos.GetViviendaToInteresado(
+            v.id, v.nombre, (select count(i.*) from interesa i
+                            where vivienda.id = v.id and
+                            usuario.id = idUsuario
+            """)
+    List<Vivienda> findAllViviendasToInteresado();
+
+ */
+
+
+    @Query (value = "select v.*  from vivienda v where usuario_id = idUsuario" , nativeQuery=true)
+    List<Vivienda> findAllViviendasToPropietario(Long idUsuario);
+
+
+
+
 
 
 

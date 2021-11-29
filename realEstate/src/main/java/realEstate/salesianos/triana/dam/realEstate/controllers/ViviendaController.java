@@ -395,7 +395,7 @@ public class ViviendaController {
         }
 
 
-    @GetMapping(value = "/propietario")
+    @GetMapping("/propietario")
     public ResponseEntity<List<GetViviendaDto>> getViviendaPropietarioLogeado (
             @AuthenticationPrincipal Usuario usuario) {
         List<GetViviendaDto> result;
@@ -406,8 +406,21 @@ public class ViviendaController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/interesado")
+    public ResponseEntity<List<GetViviendaToInteresadoDto>> getInteresadoViviendas(@AuthenticationPrincipal Usuario usuario){
+        List<GetViviendaToInteresadoDto> result;
+        if (!usuarioService.findAllViviendasToPropietario(usuario.getId()).isEmpty() && !usuarioService.findById(usuario.getId()).get().getViviendas().isEmpty()) {
+            List<Vivienda> viviendas = usuarioService.findAllViviendasToPropietario(usuario.getId());
+            result = viviendas.stream().map(viviendaDtoConverter::viviendaToGetViviendaToInteresadoDto).collect(Collectors.toList());
+            return ResponseEntity.ok().body(result);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
 
     }
+
     }
 
 

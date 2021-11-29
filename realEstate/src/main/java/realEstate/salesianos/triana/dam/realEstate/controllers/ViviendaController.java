@@ -399,15 +399,16 @@ public class ViviendaController {
     public ResponseEntity<List<GetViviendaDto>> getViviendaPropietarioLogeado (
             @AuthenticationPrincipal Usuario usuario) {
         List<GetViviendaDto> result;
-        if (usuarioService.findById(usuario.getId()).isPresent() && !usuarioService.findById(usuario.getId()).get().getViviendas().isEmpty()) {
-            List<Vivienda> viviendas = usuarioService.findById(usuario.getId()).get().getViviendas();
+        if (usuarioService.findById(usuario.getId()).isPresent() && !usuario.getViviendas().isEmpty()) {
+            List<Vivienda> viviendas = usuario.getViviendas();
             result = viviendas.stream().map(viviendaDtoConverter::viviendaToGetViviendaDto).collect(Collectors.toList());
             return ResponseEntity.ok().body(result);
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
 
-    }
-    }
+
+}
 
 

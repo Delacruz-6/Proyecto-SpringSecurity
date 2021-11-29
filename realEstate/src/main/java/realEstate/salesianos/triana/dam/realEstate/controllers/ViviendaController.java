@@ -131,7 +131,7 @@ public class ViviendaController {
 
         Optional<Vivienda> viviendaOptional=viviendaService.findById(id1);
         Usuario propietario = usuarioService.findPropietario(id1).get();
-        List<Usuario> gestores = viviendaService.findById(id1).get().getInmobiliaria().getGestores();
+        List<Usuario> gestores = viviendaService.findById(id1).get().getInmobiliaria().getGestores(); // TODO Error 500 al tratar de eliminar por 2ª vez
 
         if (viviendaOptional.isEmpty() && viviendaService.findPropietario(id1).isEmpty()){
             return ResponseEntity.notFound().build();
@@ -269,7 +269,7 @@ public class ViviendaController {
     public ResponseEntity<?> addViviendaAInmobiliaria ( @PathVariable Long id1, @PathVariable Long id2, @AuthenticationPrincipal Usuario usuario){
         Optional<Vivienda> optionalVivienda=viviendaService.findById(id1);
         Optional<Inmobiliaria> optionalInmobiliaria= inmobiliariaService.findById(id2);
-        Usuario propietario = usuarioService.findPropietario(id1).get();
+        Usuario propietario = usuarioService.findPropietario(id1).get(); // TODO Código peligroso que genera error 500
         if (optionalInmobiliaria.isEmpty() || optionalVivienda.isEmpty()){
             return ResponseEntity.notFound().build();
         }else if( usuario.getRol().equals(UserRole.ADMIN) ||
@@ -346,6 +346,7 @@ public class ViviendaController {
     @Parameter(description = "ID de la Vivienda que desea buscar")
     @PathVariable Long id,
     @RequestBody CreateViviendaDto dto, @AuthenticationPrincipal Usuario usuario){
+        // TODO Mucho código de lógica de negocio en un controlador. Debería estar en los servicios
             Optional<Vivienda> viviendaOptional = viviendaService.findById(id);
              Usuario propietario = viviendaService.findById(id).get().getPropietario();
         if(viviendaOptional.isEmpty()){
@@ -353,7 +354,7 @@ public class ViviendaController {
 
         } else if( usuario.getRol().equals(UserRole.ADMIN) ||
                     (usuario.getRol().equals(UserRole.PROPIETARIO) &&
-                            usuario.getId().equals(propietario.getId()))){
+                            usuario.getId().equals(propietario.getId()))){ // TODO Error 500 POR USAR "código peligroso"
             Vivienda vNueva;
             vNueva = viviendaDtoConverter.createViviendaDtoToVivienda(dto);
             viviendaService.edit(vNueva);

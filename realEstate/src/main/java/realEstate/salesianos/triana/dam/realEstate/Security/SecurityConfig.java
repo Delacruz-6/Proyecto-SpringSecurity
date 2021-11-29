@@ -48,6 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .authorizeRequests()
+                // TODO Muchas de estas rutas se podrían haber agrupado
                 .antMatchers(HttpMethod.POST, "/auth/login**").anonymous()
                 .antMatchers(HttpMethod.POST, "/auth/register/admin**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.POST, "/auth/register/gestor**").hasRole("ADMIN")

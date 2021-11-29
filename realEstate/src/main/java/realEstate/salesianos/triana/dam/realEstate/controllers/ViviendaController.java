@@ -33,6 +33,7 @@ import realEstate.salesianos.triana.dam.realEstate.util.PaginationLinksUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -397,19 +398,16 @@ public class ViviendaController {
     @GetMapping(value = "/propietario")
     public ResponseEntity<List<GetViviendaDto>> getViviendaPropietarioLogeado (
             @AuthenticationPrincipal Usuario usuario) {
-        List<Vivienda> data = viviendaService.findAll();
-        List<Vivienda> viviendas = viviendaService.findAll();
         List<GetViviendaDto> result;
-        if (usuarioService.findById(usuario.getId()).isPresent() ) {
-            viviendas = usuarioService.findById(usuario.getId()).get().getViviendas();
+        if (usuarioService.findById(usuario.getId()).isPresent() && !usuarioService.findById(usuario.getId()).get().getViviendas().isEmpty()) {
+            List<Vivienda> viviendas = usuarioService.findById(usuario.getId()).get().getViviendas();
             result = viviendas.stream().map(viviendaDtoConverter::viviendaToGetViviendaDto).collect(Collectors.toList());
             return ResponseEntity.ok().body(result);
-        }else
+        } else {
             return ResponseEntity.notFound().build();
+        }
 
     }
-
-
     }
 
 

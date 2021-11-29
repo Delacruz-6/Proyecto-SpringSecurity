@@ -392,6 +392,24 @@ public class ViviendaController {
 
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
+
+
+    @GetMapping(value = "/propietario")
+    public ResponseEntity<List<GetViviendaDto>> getViviendaPropietarioLogeado (
+            @AuthenticationPrincipal Usuario usuario) {
+        List<Vivienda> data = viviendaService.findAll();
+        List<Vivienda> viviendas = viviendaService.findAll();
+        List<GetViviendaDto> result;
+        if (usuarioService.findById(usuario.getId()).isPresent() ) {
+            viviendas = usuarioService.findById(usuario.getId()).get().getViviendas();
+            result = viviendas.stream().map(viviendaDtoConverter::viviendaToGetViviendaDto).collect(Collectors.toList());
+            return ResponseEntity.ok().body(result);
+        }else
+            return ResponseEntity.notFound().build();
+
+    }
+
+
     }
 
 
